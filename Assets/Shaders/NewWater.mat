@@ -1,0 +1,85 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: NewWater
+  m_Shader: {fileID: -6465566751694194690, guid: d0b1ce36c6a3a4f83be31ecceb0cd036, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 2
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _RippleTexture:
+        m_Texture: {fileID: 2800000, guid: 6eb77f524cb4a464a8138fab97dd8bdb, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - Vector1_09635336799f41e1ba702f354f63af7a: 1
+    - Vector1_467bbb3b46b940e8b3b6e0048e55bff2: 10
+    - Vector1_5c60bde749de446c8c0659d0271e9c24: 8
+    - Vector1_a338f81b8a7a47a1bd3f61c021f6a05c: 550
+    - Vector1_bb75f4c818954f7cbfe191e63370f0fa: 1
+    - Vector1_ee7abfa1eb1740c683893a4292be5a94: 0.5
+    - Vector1_eef022e91e6c4751806c98da416b9795: 0.09
+    - Vector1_f5725dbb4d524d5e9691b72b35308d2a: 1
+    - _DeepDepth: 0.66
+    - _DistortionScale: 60
+    - _DistortionSpeed: 0.02
+    - _DistortionStrength: 0.08
+    - _FadeDepth: 1
+    - _QueueControl: 0
+    - _QueueOffset: 0
+    - _WaterHeightMoveSpeed: 0.02
+    - _WaterHeightWaveWidth: 10
+    - _WaterTextureSize: 3.46
+    - _waterHeightWaveHeight: 0.07
+    m_Colors:
+    - Color_6391e5c50ab1492c8520d2c5f194f6f7: {r: 0.8313726, g: 1.003922, b: 1.247059, a: 0}
+    - Color_75819e43e61e4afdb90e4b5402e4f0fd: {r: 0.057849698, g: 0.11445417, b: 0.7075471, a: 0}
+    - Color_82d6e022a7a84f628fc88ad1fec4907c: {r: 1.498039, g: 1.498039, b: 1.498039, a: 1}
+    - _DeepColor: {r: 1, g: 0.15516607, b: 0, a: 0}
+    - _DepthColor: {r: 0.05660379, g: 0.05660379, b: 0.05660379, a: 0}
+    - _DistortionColor: {r: 0, g: 0.7019608, b: 1, a: 0}
+    - _EdgeColor: {r: 0.6226415, g: 0.6226415, b: 0.6226415, a: 0}
+    - _MainColor: {r: 0, g: 1, b: 1, a: 0}
+  m_BuildTextureStacks: []
+--- !u!114 &6771510749256193375
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 7
