@@ -71,7 +71,9 @@
     <Compile Include="Assets/Scripts/LoadedTiles.cs" />
     <Compile Include="Assets/Scripts/WaterMovement.cs" />
     <Compile Include="Assets/Shaders/Outline/BlitMaterialFeature.cs" />
+    <Compile Include="Assets/Scripts/WaterGetHeight.cs" />
     <Compile Include="Assets/Terrain/MeshGenerator.cs" />
+    <Compile Include="Assets/Scripts/SimpleBob.cs" />
     <Compile Include="Assets/Scripts/GroundLoader.cs" />
   </ItemGroup>
   <ItemGroup>
