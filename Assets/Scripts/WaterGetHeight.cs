@@ -22,7 +22,7 @@ public class WaterGetHeight : MonoBehaviour
             for(int y = 0; y < waterHeightTex.height; y++)
             {
                 heightTexValues[x, y] = (float)(waterHeightTex.GetPixel((waterHeightTex.width - 1) - x, (waterHeightTex.height - 1) - y).r);
-                Debug.Log(heightTexValues[x, y]);
+                //Debug.Log(heightTexValues[x, y]);
             }
         }
     }
@@ -75,20 +75,31 @@ public class WaterGetHeight : MonoBehaviour
         int yL = Mathf.FloorToInt(y);
         int yH = yL + 1;
         float xOff = x - xL;
+        if ((xOff >= 1) || (xOff < 0))
+            Debug.Log(xOff);
         float mXOff = 1 - xOff;
         float yOff = y - yL;
+        if ((yOff >= 1) || (yOff < 0))
+            Debug.Log(yOff);
         float mYOff = 1 - yOff;
         if (xH == waterHeightTex.width) xH = 0;
         if (yH == waterHeightTex.height) yH = 0;
-        if (xH == -1) xH = waterHeightTex.width;
-        if (yH == -1) yH = waterHeightTex.height;
-            float h = (yOff * mXOff * heightTexValues[xL, yH]) + (mYOff * mXOff * heightTexValues[xL, yL]);
-            h += (yOff * xOff * heightTexValues[xH, yH]) + (mYOff * xOff * heightTexValues[xH, yL]);
-            h /= 2;
+        //if (xH == -1) xH = waterHeightTex.width;
+        //if (yH == -1) yH = waterHeightTex.height;
+        float hL = Mathf.Lerp(heightTexValues[xL, yL], heightTexValues[xH, yL], xOff);
+        float hH = Mathf.Lerp(heightTexValues[xL, yH], heightTexValues[xH, yH], xOff);
+        float h = Mathf.Lerp(hL, hH, yOff);
+
+        //float h = (yOff * mXOff * heightTexValues[xL, yH]) + (mYOff * mXOff * heightTexValues[xL, yL]);
+        //h += (yOff * xOff * heightTexValues[xH, yH]) + (mYOff * xOff * heightTexValues[xH, yL]);
+        //    h /= 2;
+
+        //h = (yOff * 0.5f * heightTexValues[xL, yH]) + (mYOff * 0.5f * heightTexValues[xL, yL]);
+        //Debug.Log(h);
         //h = heightTexValues[xL, yL];
         //Debug.ClearDeveloperConsole();
         //Debug.Log(xL + "   " + yL);
-        return h * 5;
+        return h * 1;
     }
     //public static float GetWaterHeightAt(float x, float y)
     //{

@@ -35,6 +35,8 @@ public class IslandGenerator : MonoBehaviour
 
         CreateShape();
         UpdateMesh();
+        GetComponent<MeshCollider>().sharedMesh = mesh;
+        GetComponent<MeshCollider>().sharedMesh.RecalculateNormals();
     }
     void CreateShape()
     {

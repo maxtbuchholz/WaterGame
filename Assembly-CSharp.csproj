@@ -64,15 +64,17 @@
     <Compile Include="Assets/Scripts/Noise.cs" />
     <Compile Include="Assets/Scripts/Shooting/TurretController.cs" />
     <Compile Include="Assets/Scripts/TileDeleter.cs" />
-    <Compile Include="Assets/Scripts/ShipMovement.cs" />
+    <Compile Include="Assets/Scripts/ShipMove/ShipMovement.cs" />
     <Compile Include="Assets/Scripts/CameraTrack.cs" />
     <Compile Include="Assets/Scripts/LoadWaterTiles.cs" />
     <Compile Include="Assets/Terrain/SetTerrainShader.cs" />
     <Compile Include="Assets/Scripts/LoadedTiles.cs" />
     <Compile Include="Assets/Scripts/WaterMovement.cs" />
+    <Compile Include="Assets/Scripts/Shooting/ProjectileHit.cs" />
     <Compile Include="Assets/Shaders/Outline/BlitMaterialFeature.cs" />
     <Compile Include="Assets/Scripts/WaterGetHeight.cs" />
     <Compile Include="Assets/Terrain/MeshGenerator.cs" />
+    <Compile Include="Assets/Scripts/ShipMove/ShipRotation.cs" />
     <Compile Include="Assets/Scripts/SimpleBob.cs" />
     <Compile Include="Assets/Scripts/GroundLoader.cs" />
   </ItemGroup>

@@ -5,8 +5,9 @@ using UnityEngine;
 public class SimpleBob : MonoBehaviour
 {
     [SerializeField] WaterGetHeight wGetHeight;
-    void Update()
+    void FixedUpdate()
     {
-        transform.position = new Vector3(transform.position.x, wGetHeight.getWaterHeight(transform.position.x, transform.position.z), transform.position.z);
+        GetComponent<Rigidbody>().MovePosition(new Vector3(transform.position.x, (wGetHeight.getWaterHeight(transform.position.x, transform.position.z) + (3 * transform.position.y)) / 4, transform.position.z));
+        //transform.position = new Vector3(transform.position.x, wGetHeight.getWaterHeight(transform.position.x, transform.position.z), transform.position.z);
     }
 }
