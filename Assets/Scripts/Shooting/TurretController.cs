@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Burst.CompilerServices;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
@@ -17,17 +18,26 @@ public class TurretController : MonoBehaviour
         {
             Vector3 mousePosition = Input.mousePosition;
             Ray ray = camera.ScreenPointToRay(mousePosition);
-            if (Physics.Raycast(ray, out RaycastHit hit))
+            RaycastHit[] hits = Physics.RaycastAll(ray);
+            for(int i = 0; i < hits.Length; i++)
             {
-                if (hit.collider != null)
+                if (hits[i].transform.gameObject.tag != "IslandOuterCollider")          //found suitable target
                 {
-
-                    //Debug.Log(hit.collider.gameObject.transform.parent.name);
-                    //GetWholeTrajectory(hit.point);
-                    ShootProjectile(hit.point);
-
+                    ShootProjectile(hits[i].point);
+                    i = hits.Length;
                 }
             }
+            //if (Physics.Raycast(ray, out RaycastHit hit))
+            //{
+            //    if (hit.collider != null)
+            //    {
+
+            //        //Debug.Log(hit.collider.gameObject.transform.parent.name);
+            //        //GetWholeTrajectory(hit.point);
+            //        ShootProjectile(hit.point);
+
+            //    }
+            //}
         }
         for(int i = 1; i < trajectory.Length; i++)
         {

@@ -59,6 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets/Terrain/GenerateTerrain.cs" />
+    <Compile Include="Assets/Scripts/Shooting/DestroyOnEffectComplete.cs" />
     <Compile Include="Assets/Terrain/IslandGenerator.cs" />
     <Compile Include="Assets/Shaders/Outline/DepthNormalsFeature.cs" />
     <Compile Include="Assets/Scripts/Noise.cs" />

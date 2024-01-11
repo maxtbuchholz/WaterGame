@@ -34,11 +34,11 @@ public class ShipMovement : MonoBehaviour
             float rot = turnSpeed * Time.deltaTime;
             if (horizontal > 0)
             {
-                body.rotation *= Quaternion.AngleAxis(rot, new Vector3(0, 1, 0));
+                body.rotation  *= Quaternion.AngleAxis(rot, new Vector3(0, 1, 0));
             }
             else if (horizontal < 0)
             {
-                body.rotation *= Quaternion.AngleAxis(rot, new Vector3(0, -1, 0));
+                body.rotation  *= Quaternion.AngleAxis(rot, new Vector3(0, -1, 0));
             }
         }
     }

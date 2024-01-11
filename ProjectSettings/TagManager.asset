@@ -6,6 +6,7 @@ TagManager:
   tags:
   - SeaTile
   - Land
+  - IslandOuterCollider
   layers:
   - Default
   - TransparentFX

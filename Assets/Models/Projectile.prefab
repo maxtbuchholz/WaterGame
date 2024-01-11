@@ -278,3 +278,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45c500b7893bd4481b95d6af98706d26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterSplashEffect: {fileID: 6901020688085058331, guid: dd7297f0b0cf847f59f29e14bd8048a4, type: 3}

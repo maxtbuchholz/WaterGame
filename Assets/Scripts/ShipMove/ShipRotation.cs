@@ -19,16 +19,16 @@ public class ShipRotation : MonoBehaviour
     {
         Quaternion normalCurrRot = transform.rotation.normalized;
         Vector3 foreward = transform.position + (normalCurrRot * _ForwardCheck);
-        Debug.DrawLine(transform.position, foreward, Color.red);
+        //Debug.DrawLine(transform.position, foreward, Color.red);
 
         Vector3 port = transform.position + (normalCurrRot * _PortCheck);
-        Debug.DrawLine(transform.position, port, Color.yellow);
+        //Debug.DrawLine(transform.position, port, Color.yellow);
 
         Vector3 starboard = transform.position + (normalCurrRot * _StarboardCheck);
-        Debug.DrawLine(transform.position, starboard, Color.blue);
+        //Debug.DrawLine(transform.position, starboard, Color.blue);
 
         Vector3 stern = Vector3.Lerp(port, starboard, 0.5f);
-        Debug.DrawLine(transform.position, stern, Color.green);
+        //Debug.DrawLine(transform.position, stern, Color.green);
         float fBHeightDiff = waterHeight.getWaterHeight(foreward.x, foreward.z) - waterHeight.getWaterHeight(stern.x, stern.z);
         stern.y = fBHeightDiff;
         foreward.y = 0;
