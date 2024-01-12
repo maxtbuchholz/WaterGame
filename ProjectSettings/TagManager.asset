@@ -7,6 +7,8 @@ TagManager:
   - SeaTile
   - Land
   - IslandOuterCollider
+  - Projectile
+  - Ship
   layers:
   - Default
   - TransparentFX
@@ -14,12 +16,12 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Ship
+  - Water
+  - ShipDrive
+  - IslandOuterCollider
+  - Projectile
+  - IslandInnerCollider
   - 
   - 
   - 

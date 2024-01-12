@@ -21,6 +21,7 @@ public class IslandGenerator : MonoBehaviour
     [SerializeField] int octaves = 6;
     [SerializeField] int xWidth = 400;
     [SerializeField] int zWidth = 400;
+    [SerializeField] Material clearIslandOuterColliderMaterial;
     void Start()
     {
         WorldXWidth = xWidth;
@@ -262,7 +263,6 @@ public class IslandGenerator : MonoBehaviour
                 }            
             }
         }
-        Debug.Log(islandVectorSets.Count);
         foreach(List<Vector2> innerSet in islandVectorSets)
         {
             List<Vector2> outerSet = new();
@@ -484,13 +484,14 @@ public class IslandGenerator : MonoBehaviour
             GameObject obMesh = new GameObject();
             obMesh.transform.parent = transform;
             MeshFilter mFil = obMesh.AddComponent<MeshFilter>();
-            obMesh.AddComponent<MeshRenderer>();
+            MeshRenderer meRen = obMesh.AddComponent<MeshRenderer>();
+            meRen.material = clearIslandOuterColliderMaterial;
             MeshCollider mCol = obMesh.AddComponent<MeshCollider>();
             mCol.sharedMesh = mesh;
             mFil.mesh = mesh;
             obMesh.tag = "IslandOuterCollider";
+            obMesh.layer = 9;
         }
-        Debug.Break();
     }
     private Vector2 GetCenterCoord(List<Vector2> lst)
     {

@@ -29,6 +29,7 @@ public static class Noise
         }
         y = y - (totalHeight / 2);
         y -= 3;
+        if (y < 0) y -= 0.5f;
         //if ((y > 0) && (y < 2.5)) y = 2;
         return y;
     }

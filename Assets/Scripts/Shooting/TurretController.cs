@@ -7,6 +7,7 @@ using static UnityEngine.GraphicsBuffer;
 public class TurretController : MonoBehaviour
 {
     [SerializeField] Camera camera;
+    [SerializeField] ShipValueControl shipValues;
     [SerializeField] GameObject projectile;
     [SerializeField] GameObject turret;
     [SerializeField] GameObject barrel;
@@ -60,6 +61,7 @@ public class TurretController : MonoBehaviour
 
 
         GameObject proj = GameObject.Instantiate(projectile);
+        proj.GetComponent<ProjectileHit>().shipParts = shipValues.shipParts;
         proj.transform.position = shootPoint.transform.position;
         proj.GetComponent<Rigidbody>().velocity = normalDist * force;
     }

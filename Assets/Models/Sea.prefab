@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4180293602732309068}
   - component: {fileID: 4449013504059474814}
   - component: {fileID: 1846670765376573848}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Plane
   m_TagString: SeaTile
   m_Icon: {fileID: 0}
@@ -128,7 +128,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6373926073082448173}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Sea
   m_TagString: SeaTile
   m_Icon: {fileID: 0}
