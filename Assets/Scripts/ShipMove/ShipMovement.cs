@@ -7,6 +7,10 @@ public class ShipMovement : MonoBehaviour
     Rigidbody body;
     [SerializeField] ShipRotation shipRotation;
     [SerializeField] GameObject shipBody;
+    [SerializeField] List<ParticleSystem> backParticles;
+    [SerializeField] ParticleSystem frontParticle;
+    private float amountBackParticles;
+    private float amountFrontParticles;
 
     float horizontal;
     float vertical;
@@ -14,7 +18,7 @@ public class ShipMovement : MonoBehaviour
     private float turnSpeed = 40.0f;
 
     private float acceleration = 1.0f;
-    private float decceleration = 6.0f;
+    private float decceleration = 2.0f;
     private float maxSpeed = 5.0f;
     private float maxReverseSpeed = 2.5f;
     private float currSpeed = 0.0f;
@@ -23,6 +27,9 @@ public class ShipMovement : MonoBehaviour
     void Start()
     {
         body = GetComponent<Rigidbody>();
+        amountBackParticles = backParticles[0].emissionRate;
+        amountFrontParticles = frontParticle.emissionRate;
+        //Debug.Log(amountFrontParticles);
     }
 
     void Update()
@@ -40,7 +47,7 @@ public class ShipMovement : MonoBehaviour
             if (currSpeed > 0) currSpeed = Mathf.Min(currSpeed, maxSpeed);
             else currSpeed = Mathf.Max(currSpeed, -maxReverseSpeed);
             body.velocity = currSpeed * transform.forward;
-            Debug.Log(currSpeed);
+            //Debug.Log(currSpeed);
             //if (vertical < 0) vertical /= 5;
             //if (Mathf.Sign(vertical) != Mathf.Sign(currSpeed)) currSpeed = 0;
             //currSpeed += acceleration * Time.fixedDeltaTime * vertical;
@@ -105,6 +112,10 @@ public class ShipMovement : MonoBehaviour
             body.rotation = Quaternion.Euler(0, body.rotation.eulerAngles.y, 0);
             shipBody.transform.localRotation = Quaternion.Euler(shipRotation.bobDisplacement.x, (body.rotation.eulerAngles.y) + shipRotation.bobDisplacement.y, currRotAngle + shipRotation.bobDisplacement.z);
         }
-        Debug.Log(currRotAngle);
+        ///////////set ship particles
+        frontParticle.emissionRate = Mathf.Lerp(0, amountFrontParticles, currSpeed / maxSpeed);
+        float backParRate = Mathf.Lerp(0, amountBackParticles, vertical / 1);
+        foreach (ParticleSystem ps in backParticles)
+            ps.emissionRate = backParRate;
     }
 }

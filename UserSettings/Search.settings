@@ -8,6 +8,11 @@ onBoardingDoNotAskAgain = true
 showPackageIndexes = false
 showStatusBar = false
 scopes = {
+	"picker_window_position_offset.74AD8FDB" = "463.5;178;320;550"
+	"picker_search_text.74AD8FDB" = "circ"
+	"last_search.74AD8FDB" = "circ"
+	"OpenInspectorPreview.74AD8FDB" = "0"
+	"currentGroup.74AD8FDB" = "all"
 }
 providers = {
 	adb = {
@@ -59,6 +64,7 @@ providers = {
 objectSelectors = {
 }
 recentSearches = [
+	" "
 ]
 searchItemFavorites = [
 ]

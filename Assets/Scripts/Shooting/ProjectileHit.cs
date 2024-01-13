@@ -5,6 +5,7 @@ using UnityEngine;
 public class ProjectileHit : MonoBehaviour
 {
     [SerializeField] GameObject waterSplashEffect;
+    [SerializeField] GameObject explosionEffect;
     public List<GameObject> shipParts;
     private Collider projCollider;
     private void Start()
@@ -38,6 +39,11 @@ public class ProjectileHit : MonoBehaviour
             {
                 GameObject splash = GameObject.Instantiate(waterSplashEffect);
                 splash.transform.position = transform.position;
+            }
+            else
+            {
+                GameObject explosion = GameObject.Instantiate(explosionEffect);
+                explosion.transform.position = transform.position;
             }
         }
     }
