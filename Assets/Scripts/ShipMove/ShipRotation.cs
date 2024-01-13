@@ -9,6 +9,7 @@ public class ShipRotation : MonoBehaviour
     private Vector3 _PortCheck = new Vector3(-1, 0, -2);
     private Vector3 _StarboardCheck = new Vector3(1, 0, -2);
     [SerializeField] WaterGetHeight waterHeight;
+    [HideInInspector] public Vector3 bobDisplacement = Vector3.zero;
     void Start()
     {
         
@@ -46,6 +47,7 @@ public class ShipRotation : MonoBehaviour
 
 
 
-        transform.localRotation = Quaternion.Euler(xAngle / 2, 0, zAngle * 2);
+        //transform.localRotation
+        bobDisplacement  = new Vector3((xAngle / 2), 0, (zAngle * 2));
     }
 }

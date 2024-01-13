@@ -14,7 +14,7 @@ public class ShipValueControl : MonoBehaviour
     private void Update()
     {
         transform.position = new Vector3(ship_drive.position.x, transform.position.y , ship_drive.position.z);
-        transform.rotation = ship_drive.rotation;
+        //transform.rotation = ship_drive.rotation;
     }
     private void AddChildrenToShipParts(GameObject go)
     {

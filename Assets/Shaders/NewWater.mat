@@ -23,6 +23,14 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _CellShadingSub_18395769403f418ca75f8a743a1b5691_MainTex_3459995794_Texture2D:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _CellShadingSub_5f38a055e7924b5c9193ac083db8b078_MainTex_3459995794_Texture2D:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _RippleTexture:
         m_Texture: {fileID: 2800000, guid: 6eb77f524cb4a464a8138fab97dd8bdb, type: 3}
         m_Scale: {x: 1, y: 1}
