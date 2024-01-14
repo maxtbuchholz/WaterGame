@@ -66,9 +66,9 @@ Material:
     - Vector1_eef022e91e6c4751806c98da416b9795: 0.09
     - Vector1_f5725dbb4d524d5e9691b72b35308d2a: 1
     - _DeepDepth: 0.66
-    - _DistortionScale: 60
+    - _DistortionScale: 134.83
     - _DistortionSpeed: 0.02
-    - _DistortionStrength: 0.08
+    - _DistortionStrength: 0.02
     - _FadeDepth: 1
     - _QueueControl: 0
     - _QueueOffset: 0

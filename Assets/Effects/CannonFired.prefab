@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1674257232197536396}
   - component: {fileID: 8644315636657003015}
   m_Layer: 0
-  m_Name: Explosion
+  m_Name: CannonFired
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,7 +32,7 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!2083052967 &6705527861065482117
 VisualEffect:
@@ -42,7 +42,7 @@ VisualEffect:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3945905181827361489}
   m_Enabled: 1
-  m_Asset: {fileID: 8926484042661614526, guid: abe8d88481b914b6cb342d9b4f13cd2d, type: 3}
+  m_Asset: {fileID: 8926484042661614526, guid: e83a7458926b04c2087639b9105b5123, type: 3}
   m_InitialEventName: OnPlay
   m_InitialEventNameOverriden: 0
   m_StartSeed: 0

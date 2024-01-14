@@ -6,6 +6,7 @@ public class ProjectileHit : MonoBehaviour
 {
     [SerializeField] GameObject waterSplashEffect;
     [SerializeField] GameObject explosionEffect;
+    [SerializeField] GameObject cannonFireEffect;
     public List<GameObject> shipParts;
     private Collider projCollider;
     private void Start()
@@ -19,6 +20,8 @@ public class ProjectileHit : MonoBehaviour
             }
         }
         gameObject.layer = 10;
+        GameObject explosion = GameObject.Instantiate(cannonFireEffect);
+        explosion.transform.position = transform.position;
     }
     void OnCollisionEnter(Collision collision)
     {

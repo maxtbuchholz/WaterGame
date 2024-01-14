@@ -61,11 +61,13 @@
     <Compile Include="Assets/Terrain/GenerateTerrain.cs" />
     <Compile Include="Assets/Scripts/Shooting/DestroyOnEffectComplete.cs" />
     <Compile Include="Assets/Terrain/IslandGenerator.cs" />
+    <Compile Include="Assets/Shaders/Pixilize/PixelizePass.cs" />
     <Compile Include="Assets/Shaders/Outline/DepthNormalsFeature.cs" />
     <Compile Include="Assets/Scripts/Noise.cs" />
     <Compile Include="Assets/Scripts/Shooting/TurretController.cs" />
     <Compile Include="Assets/Scripts/TileDeleter.cs" />
     <Compile Include="Assets/Scripts/ShipMove/ShipMovement.cs" />
+    <Compile Include="Assets/Shaders/Pixilize/PixelizeFeature.cs" />
     <Compile Include="Assets/Scripts/CameraTrack.cs" />
     <Compile Include="Assets/Scripts/LoadWaterTiles.cs" />
     <Compile Include="Assets/Terrain/SetTerrainShader.cs" />
@@ -82,6 +84,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets/Shaders/CellShading/Lighting.hlsl" />
+    <None Include="Assets/Shaders/Pixilize/Pixelize.shader" />
     <None Include="Assets/Shaders/Outline/OutlinesInclude.hlsl" />
     <None Include="Assets/Shaders/Outline/DecodeDepthNormals.hlsl" />
   </ItemGroup>
@@ -842,14 +845,14 @@
     <Reference Include="Unity.VSCode.Editor">
       <HintPath>Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.2D.SpriteShape.Editor">
-      <HintPath>Library/ScriptAssemblies/Unity.2D.SpriteShape.Editor.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.2D.Tilemap.Editor">
       <HintPath>Library/ScriptAssemblies/Unity.2D.Tilemap.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.Animation.Editor">
       <HintPath>Library/ScriptAssemblies/Unity.2D.Animation.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.SpriteShape.Editor">
+      <HintPath>Library/ScriptAssemblies/Unity.2D.SpriteShape.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.Universal.Editor">
       <HintPath>Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Editor.dll</HintPath>
