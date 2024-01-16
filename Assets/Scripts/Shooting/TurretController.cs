@@ -13,39 +13,7 @@ public class TurretController : MonoBehaviour
     [SerializeField] GameObject barrel;
     [SerializeField] GameObject shootPoint;
     Vector3[] trajectory = new Vector3[] { };
-    void Update()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            Vector3 mousePosition = Input.mousePosition;
-            Ray ray = camera.ScreenPointToRay(mousePosition);
-            RaycastHit[] hits = Physics.RaycastAll(ray);
-            for(int i = 0; i < hits.Length; i++)
-            {
-                if (hits[i].transform.gameObject.tag != "IslandOuterCollider")          //found suitable target
-                {
-                    ShootProjectile(hits[i].point);
-                    i = hits.Length;
-                }
-            }
-            //if (Physics.Raycast(ray, out RaycastHit hit))
-            //{
-            //    if (hit.collider != null)
-            //    {
-
-            //        //Debug.Log(hit.collider.gameObject.transform.parent.name);
-            //        //GetWholeTrajectory(hit.point);
-            //        ShootProjectile(hit.point);
-
-            //    }
-            //}
-        }
-        for(int i = 1; i < trajectory.Length; i++)
-        {
-            Debug.DrawLine(trajectory[i - 1], trajectory[i], Color.red);
-        }
-    }
-    void ShootProjectile(Vector3 targetPos)
+    public bool ShootProjectile(Vector3 targetPos)     //returns okay if okay to shoot and shot
     {
         float force = 50;
         Vector3 vDistance = (targetPos - shootPoint.transform.position);
@@ -53,17 +21,22 @@ public class TurretController : MonoBehaviour
         Vector3 normalDist = (new Vector3(targetPos.x, 0, targetPos.z) - new Vector3(shootPoint.transform.position.x, 0, shootPoint.transform.position.z)).normalized;
         float d = Mathf.Pow(Mathf.Pow(vDistance.x, 2) + Mathf.Pow(vDistance.z, 2), 0.5f);
         float angle = GetAngle(9.81f, force, d, vDistance.y);
-        if (float.IsNaN(angle)) return;
+        if (float.IsNaN(angle)) return false;
         float rotY = Mathf.Atan2(normalDist.x, normalDist.z) * Mathf.Rad2Deg;
         normalDist.y = Mathf.Sin(angle);
         turret.transform.rotation = Quaternion.Euler(0, rotY, 0);
         barrel.transform.localRotation = Quaternion.Euler(-angle * Mathf.Rad2Deg, 0, 0);
-
-
+        Debug.DrawLine(shootPoint.transform.position, (normalDist * 5f) + shootPoint.transform.position, Color.red);
+        //Debug.Break();
+        if (Physics.Raycast(shootPoint.transform.position, normalDist, 5f))
+            return false;
+        
         GameObject proj = GameObject.Instantiate(projectile);
         proj.GetComponent<ProjectileHit>().shipParts = shipValues.shipParts;
         proj.transform.position = shootPoint.transform.position;
         proj.GetComponent<Rigidbody>().velocity = normalDist * force;
+        //Debug.Break();
+        return true;
     }
     float GetAngle(float g, float V, float d, float h)
     {

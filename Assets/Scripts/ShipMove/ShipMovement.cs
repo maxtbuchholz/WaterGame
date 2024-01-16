@@ -44,6 +44,7 @@ public class ShipMovement : MonoBehaviour
         if (vertical != 0)              //speed up in either forward or backwards
         {
             currSpeed += (acceleration * Time.fixedDeltaTime * vertical);
+            if (Mathf.Sign(currSpeed) != Mathf.Sign(vertical)) currSpeed += (((-decceleration) * Mathf.Sign(currSpeed)) * Time.fixedDeltaTime);
             if (currSpeed > 0) currSpeed = Mathf.Min(currSpeed, maxSpeed);
             else currSpeed = Mathf.Max(currSpeed, -maxReverseSpeed);
             body.velocity = currSpeed * transform.forward;
