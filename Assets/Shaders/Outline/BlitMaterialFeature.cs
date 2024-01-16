@@ -14,6 +14,7 @@
 //    along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 using UnityEngine;
+using UnityEngine.Diagnostics;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 
@@ -24,13 +25,13 @@ public class BlitMaterialFeature : ScriptableRendererFeature {
         private Material material;
         private int materialPassIndex;
         private RenderTargetIdentifier sourceID;
-        private RenderTargetHandle tempTextureHandle;
+        private RTHandle tempTextureHandle;
 
         public RenderPass(string profilingName, Material material, int passIndex) : base() {
             this.profilingName = profilingName;
             this.material = material;
             this.materialPassIndex = passIndex;
-            tempTextureHandle.Init("_TempBlitMaterialTexture");
+            tempTextureHandle = RTHandles.Alloc("_TempBlitMaterialTexture", name: "_TempBlitMaterialTexture");
         }
 
         public void SetSource(RenderTargetIdentifier source) {
@@ -43,16 +44,19 @@ public class BlitMaterialFeature : ScriptableRendererFeature {
             RenderTextureDescriptor cameraTextureDesc = renderingData.cameraData.cameraTargetDescriptor;
             cameraTextureDesc.depthBufferBits = 0;
 
-            cmd.GetTemporaryRT(tempTextureHandle.id, cameraTextureDesc, FilterMode.Bilinear);
-            Blit(cmd, sourceID, tempTextureHandle.Identifier(), material, materialPassIndex);
-            Blit(cmd, tempTextureHandle.Identifier(), sourceID);
+            cmd.GetTemporaryRT(tempTextureHandle.GetInstanceID(), cameraTextureDesc, FilterMode.Bilinear);
+
+            //Blit(cmd, sourceID, tempTextureHandle.nameID, material, materialPassIndex);
+            cmd.Blit(sourceID, tempTextureHandle.nameID);
+            //Blit(cmd, tempTextureHandle.Identifier(), sourceID);
+            cmd.Blit(sourceID, tempTextureHandle.nameID);
 
             context.ExecuteCommandBuffer(cmd);
             CommandBufferPool.Release(cmd);
         }
 
         public override void FrameCleanup(CommandBuffer cmd) {
-            cmd.ReleaseTemporaryRT(tempTextureHandle.id);
+            cmd.ReleaseTemporaryRT(tempTextureHandle.GetInstanceID());
         }
     }
 
@@ -78,7 +82,7 @@ public class BlitMaterialFeature : ScriptableRendererFeature {
     }
 
     public override void AddRenderPasses(ScriptableRenderer renderer, ref RenderingData renderingData) {
-        renderPass.SetSource(renderer.cameraColorTarget);
+        renderPass.SetSource(renderer.cameraColorTargetHandle);   //renderer.cameraColorTarget
         renderer.EnqueuePass(renderPass);
     }
 }
