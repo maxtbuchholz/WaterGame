@@ -34,9 +34,9 @@ public class ShipMovement : MonoBehaviour
 
     void Update()
     {
-        horizontal = Input.GetAxisRaw("Horizontal");
+        horizontal = PlayerInput.Instance.GetHorizontal();
         //Debug.Log(horizontal);
-        vertical = Input.GetAxisRaw("Vertical");
+        vertical = PlayerInput.Instance.GetVertical();
     }
 
     private void FixedUpdate()

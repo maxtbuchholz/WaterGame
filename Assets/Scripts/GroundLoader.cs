@@ -10,6 +10,7 @@ public class GroundLoader : MonoBehaviour
     private void Start()
     {
         chunkSize = 50;// meshGenerator.WorldWidth;
+        Application.targetFrameRate = 60;
     }
     float minUpdateTime = 1f;
     float currTimeSince = 0;
