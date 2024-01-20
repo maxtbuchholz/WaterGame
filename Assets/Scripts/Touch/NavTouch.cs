@@ -9,7 +9,8 @@ public class NavTouch : MonoBehaviour
     [SerializeField] Camera camera;
     private BoxCollider2D throttleCollider;
     private int throttleTouchId = -1;
-    private float maxRadius = 200;
+    private float navWidth = 200;
+    private float navHeight = 200;
     // Start is called before the first frame update
     void Start()
     {
@@ -51,19 +52,37 @@ public class NavTouch : MonoBehaviour
         else
         {                                                                       //set to not touching throttle
             throttleTouchId = -1;
+            Vector2 throttlePos = Vector2.zero;
+            throttlePos.x = centralThrottle.transform.localPosition.x;
+            throttlePos.y = centralThrottle.transform.localPosition.y;
+            if (Mathf.Abs((throttlePos.x) - navWidth) < 50)
+            {
+                throttlePos.x = navWidth;
+                if (Mathf.Abs(throttlePos.y - navHeight) < 50)
+                {
+                    throttlePos.y = navHeight;
+                }
+                throttlePos.x += transform.position.x;
+                throttlePos.y += transform.position.y;
+                centralThrottle.transform.position = throttlePos;
+                UpdateThrottlePos(centralThrottle.transform.position);
+            }
         }
     }
     void UpdateThrottlePos(Vector2 pos)
     {
+        Debug.Log(pos);
         pos.x -= transform.position.x;
         pos.y -= transform.position.y;
-        float magnitude = pos.magnitude;
-        Vector2 normal = pos.normalized;
-        magnitude = Mathf.Min(magnitude, maxRadius);
-        pos = normal * magnitude;
-        PlayerInput.Instance.SetVertical(magnitude / maxRadius);
-        PlayerInput.Instance.SetHorizontal(pos.x / maxRadius);
-        //Debug.Log("vert:" + magnitude / maxRadius + " hor: " + pos.x / maxRadius);
+        if (pos.x  > navWidth) pos.x = Mathf.Min(pos.x, 2 * navWidth);
+        else pos.x = Mathf.Max(pos.x, 0);
+        if (pos.y > navWidth) pos.y = Mathf.Min(pos.y, 2 * navHeight);
+        else pos.y = Mathf.Max(pos.y, 0);
+        Vector2 offsetPos = pos;
+        offsetPos.x -= navWidth;
+        offsetPos.y -= navHeight;
+        PlayerInput.Instance.SetVertical((offsetPos.y / navHeight) * Mathf.Sign(offsetPos.y) * Mathf.Sign(offsetPos.y));
+        PlayerInput.Instance.SetHorizontal((offsetPos.x / navWidth) * Mathf.Sign(offsetPos.y));
         pos.x += transform.position.x;
         pos.y += transform.position.y;
         centralThrottle.transform.position = pos;

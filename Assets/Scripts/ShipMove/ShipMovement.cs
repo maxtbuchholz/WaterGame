@@ -15,12 +15,11 @@ public class ShipMovement : MonoBehaviour
     float horizontal;
     float vertical;
 
-    private float turnSpeed = 40.0f;
 
-    private float acceleration = 1.0f;
-    private float decceleration = 2.0f;
-    private float maxSpeed = 5.0f;
-    private float maxReverseSpeed = 2.5f;
+    private float acceleration = 0.6f;
+    private float decceleration = 0.3f;
+    private float maxSpeed = 4.0f;
+    private float maxReverseSpeed = 1.5f;
     private float currSpeed = 0.0f;
     private float currRotAngle = 0.0f;
 
@@ -43,11 +42,34 @@ public class ShipMovement : MonoBehaviour
     {
         if (vertical != 0)              //speed up in either forward or backwards
         {
-            currSpeed += (acceleration * Time.fixedDeltaTime * vertical);
-            if (Mathf.Sign(currSpeed) != Mathf.Sign(vertical)) currSpeed += (((-decceleration) * Mathf.Sign(currSpeed)) * Time.fixedDeltaTime);
-            if (currSpeed > 0) currSpeed = Mathf.Min(currSpeed, maxSpeed);
-            else currSpeed = Mathf.Max(currSpeed, -maxReverseSpeed);
+            float vertSigh = Mathf.Sign(vertical);
+            vertical = Mathf.Pow(Mathf.Abs(vertical), 0.5f);
+            vertical *= vertSigh;
+            float aimSpeed = vertical * maxSpeed;
+            if (vertical < 0) aimSpeed = vertical * maxReverseSpeed;
+            if(aimSpeed > currSpeed)
+            {
+                currSpeed += (acceleration * Time.fixedDeltaTime);
+                if (Mathf.Abs(currSpeed) < Mathf.Abs(aimSpeed))
+                    currSpeed += (decceleration * Time.fixedDeltaTime);
+                currSpeed = Mathf.Min(maxSpeed, currSpeed);
+            }
+            else
+            {
+                currSpeed -= (acceleration * Time.fixedDeltaTime);
+                if(Mathf.Abs(currSpeed) > Mathf.Abs(aimSpeed))
+                    currSpeed -= (decceleration * Time.fixedDeltaTime);
+                currSpeed = Mathf.Max(-maxReverseSpeed, currSpeed);
+            }
             body.velocity = currSpeed * transform.forward;
+
+            //currSpeed += (acceleration * Time.fixedDeltaTime * vertical);
+            //if (Mathf.Sign(currSpeed) != Mathf.Sign(vertical)) currSpeed += (((-decceleration) * Mathf.Sign(currSpeed)) * Time.fixedDeltaTime);
+            //if (currSpeed > 0) currSpeed = Mathf.Min(currSpeed, maxSpeed);
+            //else currSpeed = Mathf.Max(currSpeed, -maxReverseSpeed);
+            //body.velocity = currSpeed * transform.forward;
+
+
             //Debug.Log(currSpeed);
             //if (vertical < 0) vertical /= 5;
             //if (Mathf.Sign(vertical) != Mathf.Sign(currSpeed)) currSpeed = 0;
@@ -72,33 +94,42 @@ public class ShipMovement : MonoBehaviour
             }
         }
         if (vertical != 0) {
-            float turnAngle = 0.0f;
-            turnAngle = Mathf.Min(Mathf.Abs(currSpeed) / maxSpeed, 1.0f);
-            turnAngle *= horizontal;
-            turnAngle *= Mathf.Sign(currSpeed);
-            turnAngle *= 20;
-            currRotAngle = (turnAngle * Time.fixedDeltaTime) + (currRotAngle * (1 - Time.fixedDeltaTime));
-            float speedBasedTurnSpeed = Mathf.Lerp(0, turnSpeed, Mathf.Abs(currSpeed) / maxSpeed);
-            float rot = speedBasedTurnSpeed * Time.deltaTime;
+            //float turnAngle = 0.0f;
+            //turnAngle = Mathf.Min(Mathf.Abs(currSpeed) / maxSpeed, 1.0f);
+            //turnAngle *= horizontal;
+            //turnAngle *= Mathf.Sign(currSpeed);
+            //turnAngle *= 20;
+            //Debug.Log(turnAngle);
+            //currRotAngle = (turnAngle * Time.fixedDeltaTime) + (currRotAngle * (1 - Time.fixedDeltaTime));
+            //float speedBasedTurnSpeed =  Mathf.Lerp(0, turnSpeed, Mathf.Abs(currSpeed) / maxSpeed);
+            //float rot = speedBasedTurnSpeed * Time.deltaTime;
+            float horSign = Mathf.Sign(horizontal);
+            horizontal = Mathf.Pow(Mathf.Abs(horizontal), 0.8f);
+            horizontal *= horSign;
+            //currRotAngle = (horizontal * Time.fixedDeltaTime) + (currRotAngle * (1 - Time.fixedDeltaTime)); //Mathf.Abs(horizontal);//  0.1f;
+            currRotAngle = Mathf.Lerp(currRotAngle, horizontal, Time.fixedDeltaTime / 2);
+            currRotAngle *= Mathf.Pow(Mathf.Abs(currSpeed) / maxSpeed,0.1f);
+            float rot = currRotAngle / 1.5f;                                    //turning radius, higher is larger radii, 1.5 feels pretty good
             try
             {
-                if (horizontal > 0)
+                if (horizontal !=  0)
                 {
                     body.rotation = Quaternion.Euler(0, body.rotation.eulerAngles.y + rot, 0);
                     shipBody.transform.localRotation = Quaternion.Euler(shipRotation.bobDisplacement.x, body.rotation.eulerAngles.y + rot + shipRotation.bobDisplacement.y, currRotAngle + shipRotation.bobDisplacement.z);
                     //body.rotation  *= Quaternion.AngleAxis(rot, new Vector3(0, 1, 0));
                 }
-                else if (horizontal < 0)
-                {
-                    body.rotation = Quaternion.Euler(0, body.rotation.eulerAngles.y - rot, 0);
-                    shipBody.transform.localRotation = Quaternion.Euler(shipRotation.bobDisplacement.x, (body.rotation.eulerAngles.y - rot) + shipRotation.bobDisplacement.y, currRotAngle + shipRotation.bobDisplacement.z);
-                    //body.rotation  *= Quaternion.AngleAxis(rot, new Vector3(0, -1, 0));
-                }
+                //else if (horizontal < 0)
+                //{
+                //    body.rotation = Quaternion.Euler(0, body.rotation.eulerAngles.y - currRotAngle, 0);
+                //    shipBody.transform.localRotation = Quaternion.Euler(shipRotation.bobDisplacement.x, (body.rotation.eulerAngles.y - currRotAngle) + shipRotation.bobDisplacement.y, currRotAngle + shipRotation.bobDisplacement.z);
+                //    //body.rotation  *= Quaternion.AngleAxis(rot, new Vector3(0, -1, 0));
+                //}
                 else
                 {
-                    currRotAngle = (turnAngle * Time.fixedDeltaTime) + (currRotAngle * (1 - Time.fixedDeltaTime));
+                    //currRotAngle = (0 * Time.fixedDeltaTime) + (rot * (1 - Time.fixedDeltaTime));
+                    currRotAngle = Mathf.Lerp(currRotAngle, 0, Time.fixedDeltaTime / 2);
                     body.rotation = Quaternion.Euler(0, body.rotation.eulerAngles.y, 0);
-                    shipBody.transform.localRotation = Quaternion.Euler(shipRotation.bobDisplacement.x, (body.rotation.eulerAngles.y) + shipRotation.bobDisplacement.y, currRotAngle + shipRotation.bobDisplacement.z);
+                    shipBody.transform.localRotation = Quaternion.Euler(shipRotation.bobDisplacement.x, (body.rotation.eulerAngles.y) + shipRotation.bobDisplacement.y, rot + shipRotation.bobDisplacement.z);
                 }
             }
             catch(System.Exception e)
