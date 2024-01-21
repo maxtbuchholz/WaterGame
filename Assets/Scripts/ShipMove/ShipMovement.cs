@@ -16,12 +16,13 @@ public class ShipMovement : MonoBehaviour
     float vertical;
 
 
-    private float acceleration = 0.6f;
-    private float decceleration = 0.3f;
-    private float maxSpeed = 4.0f;
-    private float maxReverseSpeed = 1.5f;
-    private float currSpeed = 0.0f;
+    private float acceleration = 1.5f;
+    private float decceleration = 1.5f;
+    private float maxSpeed = 1.5f;
+    private float maxReverseSpeed = 0.75f;
+    private float currAccel = 0.0f;
     private float currRotAngle = 0.0f;
+    private Vector3 currVelocity = Vector3.zero;
 
     void Start()
     {
@@ -37,9 +38,23 @@ public class ShipMovement : MonoBehaviour
         //Debug.Log(horizontal);
         vertical = PlayerInput.Instance.GetVertical();
     }
-
+    void OnCollisionEnter(Collision collision)
+    {
+        Vector3 imp = collision.impulse;
+        //Debug.Log(imp);
+        imp.x *= -5;
+        imp.y = 0;
+        imp.z *= -5;
+        body.AddExplosionForce(2, collision.contacts[0].point, 10, 0, ForceMode.VelocityChange);
+        //currSpeed = 0;
+    }
     private void FixedUpdate()
     {
+        Vector3 setSpeed = transform.InverseTransformVector(body.velocity);
+        float currRBSpeed = setSpeed.z;
+        setSpeed *= (1 - (Time.fixedDeltaTime / 1));
+        setSpeed.z = currRBSpeed;
+        body.velocity = transform.TransformVector(setSpeed);
         if (vertical != 0)              //speed up in either forward or backwards
         {
             float vertSigh = Mathf.Sign(vertical);
@@ -47,21 +62,21 @@ public class ShipMovement : MonoBehaviour
             vertical *= vertSigh;
             float aimSpeed = vertical * maxSpeed;
             if (vertical < 0) aimSpeed = vertical * maxReverseSpeed;
-            if(aimSpeed > currSpeed)
+            if(aimSpeed > currRBSpeed)
             {
-                currSpeed += (acceleration * Time.fixedDeltaTime);
-                if (Mathf.Abs(currSpeed) < Mathf.Abs(aimSpeed))
-                    currSpeed += (decceleration * Time.fixedDeltaTime);
-                currSpeed = Mathf.Min(maxSpeed, currSpeed);
+                currAccel = (acceleration * Time.fixedDeltaTime);
+                //if ((Mathf.Abs(currRBSpeed) < Mathf.Abs(aimSpeed)) && (Mathf.Sign(currRBSpeed) != Mathf.Sign(aimSpeed)))
+                //    currAccel += (decceleration * Time.fixedDeltaTime);
+                if (currRBSpeed + currAccel > aimSpeed) currAccel = aimSpeed - currRBSpeed;
             }
             else
             {
-                currSpeed -= (acceleration * Time.fixedDeltaTime);
-                if(Mathf.Abs(currSpeed) > Mathf.Abs(aimSpeed))
-                    currSpeed -= (decceleration * Time.fixedDeltaTime);
-                currSpeed = Mathf.Max(-maxReverseSpeed, currSpeed);
+                currAccel = -(acceleration * Time.fixedDeltaTime);
+                //if ((Mathf.Abs(currRBSpeed) < Mathf.Abs(aimSpeed)) && (Mathf.Sign(currRBSpeed) != Mathf.Sign(aimSpeed)))
+                //    currAccel -= (decceleration * Time.fixedDeltaTime);
+                if (currRBSpeed + currAccel < aimSpeed) currAccel = currRBSpeed - aimSpeed;
             }
-            body.velocity = currSpeed * transform.forward;
+            body.velocity += (currAccel * transform.forward);
 
             //currSpeed += (acceleration * Time.fixedDeltaTime * vertical);
             //if (Mathf.Sign(currSpeed) != Mathf.Sign(vertical)) currSpeed += (((-decceleration) * Mathf.Sign(currSpeed)) * Time.fixedDeltaTime);
@@ -78,22 +93,40 @@ public class ShipMovement : MonoBehaviour
             //body.velocity = currSpeed * transform.forward;
             ////body.velocity = runSpeed * vertical * transform.forward;
         }
-        else if(currSpeed != 0)
+        else if(currRBSpeed != 0)
         {
-            if(currSpeed < 0)
+            if (currRBSpeed < 0)
             {
-                currSpeed += (decceleration * Time.fixedDeltaTime);
-                if (currSpeed > 0) currSpeed = 0;
-                body.velocity = currSpeed * transform.forward;
+                //currSpeed += (decceleration * Time.fixedDeltaTime);
+                //if (currSpeed > 0) currSpeed = 0;
+                //Vector3 vel = new Vector3(0, 0, currSpeed); 
+                //currVelocity = Vector3.Lerp(vel, currVelocity, Time.fixedDeltaTime);
+                //body.velocity = currVelocity;
+
+                currAccel = (decceleration * Time.fixedDeltaTime);
+                if (currRBSpeed + currAccel > 0) currAccel = 0 - currRBSpeed;
             }
             else
             {
-                currSpeed -= (decceleration * Time.fixedDeltaTime);
-                if (currSpeed < 0) currSpeed = 0;
-                body.velocity = currSpeed * transform.forward;
+                //currSpeed -= (decceleration * Time.fixedDeltaTime);
+                //if (currSpeed < 0) currSpeed = 0;
+                //Vector3 vel = new Vector3(0, 0, currSpeed);
+                //currVelocity = Vector3.Lerp(vel, currVelocity, Time.fixedDeltaTime);
+                //body.velocity = currVelocity;
+
+                currAccel = -(decceleration * Time.fixedDeltaTime);
+                if (currRBSpeed + currAccel < 0) currAccel = currRBSpeed;
             }
+            body.velocity += (currAccel * transform.forward);
         }
-        if (vertical != 0) {
+        else
+        {
+            Vector3 vel = new Vector3(0, 0, 0);
+            currVelocity = Vector3.Lerp(vel, currVelocity, Time.fixedDeltaTime);
+            body.velocity = currVelocity;
+        }
+        if (vertical != 0)
+        {
             //float turnAngle = 0.0f;
             //turnAngle = Mathf.Min(Mathf.Abs(currSpeed) / maxSpeed, 1.0f);
             //turnAngle *= horizontal;
@@ -103,19 +136,20 @@ public class ShipMovement : MonoBehaviour
             //currRotAngle = (turnAngle * Time.fixedDeltaTime) + (currRotAngle * (1 - Time.fixedDeltaTime));
             //float speedBasedTurnSpeed =  Mathf.Lerp(0, turnSpeed, Mathf.Abs(currSpeed) / maxSpeed);
             //float rot = speedBasedTurnSpeed * Time.deltaTime;
-            float horSign = Mathf.Sign(horizontal);
-            horizontal = Mathf.Pow(Mathf.Abs(horizontal), 0.8f);
-            horizontal *= horSign;
+            //float horSign = Mathf.Sign(horizontal);
+            //horizontal = Mathf.Pow(Mathf.Abs(horizontal), 0.8f);
+            //horizontal *= horSign;
             //currRotAngle = (horizontal * Time.fixedDeltaTime) + (currRotAngle * (1 - Time.fixedDeltaTime)); //Mathf.Abs(horizontal);//  0.1f;
-            currRotAngle = Mathf.Lerp(currRotAngle, horizontal, Time.fixedDeltaTime / 2);
-            currRotAngle *= Mathf.Pow(Mathf.Abs(currSpeed) / maxSpeed,0.1f);
-            float rot = currRotAngle / 1.5f;                                    //turning radius, higher is larger radii, 1.5 feels pretty good
+            horizontal *= currRBSpeed / maxSpeed;
+            currRotAngle = horizontal;// Mathf.Lerp(currRotAngle, horizontal, Time.fixedDeltaTime / 2);
+            //currRotAngle *= Mathf.Pow(Mathf.Abs(currRBSpeed) / maxSpeed,0.1f);
+            float rot = currRotAngle /= 3f;                                    //turning radius, higher is larger radii, 1.5 feels pretty good
             try
             {
-                if (horizontal !=  0)
+                if (horizontal != 0)
                 {
                     body.rotation = Quaternion.Euler(0, body.rotation.eulerAngles.y + rot, 0);
-                    shipBody.transform.localRotation = Quaternion.Euler(shipRotation.bobDisplacement.x, body.rotation.eulerAngles.y + rot + shipRotation.bobDisplacement.y, currRotAngle + shipRotation.bobDisplacement.z);
+                    shipBody.transform.localRotation = Quaternion.Euler(shipRotation.bobDisplacement.x, body.rotation.eulerAngles.y + rot + shipRotation.bobDisplacement.y, (rot * 10) + currRotAngle + shipRotation.bobDisplacement.z);
                     //body.rotation  *= Quaternion.AngleAxis(rot, new Vector3(0, 1, 0));
                 }
                 //else if (horizontal < 0)
@@ -129,10 +163,10 @@ public class ShipMovement : MonoBehaviour
                     //currRotAngle = (0 * Time.fixedDeltaTime) + (rot * (1 - Time.fixedDeltaTime));
                     currRotAngle = Mathf.Lerp(currRotAngle, 0, Time.fixedDeltaTime / 2);
                     body.rotation = Quaternion.Euler(0, body.rotation.eulerAngles.y, 0);
-                    shipBody.transform.localRotation = Quaternion.Euler(shipRotation.bobDisplacement.x, (body.rotation.eulerAngles.y) + shipRotation.bobDisplacement.y, rot + shipRotation.bobDisplacement.z);
+                    shipBody.transform.localRotation = Quaternion.Euler(shipRotation.bobDisplacement.x, (body.rotation.eulerAngles.y) + shipRotation.bobDisplacement.y, (rot * 10) + shipRotation.bobDisplacement.z);
                 }
             }
-            catch(System.Exception e)
+            catch (System.Exception e)
             {
                 Debug.Log(e.Message);
             }
@@ -145,7 +179,7 @@ public class ShipMovement : MonoBehaviour
             shipBody.transform.localRotation = Quaternion.Euler(shipRotation.bobDisplacement.x, (body.rotation.eulerAngles.y) + shipRotation.bobDisplacement.y, currRotAngle + shipRotation.bobDisplacement.z);
         }
         ///////////set ship particles
-        frontParticle.emissionRate = Mathf.Lerp(0, amountFrontParticles, currSpeed / maxSpeed);
+        frontParticle.emissionRate = Mathf.Lerp(0, amountFrontParticles, currRBSpeed / maxSpeed);
         float backParRate = Mathf.Lerp(0, amountBackParticles, vertical / 1);
         foreach (ParticleSystem ps in backParticles)
             ps.emissionRate = backParRate;
