@@ -15,7 +15,7 @@ public class TurretController : MonoBehaviour
     Vector3[] trajectory = new Vector3[] { };
     public bool ShootProjectile(Vector3 targetPos)     //returns okay if okay to shoot and shot
     {
-        float force = 50;
+        float force = 100;
         Vector3 vDistance = (targetPos - shootPoint.transform.position);
         vDistance.y = -vDistance.y;
         Vector3 normalDist = (new Vector3(targetPos.x, 0, targetPos.z) - new Vector3(shootPoint.transform.position.x, 0, shootPoint.transform.position.z)).normalized;

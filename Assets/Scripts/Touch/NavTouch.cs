@@ -10,8 +10,8 @@ public class NavTouch : MonoBehaviour
     [SerializeField] Camera camera;
     private BoxCollider2D throttleCollider;
     private int throttleTouchId = -1;
-    private float navWidth = 168;
-    private float navHeight = 168;
+    private float navWidth = 164;
+    private float navHeight = 164;
     private float widthOffset;
     private float heightOffset;
     // Start is called before the first frame update

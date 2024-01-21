@@ -40,19 +40,22 @@ public class ShipMovement : MonoBehaviour
     }
     void OnCollisionEnter(Collision collision)
     {
-        Vector3 imp = collision.impulse;
+        Vector3 imp = transform.position - collision.contacts[0].point;// collision.impulse;
         //Debug.Log(imp);
-        imp.x *= -5;
+        float force = Mathf.Min(collision.impulse.magnitude / 10, 5f);
+        imp.x *= force + 1;
         imp.y = 0;
-        imp.z *= -5;
-        body.AddExplosionForce(2, collision.contacts[0].point, 10, 0, ForceMode.VelocityChange);
+        imp.z *= force + 1;
+        body.velocity += imp;
+        //body.AddExplosionForce(2, collision.contacts[0].point, 10, 0, ForceMode.VelocityChange);
         //currSpeed = 0;
     }
+    float prevLean = 0;
     private void FixedUpdate()
     {
         Vector3 setSpeed = transform.InverseTransformVector(body.velocity);
         float currRBSpeed = setSpeed.z;
-        setSpeed *= (1 - (Time.fixedDeltaTime / 1));
+        setSpeed *= (1 - (Time.fixedDeltaTime / 0.5f));
         setSpeed.z = currRBSpeed;
         body.velocity = transform.TransformVector(setSpeed);
         if (vertical != 0)              //speed up in either forward or backwards
@@ -125,7 +128,7 @@ public class ShipMovement : MonoBehaviour
             currVelocity = Vector3.Lerp(vel, currVelocity, Time.fixedDeltaTime);
             body.velocity = currVelocity;
         }
-        if (vertical != 0)
+        if ((vertical != 0) || true)
         {
             //float turnAngle = 0.0f;
             //turnAngle = Mathf.Min(Mathf.Abs(currSpeed) / maxSpeed, 1.0f);
@@ -144,12 +147,13 @@ public class ShipMovement : MonoBehaviour
             currRotAngle = horizontal;// Mathf.Lerp(currRotAngle, horizontal, Time.fixedDeltaTime / 2);
             //currRotAngle *= Mathf.Pow(Mathf.Abs(currRBSpeed) / maxSpeed,0.1f);
             float rot = currRotAngle /= 3f;                                    //turning radius, higher is larger radii, 1.5 feels pretty good
+            prevLean = Mathf.Lerp(prevLean, rot * 15, Time.fixedDeltaTime * 2);
             try
             {
                 if (horizontal != 0)
                 {
                     body.rotation = Quaternion.Euler(0, body.rotation.eulerAngles.y + rot, 0);
-                    shipBody.transform.localRotation = Quaternion.Euler(shipRotation.bobDisplacement.x, body.rotation.eulerAngles.y + rot + shipRotation.bobDisplacement.y, (rot * 10) + currRotAngle + shipRotation.bobDisplacement.z);
+                    shipBody.transform.localRotation = Quaternion.Euler(shipRotation.bobDisplacement.x, body.rotation.eulerAngles.y + rot + shipRotation.bobDisplacement.y, prevLean + currRotAngle + shipRotation.bobDisplacement.z);
                     //body.rotation  *= Quaternion.AngleAxis(rot, new Vector3(0, 1, 0));
                 }
                 //else if (horizontal < 0)
@@ -163,7 +167,7 @@ public class ShipMovement : MonoBehaviour
                     //currRotAngle = (0 * Time.fixedDeltaTime) + (rot * (1 - Time.fixedDeltaTime));
                     currRotAngle = Mathf.Lerp(currRotAngle, 0, Time.fixedDeltaTime / 2);
                     body.rotation = Quaternion.Euler(0, body.rotation.eulerAngles.y, 0);
-                    shipBody.transform.localRotation = Quaternion.Euler(shipRotation.bobDisplacement.x, (body.rotation.eulerAngles.y) + shipRotation.bobDisplacement.y, (rot * 10) + shipRotation.bobDisplacement.z);
+                    shipBody.transform.localRotation = Quaternion.Euler(shipRotation.bobDisplacement.x, (body.rotation.eulerAngles.y) + shipRotation.bobDisplacement.y, prevLean + shipRotation.bobDisplacement.z);
                 }
             }
             catch (System.Exception e)
