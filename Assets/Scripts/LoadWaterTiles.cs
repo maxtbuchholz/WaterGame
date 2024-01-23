@@ -10,7 +10,7 @@ public class LoadWaterTiles : MonoBehaviour
     {
         
     }
-    private float maxLoadRadius = 500.0f;
+    private float maxLoadRadius = 750.0f;
     private float inBetween = 100.0f;
     private LoadedTiles _instance;
     // Update is called once per frame

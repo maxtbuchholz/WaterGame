@@ -48,6 +48,6 @@ public class ShipRotation : MonoBehaviour
 
 
         //transform.localRotation
-        bobDisplacement  = new Vector3((xAngle / 2), 0, (zAngle * 2));
+        bobDisplacement  = new Vector3((xAngle / 3), 0, (zAngle / 2));
     }
 }

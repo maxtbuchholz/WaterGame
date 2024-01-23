@@ -66,26 +66,31 @@ Material:
     - Vector1_ee7abfa1eb1740c683893a4292be5a94: 0.5
     - Vector1_eef022e91e6c4751806c98da416b9795: 0.09
     - Vector1_f5725dbb4d524d5e9691b72b35308d2a: 1
-    - _DeepDepth: 0.66
-    - _DistortionScale: 100
-    - _DistortionSpeed: 0.002
-    - _DistortionStrength: 0.5
+    - _DeepDepth: 0.58
+    - _DistortionScale: 1000
+    - _DistortionSpeed: 0.005
+    - _DistortionStrength: 100
     - _FadeDepth: 1
+    - _FoamAmount: 8.43
+    - _FoamCuttoff: 31.5
+    - _FoamSize: 136.1
+    - _FoamSpeed: 0.001
     - _QueueControl: 0
     - _QueueOffset: 0
     - _WaterHeightMoveSpeed: 0.008
     - _WaterHeightWaveWidth: 10
     - _WaterTextureSize: 3.46
-    - _waterHeightWaveHeight: 0.15
+    - _waterHeightWaveHeight: 0
     m_Colors:
     - Color_6391e5c50ab1492c8520d2c5f194f6f7: {r: 0.8313726, g: 1.003922, b: 1.247059, a: 0}
     - Color_75819e43e61e4afdb90e4b5402e4f0fd: {r: 0.057849698, g: 0.11445417, b: 0.7075471, a: 0}
     - Color_82d6e022a7a84f628fc88ad1fec4907c: {r: 1.498039, g: 1.498039, b: 1.498039, a: 1}
     - _DeepColor: {r: 1, g: 0.15516607, b: 0, a: 0}
-    - _DepthColor: {r: 0.05660379, g: 0.05660379, b: 0.05660379, a: 0}
-    - _DistortionColor: {r: 0, g: 0.47969294, b: 1, a: 0}
-    - _EdgeColor: {r: 0.6226415, g: 0.6226415, b: 0.6226415, a: 0}
-    - _MainColor: {r: 0, g: 1, b: 1, a: 0}
+    - _DepthColor: {r: 0, g: 0, b: 0, a: 0}
+    - _DistortionColor: {r: 0.1333332, g: 0, b: 1, a: 0}
+    - _EdgeColor: {r: 0, g: 0.83177423, b: 1, a: 0}
+    - _FoamColor: {r: 1, g: 1, b: 1, a: 1}
+    - _MainColor: {r: 0, g: 0.98360705, b: 1, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &6771510749256193375

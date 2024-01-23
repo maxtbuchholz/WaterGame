@@ -154,8 +154,8 @@ public class IslandGenerator : MonoBehaviour
     //        Gizmos.DrawSphere(verticies[i], 0.1f);
     //    }
     //}
-    float colliderGridCheckOffset = 2f;
-    float groundCheckHeight = 1.3f;
+    float colliderGridCheckOffset = 1.0f;
+    float groundCheckHeight = 0.5f;
     void CreateIslandCollider(Vector3 botLeft, Vector3 topRight)
     {
         float xDst = topRight.x - botLeft.x;
@@ -477,6 +477,7 @@ public class IslandGenerator : MonoBehaviour
             }
             mesh.vertices = verticies.ToArray();
             mesh.triangles = triangles.ToArray();
+            //mesh.triangles = mesh.triangles.Reverse().ToArray();
             mesh.RecalculateNormals();
             Vector3[] normals = mesh.normals;
             mesh.SetNormals(normals);
