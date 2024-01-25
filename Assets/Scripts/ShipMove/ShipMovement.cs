@@ -144,7 +144,10 @@ public class ShipMovement : MonoBehaviour
             //horizontal *= horSign;
             //currRotAngle = (horizontal * Time.fixedDeltaTime) + (currRotAngle * (1 - Time.fixedDeltaTime)); //Mathf.Abs(horizontal);//  0.1f;
             horizontal *= currRBSpeed / maxSpeed;
-            currRotAngle = horizontal;// Mathf.Lerp(currRotAngle, horizontal, Time.fixedDeltaTime / 2);
+            float t = Time.fixedDeltaTime;
+            Debug.Log(currRotAngle);
+            currRotAngle = Mathf.Lerp(currRotAngle, horizontal, 1.0f);// horizontal;// (t * horizontal) + ((1 - t) * currRotAngle);
+            //currRotAngle = Mathf.Lerp(currRotAngle, horizontal, Time.fixedDeltaTime);// Mathf.Lerp(currRotAngle, horizontal, Time.fixedDeltaTime / 2);
             //currRotAngle *= Mathf.Pow(Mathf.Abs(currRBSpeed) / maxSpeed,0.1f);
             float rot = currRotAngle /= 3f;                                    //turning radius, higher is larger radii, 1.5 feels pretty good
             prevLean = Mathf.Lerp(prevLean, rot * 15, Time.fixedDeltaTime * 2);
@@ -155,7 +158,7 @@ public class ShipMovement : MonoBehaviour
                     body.rotation = Quaternion.Euler(0, body.rotation.eulerAngles.y + rot, 0);
                     shipBody.transform.localRotation = Quaternion.Euler(shipRotation.bobDisplacement.x, body.rotation.eulerAngles.y + rot + shipRotation.bobDisplacement.y, prevLean + currRotAngle + shipRotation.bobDisplacement.z);
                     //body.rotation  *= Quaternion.AngleAxis(rot, new Vector3(0, 1, 0));
-                }
+                } 
                 //else if (horizontal < 0)
                 //{
                 //    body.rotation = Quaternion.Euler(0, body.rotation.eulerAngles.y - currRotAngle, 0);
@@ -165,7 +168,7 @@ public class ShipMovement : MonoBehaviour
                 else
                 {
                     //currRotAngle = (0 * Time.fixedDeltaTime) + (rot * (1 - Time.fixedDeltaTime));
-                    currRotAngle = Mathf.Lerp(currRotAngle, 0, Time.fixedDeltaTime / 2);
+                    //currRotAngle = Mathf.Lerp(currRotAngle, 0, Time.fixedDeltaTime / 2);
                     body.rotation = Quaternion.Euler(0, body.rotation.eulerAngles.y, 0);
                     shipBody.transform.localRotation = Quaternion.Euler(shipRotation.bobDisplacement.x, (body.rotation.eulerAngles.y) + shipRotation.bobDisplacement.y, prevLean + shipRotation.bobDisplacement.z);
                 }
@@ -175,13 +178,13 @@ public class ShipMovement : MonoBehaviour
                 Debug.Log(e.Message);
             }
         }
-        else
-        {
-            float turnAngle = 0.0f;
-            currRotAngle = (turnAngle * Time.fixedDeltaTime) + (currRotAngle * (1 - Time.fixedDeltaTime));
-            body.rotation = Quaternion.Euler(0, body.rotation.eulerAngles.y, 0);
-            shipBody.transform.localRotation = Quaternion.Euler(shipRotation.bobDisplacement.x, (body.rotation.eulerAngles.y) + shipRotation.bobDisplacement.y, currRotAngle + shipRotation.bobDisplacement.z);
-        }
+        //else
+        //{
+        //    float turnAngle = 0.0f;
+        //    currRotAngle = (turnAngle * Time.fixedDeltaTime) + (currRotAngle * (1 - Time.fixedDeltaTime));
+        //    body.rotation = Quaternion.Euler(0, body.rotation.eulerAngles.y, 0);
+        //    shipBody.transform.localRotation = Quaternion.Euler(shipRotation.bobDisplacement.x, (body.rotation.eulerAngles.y) + shipRotation.bobDisplacement.y, currRotAngle + shipRotation.bobDisplacement.z);
+        //}
         ///////////set ship particles
         frontParticle.emissionRate = Mathf.Lerp(0, amountFrontParticles, currRBSpeed / maxSpeed);
         float backParRate = Mathf.Lerp(0, amountBackParticles, vertical / 1);

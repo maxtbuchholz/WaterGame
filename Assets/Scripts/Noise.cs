@@ -60,6 +60,11 @@ public static class Noise
             t = Mathf.Pow(t, 3f);
             height = lerpTop + Mathf.Lerp(-0.1f, lerpTop, t);
         }
+        //if((height < 0) && (height > -2))
+        //{
+        //    float per = height / 2;
+        //    height = (Mathf.Pow(per, 4) * -2);
+        //}
         return height;
     }
     public static float IslandEdgeCircleFilter(float origHeight, int x, int z, int iSizeX, int iSizeZ)

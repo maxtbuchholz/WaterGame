@@ -66,13 +66,13 @@ Material:
     - Vector1_ee7abfa1eb1740c683893a4292be5a94: 0.5
     - Vector1_eef022e91e6c4751806c98da416b9795: 0.09
     - Vector1_f5725dbb4d524d5e9691b72b35308d2a: 1
-    - _DeepDepth: 0.58
-    - _DistortionScale: 1000
+    - _DeepDepth: 0.6
+    - _DistortionScale: 300
     - _DistortionSpeed: 0.005
-    - _DistortionStrength: 100
+    - _DistortionStrength: 0.5
     - _FadeDepth: 1
-    - _FoamAmount: 8.43
-    - _FoamCuttoff: 31.5
+    - _FoamAmount: 12
+    - _FoamCuttoff: 25
     - _FoamSize: 136.1
     - _FoamSpeed: 0.001
     - _QueueControl: 0
@@ -88,9 +88,9 @@ Material:
     - _DeepColor: {r: 1, g: 0.15516607, b: 0, a: 0}
     - _DepthColor: {r: 0, g: 0, b: 0, a: 0}
     - _DistortionColor: {r: 0.1333332, g: 0, b: 1, a: 0}
-    - _EdgeColor: {r: 0, g: 0.83177423, b: 1, a: 0}
+    - _EdgeColor: {r: 0, g: 0, b: 0, a: 0}
     - _FoamColor: {r: 1, g: 1, b: 1, a: 1}
-    - _MainColor: {r: 0, g: 0.98360705, b: 1, a: 0}
+    - _MainColor: {r: 0, g: 0.85201627, b: 0.9245283, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &6771510749256193375

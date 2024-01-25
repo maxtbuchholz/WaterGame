@@ -22,9 +22,9 @@ TagManager:
   - IslandOuterCollider
   - Projectile
   - IslandInnerCollider
-  - 
-  - 
-  - 
+  - FoamSecondCamera
+  - 2nCameraSeeFoam
+  - ShipEffects
   - 
   - 
   - 

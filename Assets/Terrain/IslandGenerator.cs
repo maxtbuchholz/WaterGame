@@ -156,14 +156,17 @@ public class IslandGenerator : MonoBehaviour
     //}
     float colliderGridCheckOffset = 1.0f;
     float groundCheckHeight = 0.5f;
+    float areaCheckOffset = 30;
+    Vector3 halfOuterBox;
     void CreateIslandCollider(Vector3 botLeft, Vector3 topRight)
     {
-        float xDst = topRight.x - botLeft.x;
-        float zDst = topRight.z - botLeft.z;
-        botLeft.x += (xDst / 4);
-        botLeft.z += (zDst / 4);
-        topRight.x -= (xDst / 4);
-        topRight.z -= (zDst / 4);
+        halfOuterBox = new Vector3(areaCheckOffset / 2, areaCheckOffset / 2, areaCheckOffset / 2);
+        //float xDst = topRight.x - botLeft.x;
+        //float zDst = topRight.z - botLeft.z;
+        //botLeft.x += (xDst / 1);
+        //botLeft.z += (zDst / 1);
+        //topRight.x -= (xDst / 1);
+        //topRight.z -= (zDst / 1);
         bool zFound = false;
         groundCheckHeight = botLeft.y - groundCheckHeight;
         Debug.DrawLine(botLeft, topRight);
@@ -179,27 +182,60 @@ public class IslandGenerator : MonoBehaviour
                 {
                     if (currentCheck.x < topRight.x)
                     {
-                        ////Debug.DrawLine(Vector3.zero, currentCheck, Color.green);
-                        //RaycastHit[] rayHits = Physics.RaycastAll(currentCheck, Vector3.down, groundCheckHeight);
-                        //bool hitGound = false;
-                        //foreach (RaycastHit rayHit in rayHits)
-                        //    hitGound |= (rayHit.transform.gameObject.tag == "Land");
-                        //if (hitGound)
-                        //{
-                        //    //Debug.DrawLine(Vector3.zero, currentCheck, Color.green);
-                        //    FoundIslandPositions.Add(new Vector2(currentCheck.x, currentCheck.z));
-                        //}
-                        bool hitGound = false;
-                        //RaycastHit[] rayHits = Physics.BoxCastAll(currentCheck, halfBoxCheck, Vector3.down, Quaternion.identity, 10f);
-                        RaycastHit[] rayHits = Physics.SphereCastAll(currentCheck, halfBoxCheck, Vector3.down, groundCheckHeight);
-                        foreach (RaycastHit rayHit in rayHits)
-                            hitGound |= (rayHit.transform.gameObject.tag == "Land");
-                        if (hitGound)
+                        bool outerHitGround = false;
+                        //Debug.DrawLine(Vector3.zero, currentCheck, Color.blue);
+                        RaycastHit[] outerRayHits = Physics.BoxCastAll(currentCheck, halfOuterBox, Vector3.down, Quaternion.identity, 100 - (areaCheckOffset / 2));
+                        foreach (RaycastHit rayHit in outerRayHits)
                         {
-                            //Debug.DrawLine(Vector3.zero, currentCheck, Color.green);
-                            FoundIslandPositions.Add(new Vector2(currentCheck.x, currentCheck.z));
+                            outerHitGround |= (rayHit.transform.gameObject.CompareTag("Land"));
+                            //Debug.DrawLine(rayHit.point, currentCheck, Color.red);
                         }
-                        currentCheck.x += colliderGridCheckOffset;
+                        if (outerHitGround)
+                        {
+                            bool innerZFound = false;
+                            Vector3 innerBotLeft = currentCheck - new Vector3(areaCheckOffset / 2, 0, areaCheckOffset / 2);
+                            Vector3 innerTopRight = currentCheck + new Vector3(areaCheckOffset / 2, 0, areaCheckOffset / 2);
+                            Vector3 currentInnerCheck = innerBotLeft;
+                            currentInnerCheck.y = halfBoxCheck;
+                            while (!innerZFound)
+                            {
+                                if (currentInnerCheck.z < innerTopRight.z)
+                                {
+                                    bool innerXFound = false;
+
+                                    while (!innerXFound)
+                                    {
+                                        if (currentInnerCheck.x < innerTopRight.x)
+                                        {
+                                            bool hitGound = false;
+                                            currentInnerCheck.y = 100;
+                                            RaycastHit[] rayHits = Physics.SphereCastAll(currentInnerCheck, halfBoxCheck, Vector3.down, groundCheckHeight);
+                                            foreach (RaycastHit rayHit in rayHits)
+                                            {
+                                                hitGound |= (rayHit.transform.gameObject.CompareTag("Land"));
+                                                Debug.DrawLine(rayHit.point, Vector3.zero, Color.magenta);
+                                            }
+                                            if (hitGound)
+                                            {
+                                                FoundIslandPositions.Add(new Vector2(currentInnerCheck.x, currentInnerCheck.z));
+                                            }
+                                            currentInnerCheck.x += colliderGridCheckOffset;
+                                        }
+                                        else
+                                        {
+                                            innerXFound = true;
+                                        }
+                                    }
+                                    currentInnerCheck.x = innerBotLeft.x;
+                                    currentInnerCheck.z += colliderGridCheckOffset;
+                                }
+                                else
+                                {
+                                    innerZFound = true;
+                                }
+                            }
+                        }
+                        currentCheck.x += areaCheckOffset;
                     }
                     else
                     {
@@ -207,7 +243,7 @@ public class IslandGenerator : MonoBehaviour
                     }
                 }
                 currentCheck.x = botLeft.x;
-                currentCheck.z += colliderGridCheckOffset;
+                currentCheck.z += areaCheckOffset;
             }
             else
             {

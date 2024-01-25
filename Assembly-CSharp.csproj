@@ -68,6 +68,7 @@
     <Compile Include="Assets/Scripts/Noise.cs" />
     <Compile Include="Assets/Scripts/TileDeleter.cs" />
     <Compile Include="Assets/Scripts/Touch/PlayerInput.cs" />
+    <Compile Include="Assets/Scripts/Camera/FoamCameraFollow.cs" />
     <Compile Include="Assets/Scripts/GroundLoader.cs" />
     <Compile Include="Assets/Scripts/Shooting/DestroyOnEffectComplete.cs" />
     <Compile Include="Assets/Terrain/IslandGenerator.cs" />
@@ -87,6 +88,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets/Shaders/CellShading/Lighting.hlsl" />
+    <None Include="Assets/RenderTexture/Remove.shader" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
