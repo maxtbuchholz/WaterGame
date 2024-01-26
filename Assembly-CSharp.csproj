@@ -78,6 +78,7 @@
     <Compile Include="Assets/Scripts/WaterMovement.cs" />
     <Compile Include="Assets/Scripts/SimpleBob.cs" />
     <Compile Include="Assets/Terrain/GenerateTerrain.cs" />
+    <Compile Include="Assets/RenderTexture/MaskLowerLayers/MaskObject.cs" />
     <Compile Include="Assets/Scripts/CameraTrack.cs" />
     <Compile Include="Assets/Scripts/LoadWaterTiles.cs" />
     <Compile Include="Assets/Shaders/Unity-URP-Outlines-main 3/Outlines/Scripts/RendererFeatures/ScreenSpaceOutlines.cs" />
@@ -88,6 +89,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets/Shaders/CellShading/Lighting.hlsl" />
+    <None Include="Assets/RenderTexture/MaskLowerLayers/Mask.shader" />
     <None Include="Assets/RenderTexture/Remove.shader" />
   </ItemGroup>
   <ItemGroup>
