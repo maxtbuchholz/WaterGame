@@ -145,7 +145,7 @@ public class ShipMovement : MonoBehaviour
             //currRotAngle = (horizontal * Time.fixedDeltaTime) + (currRotAngle * (1 - Time.fixedDeltaTime)); //Mathf.Abs(horizontal);//  0.1f;
             horizontal *= currRBSpeed / maxSpeed;
             float t = Time.fixedDeltaTime;
-            Debug.Log(currRotAngle);
+            //Debug.Log(currRotAngle);
             currRotAngle = Mathf.Lerp(currRotAngle, horizontal, 1.0f);// horizontal;// (t * horizontal) + ((1 - t) * currRotAngle);
             //currRotAngle = Mathf.Lerp(currRotAngle, horizontal, Time.fixedDeltaTime);// Mathf.Lerp(currRotAngle, horizontal, Time.fixedDeltaTime / 2);
             //currRotAngle *= Mathf.Pow(Mathf.Abs(currRBSpeed) / maxSpeed,0.1f);

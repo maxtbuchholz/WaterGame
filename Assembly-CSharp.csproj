@@ -74,6 +74,7 @@
     <Compile Include="Assets/Terrain/IslandGenerator.cs" />
     <Compile Include="Assets/Scripts/Shooting/TurretController.cs" />
     <Compile Include="Assets/Scripts/Shooting/PlayerFireControl.cs" />
+    <Compile Include="Assets/Scripts/Camera/FocalPointFollow.cs" />
     <Compile Include="Assets/Terrain/SetTerrainShader.cs" />
     <Compile Include="Assets/Scripts/WaterMovement.cs" />
     <Compile Include="Assets/Scripts/SimpleBob.cs" />
