@@ -19,8 +19,8 @@ public class NavTouch : MonoBehaviour
     private float widthOffset;
     private float heightOffset;
     private float zoomDstMult = 0.5f;
-    private float maxZoomDst = -8;
-    private float minZoomDst = -2;
+    private float maxZoomDst = -24;
+    private float minZoomDst = -6;
     private Dictionary<int, float> touchTimes = new();
     // Start is called before the first frame update
     void Start()
@@ -136,14 +136,16 @@ public class NavTouch : MonoBehaviour
             }
         }
         float requestedCamZPos = Mathf.Lerp(minZoomDst, maxZoomDst, zoomDstMult);
-        RaycastHit[] hits = Physics.RaycastAll(focalPoint.position, (cameraTransform.position - focalPoint.position).normalized, Mathf.Abs(requestedCamZPos));
+        RaycastHit[] hits = Physics.RaycastAll(focalPoint.position, (cameraTransform.position - focalPoint.position).normalized, Mathf.Abs(requestedCamZPos) + 2);
         for (int k = hits.Length - 1; k >= 0; k--)
         {
             if (!hits[k].collider.CompareTag("Ship") && !hits[k].collider.CompareTag("ShipDrive") && !hits[k].collider.CompareTag("Projectile") && !hits[k].collider.CompareTag("IslandOuterCollider"))
             {
-                requestedCamZPos = Mathf.Max((-1 * Vector3.Distance(focalPoint.position, hits[k].point)) + 0.5f, requestedCamZPos);
+                requestedCamZPos = Mathf.Max((-1 * Vector3.Distance(focalPoint.position, hits[k].point)) + 2.0f, requestedCamZPos);
             }
         }
+        //Debug.Log(requestedCamZPos);
+        //Debug.DrawLine(focalPoint.position, focalPoint.position + (-requestedCamZPos * (cameraTransform.position - focalPoint.position).normalized), Color.red);
         cameraTransform.localPosition = new Vector3(0, 0, requestedCamZPos);
         if (touchIndex != -1)                                                    //update throttle                   
         {

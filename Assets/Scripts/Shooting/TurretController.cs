@@ -27,10 +27,10 @@ public class TurretController : MonoBehaviour
         turret.transform.rotation = Quaternion.Euler(0, rotY, 0);
         barrel.transform.localRotation = Quaternion.Euler(-angle * Mathf.Rad2Deg, 0, 0);
         Debug.DrawLine(shootPoint.transform.position, (normalDist * 5f) + shootPoint.transform.position, Color.red);
-        //Debug.Break();
-        if (Physics.Raycast(shootPoint.transform.position, normalDist, 5f))
-            return false;
-        
+        RaycastHit[] hits = (Physics.RaycastAll(shootPoint.transform.position, normalDist, 5f));
+        foreach (RaycastHit hit in hits)
+            if (!hit.collider.CompareTag("IslandOuterCollider"))
+                return false;
         GameObject proj = GameObject.Instantiate(projectile);
         proj.GetComponent<ProjectileHit>().shipParts = shipValues.shipParts;
         proj.transform.position = shootPoint.transform.position;

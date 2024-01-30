@@ -82,7 +82,6 @@
     <Compile Include="Assets/RenderTexture/MaskLowerLayers/MaskObject.cs" />
     <Compile Include="Assets/Scripts/CameraTrack.cs" />
     <Compile Include="Assets/Scripts/LoadWaterTiles.cs" />
-    <Compile Include="Assets/Shaders/Unity-URP-Outlines-main 3/Outlines/Scripts/RendererFeatures/ScreenSpaceOutlines.cs" />
     <Compile Include="Assets/Scripts/Touch/NavTouch.cs" />
     <Compile Include="Assets/Scripts/LoadedTiles.cs" />
     <Compile Include="Assets/Scripts/WaterGetHeight.cs" />

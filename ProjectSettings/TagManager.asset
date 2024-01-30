@@ -9,6 +9,7 @@ TagManager:
   - IslandOuterCollider
   - Projectile
   - Ship
+  - ShipDrive
   layers:
   - Default
   - TransparentFX
