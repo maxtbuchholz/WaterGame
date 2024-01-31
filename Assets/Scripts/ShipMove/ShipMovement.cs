@@ -11,6 +11,7 @@ public class ShipMovement : MonoBehaviour
     [SerializeField] ParticleSystem frontParticle;
     private float amountBackParticles;
     private float amountFrontParticles;
+    [HideInInspector] public float currSpeedPercentage = 0;
 
     float horizontal;
     float vertical;
@@ -18,8 +19,8 @@ public class ShipMovement : MonoBehaviour
 
     private float acceleration = 1.5f;
     private float decceleration = 1.5f;
-    private float maxSpeed = 1.0f;
-    private float maxReverseSpeed = 0.5f;
+    private float maxSpeed = 2.0f;
+    private float maxReverseSpeed = 1.0f;
     private float currAccel = 0.0f;
     private float currRotAngle = 0.0f;
     private Vector3 currVelocity = Vector3.zero;
@@ -42,7 +43,7 @@ public class ShipMovement : MonoBehaviour
     {
         Vector3 imp = transform.position - collision.contacts[0].point;// collision.impulse;
         //Debug.Log(imp);
-        float force = Mathf.Min(collision.impulse.magnitude / 10, 5f);
+        float force = Mathf.Min(collision.impulse.magnitude / 4, 5f);
         imp.x *= force + 1;
         imp.y = 0;
         imp.z *= force + 1;
@@ -55,9 +56,10 @@ public class ShipMovement : MonoBehaviour
     {
         Vector3 setSpeed = transform.InverseTransformVector(body.velocity);
         float currRBSpeed = setSpeed.z;
-        setSpeed *= (1 - (Time.fixedDeltaTime / 0.3f));
+        setSpeed *= (1 - (Time.fixedDeltaTime / 0.05f));
         setSpeed.z = currRBSpeed;
         body.velocity = transform.TransformVector(setSpeed);
+        currSpeedPercentage = currRBSpeed / maxSpeed;
         if (vertical != 0)              //speed up in either forward or backwards
         {
             float vertSigh = Mathf.Sign(vertical);
