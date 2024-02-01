@@ -5,7 +5,7 @@ using UnityEngine;
 public class FrontTrail : MonoBehaviour
 {
     Queue<PosNormTime> posQueue = new();
-    float maxTime = 2.0f;
+    float maxTime = 1.0f;
     float minResreshTime = 0.025f;
     float cycleTime = 0f;
     [SerializeField] Transform wakeTrans;
@@ -41,8 +41,8 @@ public class FrontTrail : MonoBehaviour
                 {
                     tempQueue.Enqueue(tempPNT);
                     int negMult = tempPNT.speedPer >= 0 ? 1 : 0;
-                    Vector3 rightAngle = Quaternion.AngleAxis(90, Vector3.up) * tempPNT.norm * (tempPNT.time / maxTime) * 3 * Mathf.Abs(tempPNT.speedPer) * negMult;
-                    Vector3 leftAngle = Quaternion.AngleAxis(-90, Vector3.up) * tempPNT.norm * (tempPNT.time / maxTime) * 3 * Mathf.Abs(tempPNT.speedPer) * negMult;
+                    Vector3 rightAngle = Quaternion.AngleAxis(90, Vector3.up) * tempPNT.norm * (tempPNT.time / maxTime) * 1.5f * Mathf.Abs(tempPNT.speedPer) * negMult;
+                    Vector3 leftAngle = Quaternion.AngleAxis(-90, Vector3.up) * tempPNT.norm * (tempPNT.time / maxTime) * 1.5f * Mathf.Abs(tempPNT.speedPer) * negMult;
                     Vector3 newPos = new Vector3(tempPNT.pos.x, 0.02f, tempPNT.pos.z);
                     //Debug.DrawLine(wakeTrans.position + (newPos.x), newPos, Color.red);
                     newTrailPos.Add(newPos + rightAngle);
