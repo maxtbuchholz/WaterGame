@@ -26,6 +26,7 @@ public class ProjectileHit : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
         Collide(collision.gameObject.tag);
+        //Debug.Break();
     }
     private void Collide(string tag)
     {

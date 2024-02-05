@@ -56,7 +56,7 @@ public class ShipMovement : MonoBehaviour
     {
         Vector3 setSpeed = transform.InverseTransformVector(body.velocity);
         float currRBSpeed = setSpeed.z;
-        setSpeed *= (1 - (Time.fixedDeltaTime / 0.05f));
+        setSpeed *= (1 - (Time.fixedDeltaTime / 0.02f));
         setSpeed.z = currRBSpeed;
         body.velocity = transform.TransformVector(setSpeed);
         currSpeedPercentage = currRBSpeed / maxSpeed;

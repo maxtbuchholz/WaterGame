@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 
 public class IslandGenerator : MonoBehaviour
@@ -298,6 +299,7 @@ public class IslandGenerator : MonoBehaviour
                 }            
             }
         }
+        int saveForDebugColliderNumber = 0;
         foreach(List<Vector2> innerSet in islandVectorSets)
         {
             List<Vector2> outerSet = new();
@@ -525,9 +527,12 @@ public class IslandGenerator : MonoBehaviour
             MeshCollider mCol = obMesh.AddComponent<MeshCollider>();
             mCol.sharedMesh = mesh;
             mFil.mesh = mesh;
+            //AssetDatabase.CreateAsset( mesh, "Assets/SaveMeshes/island_collider_" + saveForDebugColliderNumber + ".asset");
+            saveForDebugColliderNumber++;
             obMesh.tag = "IslandOuterCollider";
             obMesh.layer = 9;
         }
+        //AssetDatabase.SaveAssets();
     }
     private Vector2 GetCenterCoord(List<Vector2> lst)
     {
