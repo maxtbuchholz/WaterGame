@@ -26,7 +26,7 @@ public class FrontTrail : MonoBehaviour
         List<Vector3> newTrailPosLeft = new();
         if (cycleTime >= minResreshTime)
         {
-            Debug.DrawLine(transform.position, transform.position + (transform.forward * 10), Color.red);
+            //Debug.DrawLine(transform.position, transform.position + (transform.forward * 10), Color.red);
             posQueue.Enqueue(new PosNormTime(transform.position, transform.forward, shipMovement.currSpeedPercentage));
 
             Queue<PosNormTime> tempQueue = new Queue<PosNormTime>();
@@ -104,13 +104,13 @@ public class FrontTrail : MonoBehaviour
             //wakeTrans.position = new Vector3(transform.position.x, 0.02f, transform.position.z);
         }
     }
-    void OnDrawGizmos()
-    {
-        // Draw a yellow sphere at the transform's position
-        Gizmos.color = Color.yellow;
-        foreach(PosNormTime pNT in posQueue)
-         Gizmos.DrawSphere(pNT.pos, 0.5f);
-    }
+    //void OnDrawGizmos()
+    //{
+    //    // Draw a yellow sphere at the transform's position
+    //    Gizmos.color = Color.yellow;
+    //    foreach(PosNormTime pNT in posQueue)
+    //     Gizmos.DrawSphere(pNT.pos, 0.5f);
+    //}
     class PosNormTime
     {
         public Vector3 pos;

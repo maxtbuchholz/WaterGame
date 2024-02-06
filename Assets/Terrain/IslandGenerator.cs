@@ -1,15 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
 
 public class IslandGenerator : MonoBehaviour
 {
-    Mesh mesh;
+    Mesh meshIsland;
     Vector3[] verticies;
     int[] triangles;
-    Color[] vertColors;
+    //Color[] vertColors;
 
     int xSize = 100;
     int zSize = 100;
@@ -22,33 +23,73 @@ public class IslandGenerator : MonoBehaviour
     [SerializeField] int xWidth = 400;
     [SerializeField] int zWidth = 400;
     [SerializeField] Material clearIslandOuterColliderMaterial;
-    void Start()
+    async void Start()
     {
         WorldXWidth = xWidth;
         WorldZWidth = zWidth;
         xSize = Mathf.RoundToInt((WorldXWidth / 10.0f) * vertsPerTenWidth);
         zSize = Mathf.RoundToInt((WorldZWidth / 10.0f) * vertsPerTenWidth);
-        Generate();
+        await Generate(transform.position);
+        //await Task.Run(() =>
+        //{
+        //    Generate();
+        //});
     }
-    private void Generate()
+    private async Task Generate(Vector3 currPos)
     {
-        if (mesh != null) mesh.Clear();
-        mesh = new Mesh();
-        GetComponent<MeshFilter>().mesh = mesh;
+        if (meshIsland != null) meshIsland.Clear();
+        meshIsland = new Mesh();
+        GetComponent<MeshFilter>().mesh = meshIsland;
 
-        CreateShape();
-        UpdateMesh();
-        GetComponent<MeshCollider>().sharedMesh = mesh;
+        VertAndTri vertAndTri = await Task.Run(() => CreateShape(currPos));
+        UpdateMesh(vertAndTri);
+        GetComponent<MeshCollider>().sharedMesh = meshIsland;
         GetComponent<MeshCollider>().sharedMesh.RecalculateNormals();
 
-        Vector3 botLeft = new Vector3(transform.position.x - (WorldXWidth / 2), 100, transform.position.z - (WorldZWidth / 2));
-        Vector3 topRight = new Vector3(transform.position.x + (WorldXWidth / 2), 100, transform.position.z + (WorldZWidth / 2)); //new Vector3((((float)xWidth / (float)xSize) * WorldXWidth) - (WorldXWidth / 2) + transform.position.x, 100, (((float)zWidth / (float)zSize) * WorldZWidth) - (WorldZWidth / 2) + transform.position.z);
-        CreateIslandCollider(botLeft, topRight);
+        Vector3 botLeft = new Vector3(currPos.x - (WorldXWidth / 2), 100, currPos.z - (WorldZWidth / 2));
+        Vector3 topRight = new Vector3(currPos.x + (WorldXWidth / 2), 100, currPos.z + (WorldZWidth / 2)); //new Vector3((((float)xWidth / (float)xSize) * WorldXWidth) - (WorldXWidth / 2) + transform.position.x, 100, (((float)zWidth / (float)zSize) * WorldZWidth) - (WorldZWidth / 2) + transform.position.z);
+        //SetUpIslandColliders(await Task.Run(() => CreateIslandCollider(botLeft, topRight)));
+        SetUpIslandColliders(CreateIslandCollider(botLeft, topRight, vertAndTri.foundColliderEdgePlaces));
+        //foreach(Vector2 v2 in vertAndTri.foundColliderEdgePlaces)
+        //{
+        //    Debug.DrawLine(new Vector3(v2.x, -10, v2.y), new Vector3(v2.x, 10, v2.y), Color.red);
+        //}
+        //Debug.Break();
+        return;
     }
-    void CreateShape()
+    private void SetUpIslandColliders(List<Mesh> meshes)
     {
-        verticies = new Vector3[(xSize + 1) * (zSize + 1)];
-        vertColors = new Color[(xSize + 1) * (zSize + 1)];
+        foreach (Mesh mesh in meshes)
+        {
+            GameObject obMesh = new GameObject();
+            obMesh.transform.parent = transform;
+            MeshFilter mFil = obMesh.AddComponent<MeshFilter>();
+            MeshRenderer meRen = obMesh.AddComponent<MeshRenderer>();
+            meRen.material = clearIslandOuterColliderMaterial;
+            MeshCollider mCol = obMesh.AddComponent<MeshCollider>();
+            mCol.sharedMesh = mesh;
+            mFil.mesh = mesh;
+            obMesh.tag = "IslandOuterCollider";
+            obMesh.layer = 9;
+        }
+    }
+    private class VertAndTri
+    {
+        public Vector3[] verticies;
+        public int[] triangles;
+        public List<Vector2> foundColliderEdgePlaces;
+        public VertAndTri(Vector3[] verticies, int[] triangles, List<Vector2> foundColliderEdgePlaces)
+        {
+            this.verticies = verticies;
+            this.triangles = triangles;
+            this.foundColliderEdgePlaces = foundColliderEdgePlaces;
+        }
+    }
+    private float islandYCollider = 0;
+    VertAndTri CreateShape(Vector3 currTransform)
+    {
+        Vector3[] verticies = new Vector3[(xSize + 1) * (zSize + 1)];
+        //vertColors = new Color[(xSize + 1) * (zSize + 1)];
         int i = 0;
         for (int z = 0; z <= zSize; z++)
         {
@@ -57,16 +98,17 @@ public class IslandGenerator : MonoBehaviour
                 float fX = (((float)x / (float)xSize) * WorldXWidth) - (WorldXWidth / 2);
                 float fZ = (((float)z / (float)zSize) * WorldZWidth) - (WorldZWidth / 2);
                 //float y = Noise.GroundHeight(fX, fZ, lacunarity, persistance, octaves);
-                float y = Noise.ConformToIslandShape(Noise.IslandEdgeCircleFilter(Noise.GroundHeight(fX + transform.position.x, fZ + transform.position.z, lacunarity, persistance, octaves), x, z, xSize, zSize));
+                float y = Noise.ConformToIslandShape(Noise.IslandEdgeCircleFilter(Noise.GroundHeight(fX + currTransform.x, fZ + currTransform.z, lacunarity, persistance, octaves), x, z, xSize, zSize));
                 y = SetTerrainShader.SetIslandHeightBelowStarts(y);
                 verticies[i] = new Vector3(fX, y, fZ);
-                vertColors[i] = Noise.GetIslandColorForHeight(y, y, y);
+                //vertColors[i] = Noise.GetIslandColorForHeight(y, y, y);
                 i++;
             }
         }
-        triangles = new int[xSize * zSize * 6];
+        int[] triangles = new int[xSize * zSize * 6];
         int vert = 0;
         int tris = 0;
+        List<Vector2> foundColliderSport = new();
         for (int z = 0; z < zSize; z++)
         {
             for (int x = 0; x < xSize; x++)
@@ -74,77 +116,156 @@ public class IslandGenerator : MonoBehaviour
                 triangles[tris + 0] = vert + 0;
                 triangles[tris + 1] = vert + xSize + 1;
                 triangles[tris + 2] = vert + 1;
+                FindEgdes(vert + 0, vert + xSize + 1, vert + 1);
                 triangles[tris + 3] = vert + 1;
                 triangles[tris + 4] = vert + xSize + 1;
                 triangles[tris + 5] = vert + xSize + 2;
+                FindEgdes(vert + 1, vert + xSize + 1, vert + xSize + 2);
 
                 vert++;
                 tris += 6;
             }
             vert++;
         }
-    }
-    void CreateHardEdgeShape()
-    {
-        float fXDistForOne = ((1.0f / (float)xSize) * WorldXWidth);
-        float fZDistForOne = ((1.0f / (float)zSize) * WorldZWidth);
-        float xOffset = -(WorldXWidth / 2);
-        float zOffset = -(WorldZWidth / 2);
-        List<Vector3> vertList = new();
-        List<int> trisList = new();
-        List<Color> ColorsList = new();
-        for (int z = 0; z < zSize; z++)
+        void FindEgdes(int a, int b, int c)
         {
-            for (int x = 0; x < xSize; x++)
+            Vector2 tempV2;
+            if (verticies[a].y == islandYCollider)                                      //check for verticies equaling the target, probably not needed
             {
-                float currX = (x * fXDistForOne) + xOffset;                          //bottom left
-                float currZ = (z * fZDistForOne) + zOffset;
-                float currXPlus = currX + fXDistForOne;
-                float currZPlus = currZ + fZDistForOne;
-                float tPosX = transform.position.x;
-                float tPosZ = transform.position.z;
-                float heightBL = Noise.ConformToIslandShape(Noise.IslandEdgeFilter(Noise.GroundHeight(currX + tPosX, currZ + tPosZ, lacunarity, persistance, octaves), x, z, xSize, zSize));
-                float heightTL = Noise.ConformToIslandShape(Noise.IslandEdgeFilter(Noise.GroundHeight(currX + tPosX, currZPlus + tPosZ, lacunarity, persistance, octaves), x, z + 1, xSize, zSize));
-                float heightBR = Noise.ConformToIslandShape(Noise.IslandEdgeFilter(Noise.GroundHeight(currXPlus + tPosX, currZ + tPosZ, lacunarity, persistance, octaves), x + 1, z, xSize, zSize));
-                float heightTR = Noise.ConformToIslandShape(Noise.IslandEdgeFilter(Noise.GroundHeight(currXPlus + tPosX, currZPlus + tPosZ, lacunarity, persistance, octaves), x + 1, z + 1, xSize, zSize));
-
-                vertList.Add(new Vector3(currX, heightBL, currZ));      //bottom left       first triangle
-                vertList.Add(new Vector3(currX, heightTL, currZPlus));  //top left
-                vertList.Add(new Vector3(currXPlus, heightTR, currZPlus));  //top right
-                trisList.Add(vertList.Count - 3);
-                trisList.Add(vertList.Count - 2);
-                trisList.Add(vertList.Count - 1);
-                float centerHeight = (heightBL + heightTL + heightTR) / 3;
-                Color centerColor = Noise.GetIslandColorForHeight(heightBL, heightTL, heightTR);
-                ColorsList.Add(centerColor);
-                ColorsList.Add(centerColor);
-                ColorsList.Add(centerColor);
-                vertList.Add(new Vector3(currX, heightBL, currZ));      //bottom left       second triangle
-                vertList.Add(new Vector3(currXPlus, heightBR, currZ));  //bottom right
-                vertList.Add(new Vector3(currXPlus, heightTR, currZPlus));  //top right
-                trisList.Add(vertList.Count - 1);
-                trisList.Add(vertList.Count - 2);
-                trisList.Add(vertList.Count - 3);
-                //centerHeight = (heightBL + heightBR + heightTR) / 3;
-                centerColor = Noise.GetIslandColorForHeight(heightBL, heightBR, heightTR);
-                ColorsList.Add(centerColor);
-                ColorsList.Add(centerColor);
-                ColorsList.Add(centerColor);
+                tempV2 = new Vector2(verticies[a].x, verticies[a].z);
+                if (!foundColliderSport.Contains(tempV2)) foundColliderSport.Add(tempV2);
+            }
+            if (verticies[b].y == islandYCollider)
+            {
+                tempV2 = new Vector2(verticies[b].x, verticies[b].z);
+                if (!foundColliderSport.Contains(tempV2)) foundColliderSport.Add(tempV2);
+            }
+            if (verticies[c].y == islandYCollider)
+            {
+                tempV2 = new Vector2(verticies[c].x, verticies[c].z);
+                if (!foundColliderSport.Contains(tempV2)) foundColliderSport.Add(tempV2);
+            }
+            if(verticies[a].y > islandYCollider)
+            {
+                if(verticies[b].y < islandYCollider)
+                {
+                    float top = verticies[a].y - islandYCollider;
+                    float bottom = islandYCollider - verticies[b].y;
+                    Vector3 tempV3 = Vector3.Lerp(verticies[b], verticies[a], bottom / (top + bottom));
+                    tempV2 = new Vector2(tempV3.x, tempV3.z);
+                    if (!foundColliderSport.Contains(tempV2)) foundColliderSport.Add(tempV2);
+                }
+                if (verticies[c].y < islandYCollider)
+                {
+                    float top = verticies[a].y - islandYCollider;
+                    float bottom = islandYCollider - verticies[c].y;
+                    Vector3 tempV3 = Vector3.Lerp(verticies[c], verticies[a], bottom / (top + bottom));
+                    tempV2 = new Vector2(tempV3.x, tempV3.z);
+                    if (!foundColliderSport.Contains(tempV2)) foundColliderSport.Add(tempV2);
+                }
+            }
+            if (verticies[b].y > islandYCollider)
+            {
+                if (verticies[c].y < islandYCollider)
+                {
+                    float top = verticies[b].y - islandYCollider;
+                    float bottom = islandYCollider - verticies[c].y;
+                    Vector3 tempV3 = Vector3.Lerp(verticies[c], verticies[b], bottom / (top + bottom));
+                    tempV2 = new Vector2(tempV3.x, tempV3.z);
+                    if (!foundColliderSport.Contains(tempV2)) foundColliderSport.Add(tempV2);
+                }
+                if (verticies[a].y < islandYCollider)
+                {
+                    float top = verticies[b].y - islandYCollider;
+                    float bottom = islandYCollider - verticies[a].y;
+                    Vector3 tempV3 = Vector3.Lerp(verticies[a], verticies[b], bottom / (top + bottom));
+                    tempV2 = new Vector2(tempV3.x, tempV3.z);
+                    if (!foundColliderSport.Contains(tempV2)) foundColliderSport.Add(tempV2);
+                }
+            }
+            if (verticies[c].y > islandYCollider)
+            {
+                if (verticies[a].y < islandYCollider)
+                {
+                    float top = verticies[c].y - islandYCollider;
+                    float bottom = islandYCollider - verticies[a].y;
+                    Vector3 tempV3 = Vector3.Lerp(verticies[a], verticies[c], bottom / (top + bottom));
+                    tempV2 = new Vector2(tempV3.x, tempV3.z);
+                    if (!foundColliderSport.Contains(tempV2)) foundColliderSport.Add(tempV2);
+                }
+                if (verticies[b].y < islandYCollider)
+                {
+                    float top = verticies[c].y - islandYCollider;
+                    float bottom = islandYCollider - verticies[b].y;
+                    Vector3 tempV3 = Vector3.Lerp(verticies[b], verticies[c], bottom / (top + bottom));
+                    tempV2 = new Vector2(tempV3.x, tempV3.z);
+                    if (!foundColliderSport.Contains(tempV2)) foundColliderSport.Add(tempV2);
+                }
             }
         }
-        vertColors = ColorsList.ToArray();
-        verticies = vertList.ToArray();
-        triangles = trisList.ToArray();
+        return new VertAndTri(verticies, triangles, foundColliderSport);
     }
-    void UpdateMesh()
+    //void CreateHardEdgeShape()
+    //{
+    //    float fXDistForOne = ((1.0f / (float)xSize) * WorldXWidth);
+    //    float fZDistForOne = ((1.0f / (float)zSize) * WorldZWidth);
+    //    float xOffset = -(WorldXWidth / 2);
+    //    float zOffset = -(WorldZWidth / 2);
+    //    List<Vector3> vertList = new();
+    //    List<int> trisList = new();
+    //    List<Color> ColorsList = new();
+    //    for (int z = 0; z < zSize; z++)
+    //    {
+    //        for (int x = 0; x < xSize; x++)
+    //        {
+    //            float currX = (x * fXDistForOne) + xOffset;                          //bottom left
+    //            float currZ = (z * fZDistForOne) + zOffset;
+    //            float currXPlus = currX + fXDistForOne;
+    //            float currZPlus = currZ + fZDistForOne;
+    //            float tPosX = transform.position.x;
+    //            float tPosZ = transform.position.z;
+    //            float heightBL = Noise.ConformToIslandShape(Noise.IslandEdgeFilter(Noise.GroundHeight(currX + tPosX, currZ + tPosZ, lacunarity, persistance, octaves), x, z, xSize, zSize));
+    //            float heightTL = Noise.ConformToIslandShape(Noise.IslandEdgeFilter(Noise.GroundHeight(currX + tPosX, currZPlus + tPosZ, lacunarity, persistance, octaves), x, z + 1, xSize, zSize));
+    //            float heightBR = Noise.ConformToIslandShape(Noise.IslandEdgeFilter(Noise.GroundHeight(currXPlus + tPosX, currZ + tPosZ, lacunarity, persistance, octaves), x + 1, z, xSize, zSize));
+    //            float heightTR = Noise.ConformToIslandShape(Noise.IslandEdgeFilter(Noise.GroundHeight(currXPlus + tPosX, currZPlus + tPosZ, lacunarity, persistance, octaves), x + 1, z + 1, xSize, zSize));
+
+    //            vertList.Add(new Vector3(currX, heightBL, currZ));      //bottom left       first triangle
+    //            vertList.Add(new Vector3(currX, heightTL, currZPlus));  //top left
+    //            vertList.Add(new Vector3(currXPlus, heightTR, currZPlus));  //top right
+    //            trisList.Add(vertList.Count - 3);
+    //            trisList.Add(vertList.Count - 2);
+    //            trisList.Add(vertList.Count - 1);
+    //            float centerHeight = (heightBL + heightTL + heightTR) / 3;
+    //            Color centerColor = Noise.GetIslandColorForHeight(heightBL, heightTL, heightTR);
+    //            ColorsList.Add(centerColor);
+    //            ColorsList.Add(centerColor);
+    //            ColorsList.Add(centerColor);
+    //            vertList.Add(new Vector3(currX, heightBL, currZ));      //bottom left       second triangle
+    //            vertList.Add(new Vector3(currXPlus, heightBR, currZ));  //bottom right
+    //            vertList.Add(new Vector3(currXPlus, heightTR, currZPlus));  //top right
+    //            trisList.Add(vertList.Count - 1);
+    //            trisList.Add(vertList.Count - 2);
+    //            trisList.Add(vertList.Count - 3);
+    //            //centerHeight = (heightBL + heightBR + heightTR) / 3;
+    //            centerColor = Noise.GetIslandColorForHeight(heightBL, heightBR, heightTR);
+    //            ColorsList.Add(centerColor);
+    //            ColorsList.Add(centerColor);
+    //            ColorsList.Add(centerColor);
+    //        }
+    //    }
+    //    vertColors = ColorsList.ToArray();
+    //    verticies = vertList.ToArray();
+    //    triangles = trisList.ToArray();
+    //}
+    void UpdateMesh(VertAndTri vT)
     {
-        mesh.Clear();
+        meshIsland.Clear();
 
-        mesh.vertices = verticies;
-        mesh.triangles = triangles;
-        mesh.colors = vertColors;
+        meshIsland.vertices = vT.verticies;
+        meshIsland.triangles = vT.triangles;
+        //mesh.colors = vertColors;
 
-        mesh.RecalculateNormals();
+        meshIsland.RecalculateNormals();
     }
     //private void OnDrawGizmos()
     //{
@@ -155,12 +276,13 @@ public class IslandGenerator : MonoBehaviour
     //        Gizmos.DrawSphere(verticies[i], 0.1f);
     //    }
     //}
-    float colliderGridCheckOffset = 1.0f;
+    float colliderGridCheckOffset = 2.0f;
     float groundCheckHeight = 0.5f;
     float areaCheckOffset = 30;
     Vector3 halfOuterBox;
-    void CreateIslandCollider(Vector3 botLeft, Vector3 topRight)
+    List<Mesh> CreateIslandCollider(Vector3 botLeft, Vector3 topRight, List<Vector2> foundEdges)
     {
+        List<Mesh> returnMeshes = new();
         halfOuterBox = new Vector3(areaCheckOffset / 2, areaCheckOffset / 2, areaCheckOffset / 2);
         //float xDst = topRight.x - botLeft.x;
         //float zDst = topRight.z - botLeft.z;
@@ -519,20 +641,22 @@ public class IslandGenerator : MonoBehaviour
             mesh.RecalculateNormals();
             Vector3[] normals = mesh.normals;
             mesh.SetNormals(normals);
-            GameObject obMesh = new GameObject();
-            obMesh.transform.parent = transform;
-            MeshFilter mFil = obMesh.AddComponent<MeshFilter>();
-            MeshRenderer meRen = obMesh.AddComponent<MeshRenderer>();
-            meRen.material = clearIslandOuterColliderMaterial;
-            MeshCollider mCol = obMesh.AddComponent<MeshCollider>();
-            mCol.sharedMesh = mesh;
-            mFil.mesh = mesh;
+                //GameObject obMesh = new GameObject();
+                //obMesh.transform.parent = transform;
+                //MeshFilter mFil = obMesh.AddComponent<MeshFilter>();
+                //MeshRenderer meRen = obMesh.AddComponent<MeshRenderer>();
+                //meRen.material = clearIslandOuterColliderMaterial;
+                //MeshCollider mCol = obMesh.AddComponent<MeshCollider>();
+                //mCol.sharedMesh = mesh;
+                //mFil.mesh = mesh;
+                //obMesh.tag = "IslandOuterCollider";
+                //obMesh.layer = 9;
             //AssetDatabase.CreateAsset( mesh, "Assets/SaveMeshes/island_collider_" + saveForDebugColliderNumber + ".asset");
-            saveForDebugColliderNumber++;
-            obMesh.tag = "IslandOuterCollider";
-            obMesh.layer = 9;
+            //saveForDebugColliderNumber++;
+            returnMeshes.Add(mesh);
         }
         //AssetDatabase.SaveAssets();
+        return returnMeshes;
     }
     private Vector2 GetCenterCoord(List<Vector2> lst)
     {

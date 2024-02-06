@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class ShipMovement : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class ShipMovement : MonoBehaviour
     [SerializeField] GameObject shipBody;
     [SerializeField] List<ParticleSystem> backParticles;
     [SerializeField] ParticleSystem frontParticle;
+    [SerializeField] List<VisualEffect> funnelParticles;
+    private float amountFunnelParticles;
     private float amountBackParticles;
     private float amountFrontParticles;
     [HideInInspector] public float currSpeedPercentage = 0;
@@ -28,6 +31,7 @@ public class ShipMovement : MonoBehaviour
     void Start()
     {
         body = GetComponent<Rigidbody>();
+        amountFunnelParticles = funnelParticles[0].GetFloat("SpawnRate");
         amountBackParticles = backParticles[0].emissionRate;
         amountFrontParticles = frontParticle.emissionRate;
         //Debug.Log(amountFrontParticles);
@@ -189,6 +193,11 @@ public class ShipMovement : MonoBehaviour
         //}
         ///////////set ship particles
         frontParticle.emissionRate = Mathf.Lerp(0, amountFrontParticles, currRBSpeed / maxSpeed);
+        float smokeEmmission = Mathf.Abs(vertical) / 1;
+        //smokeEmmission = Mathf.Pow(smokeEmmission, 0.5f);
+        smokeEmmission *= amountFunnelParticles;
+        foreach (VisualEffect vFX in funnelParticles)
+            vFX.SetFloat("SpawnRate", smokeEmmission);
         float backParRate = Mathf.Lerp(0, amountBackParticles, vertical / 1);
         foreach (ParticleSystem ps in backParticles)
             ps.emissionRate = backParRate;
