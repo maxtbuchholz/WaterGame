@@ -16,8 +16,22 @@ public class FortTurretControl : MonoBehaviour
             time %= 1;
             if (target.TryGetComponent<Rigidbody>(out Rigidbody rb))
             {
-                foreach (TurretController turret in turrets)
-                    turret.ShootProjectile(new Vector2(target.position.x, target.position.z), new Vector2(rb.velocity.x, rb.velocity.z));
+                List<int> ableTurretIndexes = new();
+                List<Vector3> turretNormalVec = new();
+                TurretController.ShootAbility shootAbility;
+                for (int i = 0; i < turrets.Count; i++)
+                {
+                    Vector3 normalVec = turrets[i].RequestShot(new Vector2(target.position.x, target.position.z), new Vector2(rb.velocity.x, rb.velocity.z), out shootAbility);
+                    if(shootAbility == TurretController.ShootAbility.able)
+                    {
+                        ableTurretIndexes.Add(i);
+                        turretNormalVec.Add(normalVec);
+                    }
+                }
+                for(int i = 0; i < ableTurretIndexes.Count; i++)
+                {
+                    turrets[ableTurretIndexes[i]].ShootProjectile(turretNormalVec[i]);
+                }
             }
         }
     }

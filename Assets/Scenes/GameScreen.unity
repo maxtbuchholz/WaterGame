@@ -5058,6 +5058,37 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 22852711}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &38174845
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 38174846}
+  m_Layer: 0
+  m_Name: WaterParent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &38174846
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 38174845}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -10.2, y: 0.26999998, z: -10.897202}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &97424756
 GameObject:
   m_ObjectHideFlags: 0
@@ -5216,6 +5247,114 @@ MonoBehaviour:
   turret: {fileID: 107651881}
   barrel: {fileID: 910874242}
   shootPoint: {fileID: 1756930640}
+  turretCube: {fileID: 752952656}
+--- !u!1 &186347781
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 186347785}
+  - component: {fileID: 186347784}
+  - component: {fileID: 186347783}
+  - component: {fileID: 186347782}
+  m_Layer: 0
+  m_Name: DebugBall
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!135 &186347782
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 186347781}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &186347783
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 186347781}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: e25426d31b08249f09c576b68c31c1d0, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &186347784
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 186347781}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &186347785
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 186347781}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -215.83055, y: 0.4936601, z: -25.378368}
+  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &198872823
 GameObject:
   m_ObjectHideFlags: 0
@@ -9385,6 +9524,7 @@ MonoBehaviour:
   turret: {fileID: 1248900962}
   barrel: {fileID: 1497816055}
   shootPoint: {fileID: 491336616}
+  turretCube: {fileID: 984799981}
 --- !u!1 &1264311710
 GameObject:
   m_ObjectHideFlags: 0
@@ -9398,6 +9538,7 @@ GameObject:
   - component: {fileID: 1264311714}
   - component: {fileID: 1264311713}
   - component: {fileID: 1264311715}
+  - component: {fileID: 1264311716}
   m_Layer: 8
   m_Name: FocusPoint
   m_TagString: Untagged
@@ -9458,8 +9599,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a99e78970e35927428f60265ab02bb2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  islandTracker: {fileID: 1264311715}
-  tile: {fileID: 3012139497195501864, guid: 4a48f5b67a8a3e244840287586d7e0ef, type: 3}
 --- !u!114 &1264311715
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9473,6 +9612,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   islandPrefab: {fileID: 9104232350504377752, guid: c5defb5b0cc094a8794df0d4281c194d, type: 3}
+--- !u!114 &1264311716
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1264311710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96622c6fbdc09854287454115ac52e5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waterParent: {fileID: 38174846}
+  water: {fileID: 3012139497195501864, guid: 4a48f5b67a8a3e244840287586d7e0ef, type: 3}
+  islandTracker: {fileID: 1264311715}
 --- !u!1 &1305982341
 GameObject:
   m_ObjectHideFlags: 0
@@ -9926,6 +10080,7 @@ MonoBehaviour:
   turret: {fileID: 1457619375}
   barrel: {fileID: 1124995807}
   shootPoint: {fileID: 768381327}
+  turretCube: {fileID: 574600478}
 --- !u!1001 &1461413422
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15743,6 +15898,7 @@ MonoBehaviour:
   - {fileID: 1248900964}
   - {fileID: 1457619377}
   camera: {fileID: 1070980776}
+  debugBall: {fileID: 186347781}
 --- !u!1 &1896776697
 GameObject:
   m_ObjectHideFlags: 0
@@ -21211,3 +21367,5 @@ SceneRoots:
   - {fileID: 1264311711}
   - {fileID: 1885345387}
   - {fileID: 1872215396}
+  - {fileID: 38174846}
+  - {fileID: 186347785}

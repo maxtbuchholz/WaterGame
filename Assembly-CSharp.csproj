@@ -62,11 +62,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets/Scripts/ShipMove/ShipMovement.cs" />
+    <Compile Include="Assets/Scripts/x/LoadWaterTiles.cs" />
     <Compile Include="Assets/Scripts/ShipMove/ShipValueControl.cs" />
     <Compile Include="Assets/Scripts/Shooting/ProjectileHit.cs" />
     <Compile Include="Assets/Scripts/ShipMove/ShipRotation.cs" />
+    <Compile Include="Assets/Scripts/x/TileDeleter.cs" />
     <Compile Include="Assets/Scripts/Noise.cs" />
-    <Compile Include="Assets/Scripts/TileDeleter.cs" />
     <Compile Include="Assets/Scripts/FrontTrail.cs" />
     <Compile Include="Assets/Scripts/Touch/PlayerInput.cs" />
     <Compile Include="Assets/Scripts/Shooting/FortValues.cs" />
@@ -79,15 +80,14 @@
     <Compile Include="Assets/Terrain/IslandTracker.cs" />
     <Compile Include="Assets/Scripts/Shooting/PlayerFireControl.cs" />
     <Compile Include="Assets/Scripts/Camera/FocalPointFollow.cs" />
+    <Compile Include="Assets/Scripts/WaterLoad.cs" />
     <Compile Include="Assets/Terrain/SetTerrainShader.cs" />
     <Compile Include="Assets/Scripts/WaterMovement.cs" />
     <Compile Include="Assets/Scripts/SimpleBob.cs" />
     <Compile Include="Assets/Terrain/GenerateTerrain.cs" />
     <Compile Include="Assets/RenderTexture/MaskLowerLayers/MaskObject.cs" />
     <Compile Include="Assets/Scripts/CameraTrack.cs" />
-    <Compile Include="Assets/Scripts/LoadWaterTiles.cs" />
     <Compile Include="Assets/Scripts/Touch/NavTouch.cs" />
-    <Compile Include="Assets/Scripts/LoadedTiles.cs" />
     <Compile Include="Assets/Scripts/WaterGetHeight.cs" />
     <Compile Include="Assets/Terrain/MeshGenerator.cs" />
   </ItemGroup>

@@ -13,12 +13,14 @@ public class TurretController : MonoBehaviour
     [SerializeField] GameObject turret;
     [SerializeField] GameObject barrel;
     [SerializeField] GameObject shootPoint;
+    [SerializeField] GameObject turretCube;
     Vector3[] trajectory = new Vector3[] { };
     private float force = 100;
     private float maxDistance;
     Dictionary<float, float> cannonDistanceToTime = new();
     private void Start()
     {
+        cannonDistanceToTime = new();
         maxDistance = Mathf.Pow(force, 2) / 9.81f;
         bool keepSearching = true;
         float step = 1.0f;
@@ -34,52 +36,66 @@ public class TurretController : MonoBehaviour
                 keepSearching = false;
         }
     }
-    public bool ShootProjectile(Vector3 targetPos)     //returns okay if okay to shoot and shot
+    public Vector3 RequestShot(Vector3 targetPos, out ShootAbility shootAbility)
     {
-        //float force = 100;
-        Vector3 vDistance = (targetPos - shootPoint.transform.position);
+        Vector3 vDistance = (targetPos - shootPoint.transform.position) * 1.06f;
         vDistance.y = -vDistance.y;
         Vector3 normalDist = (new Vector3(targetPos.x, 0, targetPos.z) - new Vector3(shootPoint.transform.position.x, 0, shootPoint.transform.position.z)).normalized;
         float d = Mathf.Pow(Mathf.Pow(vDistance.x, 2) + Mathf.Pow(vDistance.z, 2), 0.5f);
         float angle = GetAngle(9.81f, force, d, vDistance.y);
-        if (float.IsNaN(angle)) return false;
+        if (float.IsNaN(angle)) { shootAbility = ShootAbility.toFar; return Vector3.zero; }
         float rotY = Mathf.Atan2(normalDist.x, normalDist.z) * Mathf.Rad2Deg;
         normalDist.y = Mathf.Sin(angle);
+        //Debug.DrawLine(shootPoint.transform.position, (normalDist * 5f) + shootPoint.transform.position, Color.red);
+        //Debug.Break();
+        RaycastHit[] hits = (Physics.RaycastAll(turret.transform.position + new Vector3(0, 0.15f, 0), normalDist, 5f));
+        foreach (RaycastHit hit in hits)
+            if (!hit.collider.CompareTag("IslandOuterCollider") && !hit.collider.CompareTag("SeaTile") && ((hit.collider.gameObject != turret) && (hit.collider.gameObject != barrel) && (hit.collider.gameObject != shootPoint) && (hit.collider.gameObject != turretCube)))
+            {
+                //Debug.DrawRay(turret.transform.position + new Vector3(0, 0.15f, 0), new Vector3(normalDist.x, 0, normalDist.z), Color.blue, 10f);
+                shootAbility = ShootAbility.blocked;
+                return Vector3.zero;
+            }
         turret.transform.rotation = Quaternion.Euler(0, rotY, 0);
         barrel.transform.localRotation = Quaternion.Euler(-angle * Mathf.Rad2Deg, 0, 0);
-        Debug.DrawLine(shootPoint.transform.position, (normalDist * 5f) + shootPoint.transform.position, Color.red);
-        RaycastHit[] hits = (Physics.RaycastAll(shootPoint.transform.position, normalDist, 5f));
+        hits = (Physics.RaycastAll(shootPoint.transform.position, normalDist, 5f));
         foreach (RaycastHit hit in hits)
-            if (!hit.collider.CompareTag("IslandOuterCollider"))
-                return false;
-        GameObject proj = GameObject.Instantiate(projectile);
-        if(shipValues != null)
-            proj.GetComponent<ProjectileHit>().shipParts = shipValues.shipParts;
-        else if (fortValues != null)
-            proj.GetComponent<ProjectileHit>().shipParts = fortValues.fortParts;
-        proj.transform.position = shootPoint.transform.position;
-        proj.GetComponent<Rigidbody>().velocity = normalDist * force;
+            if (!hit.collider.CompareTag("IslandOuterCollider") && !hit.collider.CompareTag("SeaTile") && ((hit.collider.gameObject != turret) && (hit.collider.gameObject != barrel) && (hit.collider.gameObject != shootPoint) && (hit.collider.gameObject != turretCube)))
+            {
+                shootAbility = ShootAbility.blocked;
+                return Vector3.zero;
+            }
+        //Debug.DrawRay(shootPoint.transform.position, normalDist, Color.red, 5f);
         //Debug.Break();
-        return true;
+        //ShootProjectile(normalDist);
+        shootAbility = ShootAbility.able;
+        return normalDist;
     }
-    public bool ShootProjectile(Vector2 targetPos, Vector2 targetVelocity)          //attackin a ship with a velocity
+    public enum ShootAbility
     {
-        //float force = 100;
-        Vector3 oneSecOut = targetPos + targetVelocity;
-        float currDst = Vector2.Distance(targetPos, transform.position);
-        float diffInDst = Vector2.Distance(oneSecOut, transform.position) - currDst;
-        Debug.Log(diffInDst);
+        able,
+        toFar,
+        blocked
+    }
+    public Vector3 RequestShot(Vector2 targetPos, Vector2 targetVelocity, out ShootAbility shootAbility)
+    {
+        Vector2 turretPos = new Vector2(transform.position.x, transform.position.z);
+        Vector2 oneSecOut = targetPos + targetVelocity;
+        float currDst = Vector2.Distance(targetPos, turretPos) * 1.06f;            //chamge transformpos to vector2
+        float futureDst = Vector2.Distance(oneSecOut, turretPos) * 1.06f;
+        float diffInDst = futureDst - currDst;
+        //Debug.Log(diffInDst);
 
-
+        if (futureDst > maxDistance) shootAbility = ShootAbility.toFar;
 
         float closestTime = 0;
         float closestDst = 0;
         float closestDstDiff = -1;
-        foreach(KeyValuePair<float, float> dstTime in cannonDistanceToTime)
+        foreach (KeyValuePair<float, float> dstTime in cannonDistanceToTime)
         {
             float tempTarDst = currDst + (diffInDst * dstTime.Value);
             float tempDiff = Mathf.Abs(tempTarDst - dstTime.Key);
-            if((tempDiff < closestDstDiff) || (closestDstDiff == -1))
+            if ((tempDiff < closestDstDiff) || (closestDstDiff == -1))
             {
                 closestDstDiff = tempDiff;
                 closestTime = dstTime.Value;
@@ -88,16 +104,51 @@ public class TurretController : MonoBehaviour
         }
         targetPos = targetPos + (targetVelocity * closestTime);
 
+        RaycastHit[] hits = Physics.RaycastAll(transform.position + new Vector3(0, 0.15f, 0), (new Vector3(targetPos.x, 0, targetPos.y) - transform.position), closestDst);
+        //Debug.DrawRay(transform.position + new Vector3(0, 0.15f, 0), (new Vector3(targetPos.x, 0, targetPos.y) - transform.position), Color.red);
+        //Debug.DrawLine(transform.position, new Vector3(targetPos.x, 0, targetPos.y), Color.blue);
+        foreach (RaycastHit hit in hits)
+        {
+            //Debug.DrawLine(hit.point, Vector3.zero, Color.green);
+            if (hit.collider.CompareTag("Land"))
+            {
+                //Debug.DrawLine(hit.point, Vector3.zero, Color.blue);
+                shootAbility = ShootAbility.blocked;
+                //Debug.Break();
+                return Vector3.zero;
+            }
+        }
         float angle = (Mathf.Asin((9.18F * closestDst) / (Mathf.Pow(force, 2)))) / 2;
         Vector3 normalDist = (new Vector3(targetPos.x, 0, targetPos.y) - new Vector3(shootPoint.transform.position.x, 0, shootPoint.transform.position.z)).normalized;
         float rotY = Mathf.Atan2(normalDist.x, normalDist.z) * Mathf.Rad2Deg;
         normalDist.y = Mathf.Sin(angle);
+
+        hits = (Physics.RaycastAll(turret.transform.position + new Vector3(0, 0.15f, 0), normalDist, 5f));
+        foreach (RaycastHit hit in hits)
+            if (!hit.collider.CompareTag("IslandOuterCollider") && !hit.collider.CompareTag("SeaTile") && ((hit.collider.gameObject != turret) && (hit.collider.gameObject != barrel) && (hit.collider.gameObject != shootPoint) && (hit.collider.gameObject != turretCube)))
+            {
+                shootAbility = ShootAbility.blocked;
+                return Vector3.zero;
+            }
+
         turret.transform.rotation = Quaternion.Euler(0, rotY, 0);
         barrel.transform.localRotation = Quaternion.Euler(-angle * Mathf.Rad2Deg, 0, 0);
 
-
+        hits = (Physics.RaycastAll(shootPoint.transform.position, normalDist, 5f));
+        foreach (RaycastHit hit in hits)
+            if (!hit.collider.CompareTag("IslandOuterCollider") && !hit.collider.CompareTag("SeaTile") && ((hit.collider.gameObject != turret) && (hit.collider.gameObject != barrel) && (hit.collider.gameObject != shootPoint) && (hit.collider.gameObject != turretCube)))
+            {
+                shootAbility = ShootAbility.blocked;
+                return Vector3.zero;
+            }
+        //ShootProjectile(normalDist);
+        shootAbility = ShootAbility.able;
+        return normalDist;
+    }
+    public bool ShootProjectile(Vector3 normalDist)
+    {
         GameObject proj = GameObject.Instantiate(projectile);
-        if (shipValues != null)
+        if(shipValues != null)
             proj.GetComponent<ProjectileHit>().shipParts = shipValues.shipParts;
         else if (fortValues != null)
             proj.GetComponent<ProjectileHit>().shipParts = fortValues.fortParts;

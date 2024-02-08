@@ -87,7 +87,9 @@ public class NavTouch : MonoBehaviour
                 {
                     if (touchTimes.ContainsKey(touches[i].fingerId))
                         if (touchTimes[touches[i].fingerId] < 0.2f)
+                        {
                             playerFireControl.RequestShot(touches[i].position);
+                        }
                 }
             }
         }
