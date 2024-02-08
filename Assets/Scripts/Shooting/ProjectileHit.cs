@@ -30,7 +30,7 @@ public class ProjectileHit : MonoBehaviour
     }
     private void Collide(string tag)
     {
-        Debug.Log("tag: " + tag);
+        //Debug.Log("tag: " + tag);
         if (tag != "IslandOuterCollider")
         {
             GetComponent<Rigidbody>().velocity = Vector3.zero;

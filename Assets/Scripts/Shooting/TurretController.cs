@@ -2,20 +2,41 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Burst.CompilerServices;
 using UnityEngine;
+using System;
 using static UnityEngine.GraphicsBuffer;
 
 public class TurretController : MonoBehaviour
 {
-    [SerializeField] Camera camera;
     [SerializeField] ShipValueControl shipValues;
+    [SerializeField] FortValues fortValues;
     [SerializeField] GameObject projectile;
     [SerializeField] GameObject turret;
     [SerializeField] GameObject barrel;
     [SerializeField] GameObject shootPoint;
     Vector3[] trajectory = new Vector3[] { };
+    private float force = 100;
+    private float maxDistance;
+    Dictionary<float, float> cannonDistanceToTime = new();
+    private void Start()
+    {
+        maxDistance = Mathf.Pow(force, 2) / 9.81f;
+        bool keepSearching = true;
+        float step = 1.0f;
+        float currStep = 0.0f;
+        float forceSqr = force * force;
+        while (keepSearching)
+        {
+            float angle = Mathf.Asin((9.81f * currStep) / (forceSqr)) / 2;
+            float timeToTarget = currStep / (Mathf.Cos(angle) * force);
+            cannonDistanceToTime.Add(currStep, timeToTarget);
+            currStep += step;
+            if (currStep > maxDistance)
+                keepSearching = false;
+        }
+    }
     public bool ShootProjectile(Vector3 targetPos)     //returns okay if okay to shoot and shot
     {
-        float force = 100;
+        //float force = 100;
         Vector3 vDistance = (targetPos - shootPoint.transform.position);
         vDistance.y = -vDistance.y;
         Vector3 normalDist = (new Vector3(targetPos.x, 0, targetPos.z) - new Vector3(shootPoint.transform.position.x, 0, shootPoint.transform.position.z)).normalized;
@@ -32,7 +53,54 @@ public class TurretController : MonoBehaviour
             if (!hit.collider.CompareTag("IslandOuterCollider"))
                 return false;
         GameObject proj = GameObject.Instantiate(projectile);
-        proj.GetComponent<ProjectileHit>().shipParts = shipValues.shipParts;
+        if(shipValues != null)
+            proj.GetComponent<ProjectileHit>().shipParts = shipValues.shipParts;
+        else if (fortValues != null)
+            proj.GetComponent<ProjectileHit>().shipParts = fortValues.fortParts;
+        proj.transform.position = shootPoint.transform.position;
+        proj.GetComponent<Rigidbody>().velocity = normalDist * force;
+        //Debug.Break();
+        return true;
+    }
+    public bool ShootProjectile(Vector2 targetPos, Vector2 targetVelocity)          //attackin a ship with a velocity
+    {
+        //float force = 100;
+        Vector3 oneSecOut = targetPos + targetVelocity;
+        float currDst = Vector2.Distance(targetPos, transform.position);
+        float diffInDst = Vector2.Distance(oneSecOut, transform.position) - currDst;
+        Debug.Log(diffInDst);
+
+
+
+        float closestTime = 0;
+        float closestDst = 0;
+        float closestDstDiff = -1;
+        foreach(KeyValuePair<float, float> dstTime in cannonDistanceToTime)
+        {
+            float tempTarDst = currDst + (diffInDst * dstTime.Value);
+            float tempDiff = Mathf.Abs(tempTarDst - dstTime.Key);
+            if((tempDiff < closestDstDiff) || (closestDstDiff == -1))
+            {
+                closestDstDiff = tempDiff;
+                closestTime = dstTime.Value;
+                closestDst = dstTime.Key;
+            }
+        }
+        targetPos = targetPos + (targetVelocity * closestTime);
+
+        float angle = (Mathf.Asin((9.18F * closestDst) / (Mathf.Pow(force, 2)))) / 2;
+        Vector3 normalDist = (new Vector3(targetPos.x, 0, targetPos.y) - new Vector3(shootPoint.transform.position.x, 0, shootPoint.transform.position.z)).normalized;
+        float rotY = Mathf.Atan2(normalDist.x, normalDist.z) * Mathf.Rad2Deg;
+        normalDist.y = Mathf.Sin(angle);
+        turret.transform.rotation = Quaternion.Euler(0, rotY, 0);
+        barrel.transform.localRotation = Quaternion.Euler(-angle * Mathf.Rad2Deg, 0, 0);
+
+
+        GameObject proj = GameObject.Instantiate(projectile);
+        if (shipValues != null)
+            proj.GetComponent<ProjectileHit>().shipParts = shipValues.shipParts;
+        else if (fortValues != null)
+            proj.GetComponent<ProjectileHit>().shipParts = fortValues.fortParts;
         proj.transform.position = shootPoint.transform.position;
         proj.GetComponent<Rigidbody>().velocity = normalDist * force;
         //Debug.Break();

@@ -9,8 +9,8 @@ public class IslandTracker : MonoBehaviour
     List<Vector2> existingIslands = new();
     List<GameObject> loadedIslands = new();
     List<Vector2> loadedCoords = new();
-    float islandLoadDistance = 500;
-    float minIslandDistacnce = 150;
+    float islandLoadDistance = 1000; //water tiles is 750
+    float minIslandDistacnce = 50;
     int xDivPos = 0;
     int zDivPos = 0;
     float IntDivAmount = 50;
@@ -44,17 +44,15 @@ public class IslandTracker : MonoBehaviour
             }
         }
     }
-    int islandCount = 0;
     public void TrySpawnIsland(Vector2 pos)
     {
-        if (Random.Range(0.0f, 1.0f) > 0.98f)
+        if (Random.Range(0.0f, 1.0f) > 0.8f)
         {
             bool farEnoughOut = true;
             foreach (Vector2 checkPos in existingIslands)
                 farEnoughOut &= (Vector2.Distance(pos, checkPos) >= minIslandDistacnce);
-            if (farEnoughOut && (islandCount < 2))
+            if (farEnoughOut)
             {
-                islandCount++;
                 existingIslands.Add(pos);
                 loadedCoords.Add(pos);
                 loadedIslands.Add(GameObject.Instantiate(islandPrefab, new Vector3(pos.x, 0, pos.y), Quaternion.identity));
