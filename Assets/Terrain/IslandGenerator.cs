@@ -23,13 +23,13 @@ public class IslandGenerator : MonoBehaviour
     [SerializeField] int xWidth = 400;
     [SerializeField] int zWidth = 400;
     [SerializeField] Material clearIslandOuterColliderMaterial;
-    async void Start()
+    void Start()
     {
         WorldXWidth = xWidth;
         WorldZWidth = zWidth;
         xSize = Mathf.RoundToInt((WorldXWidth / 10.0f) * vertsPerTenWidth);
         zSize = Mathf.RoundToInt((WorldZWidth / 10.0f) * vertsPerTenWidth);
-        await Generate(transform.position);
+        Generate(transform.position);
         //await Task.Run(() =>
         //{
         //    await Generate(transform.position);
@@ -64,13 +64,14 @@ public class IslandGenerator : MonoBehaviour
     //}
     private int generationStep = 0;
     private VertAndTri vaT;
-    private async Task Generate(Vector3 currPos)
+    private void Generate(Vector3 currPos)
     {
         if (meshIsland != null) meshIsland.Clear();
         meshIsland = new Mesh();
         GetComponent<MeshFilter>().mesh = meshIsland;
 
-        vaT = await Task.Run(() => CreateShape(currPos));
+        //vaT = await Task.Run(() => CreateShape(currPos));
+        vaT = CreateShape(currPos);
         UpdateMesh(vaT);
         GetComponent<MeshCollider>().sharedMesh = meshIsland;
         GetComponent<MeshCollider>().sharedMesh.RecalculateNormals();
@@ -162,7 +163,8 @@ public class IslandGenerator : MonoBehaviour
                 i++;
             }
         }
-        int[] triangles = new int[xSize * zSize * 6];
+        //int[] triangles = new int[xSize * zSize * 6];
+        List<int> triangles = new();
         int vert = 0;
         int tris = 0;
         List<Vector2> foundColliderSport = new();
@@ -174,13 +176,29 @@ public class IslandGenerator : MonoBehaviour
         {
             for (int x = 0; x < xSize; x++)
             {
-                triangles[tris + 0] = vert + 0;
-                triangles[tris + 1] = vert + xSize + 1;
-                triangles[tris + 2] = vert + 1;
+                if ((verticies[vert + 0].y > -2) &&
+                        (verticies[vert + xSize + 1].y > -2) &&
+                        (verticies[vert + 1].y > -2))
+                {
+                    //triangles[tris + 0] = vert + 0;
+                    //triangles[tris + 1] = vert + xSize + 1;
+                    //triangles[tris + 2] = vert + 1;
+                    triangles.Add(vert + 0);
+                    triangles.Add(vert + xSize + 1);
+                    triangles.Add(vert + 1);
+                }
                 //FindEgdes(vert + 0, vert + xSize + 1, vert + 1);
-                triangles[tris + 3] = vert + 1;
-                triangles[tris + 4] = vert + xSize + 1;
-                triangles[tris + 5] = vert + xSize + 2;
+                if ((verticies[vert + 1].y > -2) &&
+                        (verticies[vert + xSize + 1].y > -2) &&
+                        (verticies[vert + xSize + 2].y > -2))
+                {
+                    //triangles[tris + 3] = vert + 1;
+                    //triangles[tris + 4] = vert + xSize + 1;
+                    //triangles[tris + 5] = vert + xSize + 2;
+                    triangles.Add(vert + 1);
+                    triangles.Add(vert + xSize + 1);
+                    triangles.Add(vert + xSize + 2);
+                }
                 //FindEgdes(vert + 1, vert + xSize + 1, vert + xSize + 2);
 
                 vert++;
@@ -450,7 +468,7 @@ public class IslandGenerator : MonoBehaviour
         //        foundNeiVert[^1].RemoveAt(i);
         //    }
         //}
-        return new VertAndTri(verticies, triangles, foundColliderSport, foundNeiVert, containigTiles);
+        return new VertAndTri(verticies, triangles.ToArray(), foundColliderSport, foundNeiVert, containigTiles);
     }
     //void CreateHardEdgeShape()
     //{
@@ -929,23 +947,23 @@ public class IslandGenerator : MonoBehaviour
     //    ret /= lst.Count;
     //    return ret;
     //}
-    private class HelpIslandPos
-    {
-        public int crossNeighorCount = 0;
-        public int[] neighborIndexes = new int[] { -1, -1, -1, -1, -1, -1, -1, -1 };
-        public HelpIslandPos(Vector2 coord)
-        {
+    //private class HelpIslandPos
+    //{
+    //    public int crossNeighorCount = 0;
+    //    public int[] neighborIndexes = new int[] { -1, -1, -1, -1, -1, -1, -1, -1 };
+    //    public HelpIslandPos(Vector2 coord)
+    //    {
 
-        }
-    }
-    private class EdgeCoordNeighboors
-    {
-        public int index;
-        public List<int> neighboors;
-        public EdgeCoordNeighboors(int index)
-        {
-            this.index = index;
-            neighboors = new();
-        }
-    }
+    //    }
+    //}
+    //private class EdgeCoordNeighboors
+    //{
+    //    public int index;
+    //    public List<int> neighboors;
+    //    public EdgeCoordNeighboors(int index)
+    //    {
+    //        this.index = index;
+    //        neighboors = new();
+    //    }
+    //}
 }

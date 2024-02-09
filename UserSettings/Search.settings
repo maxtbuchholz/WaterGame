@@ -13,6 +13,9 @@ scopes = {
 	"last_search.74AD8FDB" = "circ"
 	"OpenInspectorPreview.74AD8FDB" = "0"
 	"currentGroup.74AD8FDB" = "all"
+	"last_search.5A656512" = "ref=\"Assets/Terrain/IslandGenerator.cs\""
+	"OpenInspectorPreview.5A656512" = "0"
+	"currentGroup.5A656512" = null
 }
 providers = {
 	adb = {
@@ -58,6 +61,11 @@ providers = {
 	asset = {
 		active = true
 		priority = 25
+		defaultAction = null
+	}
+	presets_provider = {
+		active = false
+		priority = -10
 		defaultAction = null
 	}
 }
