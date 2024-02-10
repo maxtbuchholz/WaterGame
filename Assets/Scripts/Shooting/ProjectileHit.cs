@@ -26,6 +26,10 @@ public class ProjectileHit : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
         Collide(collision.gameObject.tag);
+        if(collision.gameObject.TryGetComponent<DetectHit>(out DetectHit detectHit))
+        {
+            detectHit.DealtDamage(-20, 0);
+        }
         //Debug.Break();
     }
     private void Collide(string tag)

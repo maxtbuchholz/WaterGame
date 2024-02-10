@@ -14,23 +14,31 @@ public class TurretController : MonoBehaviour
     [SerializeField] GameObject barrel;
     [SerializeField] GameObject shootPoint;
     [SerializeField] GameObject turretCube;
+    [SerializeField] GameObject barrelRotationPoint;
+    [SerializeField] float distanceMultiplyer = 1;
+    [SerializeField] float distanceAdd = 0;
+    [SerializeField] bool overhead = false;
     Vector3[] trajectory = new Vector3[] { };
-    private float force = 100;
+    [SerializeField] float force = 100;
     private float maxDistance;
     Dictionary<float, float> cannonDistanceToTime = new();
+    Dictionary<float, float> cannonDistanceToAngle = new();
+    private float gravity = 50;
     private void Start()
     {
         cannonDistanceToTime = new();
-        maxDistance = Mathf.Pow(force, 2) / 9.81f;
+        maxDistance = Mathf.Pow(force, 2) / gravity;
         bool keepSearching = true;
         float step = 1.0f;
         float currStep = 0.0f;
         float forceSqr = force * force;
         while (keepSearching)
         {
-            float angle = Mathf.Asin((9.81f * currStep) / (forceSqr)) / 2;
-            float timeToTarget = currStep / (Mathf.Cos(angle) * force);
+            float angle = Mathf.Asin((gravity * currStep) / (forceSqr)) / 2;
+            if (overhead) angle = 1.5708f - angle;
+            float timeToTarget = 2 * (force / gravity) * Mathf.Sin(angle);//currStep / (Mathf.Cos(angle) * force);
             cannonDistanceToTime.Add(currStep, timeToTarget);
+            cannonDistanceToAngle.Add(currStep, angle);
             currStep += step;
             if (currStep > maxDistance)
                 keepSearching = false;
@@ -38,12 +46,13 @@ public class TurretController : MonoBehaviour
     }
     public Vector3 RequestShot(Vector3 targetPos, out ShootAbility shootAbility)
     {
-        Vector3 vDistance = (targetPos - shootPoint.transform.position) * 1.06f;
+        Vector3 vDistance = (targetPos - shootPoint.transform.position) * distanceMultiplyer;
         vDistance.y = -vDistance.y;
         Vector3 normalDist = (new Vector3(targetPos.x, 0, targetPos.z) - new Vector3(shootPoint.transform.position.x, 0, shootPoint.transform.position.z)).normalized;
         float d = Mathf.Pow(Mathf.Pow(vDistance.x, 2) + Mathf.Pow(vDistance.z, 2), 0.5f);
-        float angle = GetAngle(9.81f, force, d, vDistance.y);
+        float angle = GetAngle(gravity, force, d, vDistance.y);
         if (float.IsNaN(angle)) { shootAbility = ShootAbility.toFar; return Vector3.zero; }
+        if (overhead) angle = 1.5708f - angle;
         float rotY = Mathf.Atan2(normalDist.x, normalDist.z) * Mathf.Rad2Deg;
         normalDist.y = Mathf.Sin(angle);
         //Debug.DrawLine(shootPoint.transform.position, (normalDist * 5f) + shootPoint.transform.position, Color.red);
@@ -57,7 +66,10 @@ public class TurretController : MonoBehaviour
                 return Vector3.zero;
             }
         turret.transform.rotation = Quaternion.Euler(0, rotY, 0);
-        barrel.transform.localRotation = Quaternion.Euler(-angle * Mathf.Rad2Deg, 0, 0);
+        if (barrelRotationPoint == null)
+            barrel.transform.localRotation = Quaternion.Euler(-angle * Mathf.Rad2Deg, 0, 0);
+        else
+            barrelRotationPoint.transform.localRotation = Quaternion.Euler(-angle * Mathf.Rad2Deg, 0, 0);
         hits = (Physics.RaycastAll(shootPoint.transform.position, normalDist, 5f));
         foreach (RaycastHit hit in hits)
             if (!hit.collider.CompareTag("IslandOuterCollider") && !hit.collider.CompareTag("SeaTile") && ((hit.collider.gameObject != turret) && (hit.collider.gameObject != barrel) && (hit.collider.gameObject != shootPoint) && (hit.collider.gameObject != turretCube)))
@@ -81,8 +93,8 @@ public class TurretController : MonoBehaviour
     {
         Vector2 turretPos = new Vector2(transform.position.x, transform.position.z);
         Vector2 oneSecOut = targetPos + targetVelocity;
-        float currDst = Vector2.Distance(targetPos, turretPos) * 1.06f;            //chamge transformpos to vector2
-        float futureDst = Vector2.Distance(oneSecOut, turretPos) * 1.06f;
+        float currDst = (Vector2.Distance(targetPos, turretPos) * distanceMultiplyer) + distanceAdd;            //chamge transformpos to vector2
+        float futureDst = (Vector2.Distance(oneSecOut, turretPos) * distanceMultiplyer) + distanceAdd;
         float diffInDst = futureDst - currDst;
         //Debug.Log(diffInDst);
 
@@ -118,9 +130,13 @@ public class TurretController : MonoBehaviour
                 return Vector3.zero;
             }
         }
-        float angle = (Mathf.Asin((9.18F * closestDst) / (Mathf.Pow(force, 2)))) / 2;
-        Vector3 normalDist = (new Vector3(targetPos.x, 0, targetPos.y) - new Vector3(shootPoint.transform.position.x, 0, shootPoint.transform.position.z)).normalized;
-        float rotY = Mathf.Atan2(normalDist.x, normalDist.z) * Mathf.Rad2Deg;
+        //float angle = (Mathf.Asin((9.18F * closestDst) / (Mathf.Pow(force, 2)))) / 2;
+        //if (overhead) angle = 1.5708f - angle;
+        float angle = cannonDistanceToAngle[closestDst];
+        Vector3 turn = (new Vector3(targetPos.x, 0, targetPos.y) - new Vector3(shootPoint.transform.position.x, 0, shootPoint.transform.position.z)).normalized;
+        Vector3 normalDist = new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0);
+        float rotY = Mathf.Atan2(turn.x, turn.z) * Mathf.Rad2Deg;
+        normalDist = Rotated(normalDist, 0, rotY - 90, 0, Vector3.down);
         normalDist.y = Mathf.Sin(angle);
 
         hits = (Physics.RaycastAll(turret.transform.position + new Vector3(0, 0.15f, 0), normalDist, 5f));
@@ -132,7 +148,10 @@ public class TurretController : MonoBehaviour
             }
 
         turret.transform.rotation = Quaternion.Euler(0, rotY, 0);
-        barrel.transform.localRotation = Quaternion.Euler(-angle * Mathf.Rad2Deg, 0, 0);
+        if (barrelRotationPoint == null)
+            barrel.transform.localRotation = Quaternion.Euler(-angle * Mathf.Rad2Deg, 0, 0);
+        else
+            barrelRotationPoint.transform.localRotation = Quaternion.Euler(-angle * Mathf.Rad2Deg, 0, 0);
 
         hits = (Physics.RaycastAll(shootPoint.transform.position, normalDist, 5f));
         foreach (RaycastHit hit in hits)
@@ -148,7 +167,7 @@ public class TurretController : MonoBehaviour
     public bool ShootProjectile(Vector3 normalDist)
     {
         GameObject proj = GameObject.Instantiate(projectile);
-        if(shipValues != null)
+        if (shipValues != null)
             proj.GetComponent<ProjectileHit>().shipParts = shipValues.shipParts;
         else if (fortValues != null)
             proj.GetComponent<ProjectileHit>().shipParts = fortValues.fortParts;
@@ -183,7 +202,7 @@ public class TurretController : MonoBehaviour
         vDistance.y = -vDistance.y;
         Vector3 normalDist = (new Vector3(targetPos.x, 0, targetPos.z) - new Vector3(transform.position.x, 0, transform.position.z)).normalized;
         float d = Mathf.Pow(Mathf.Pow(vDistance.x, 2) + Mathf.Pow(vDistance.z, 2), 0.5f);
-        float angle = GetAngle(9.81f, locForce, d, vDistance.y);
+        float angle = GetAngle(gravity, locForce, d, vDistance.y);
         float[] points = GetTrajectoryPoints(locCount, locForce, angle, 0);
         Vector3[] verts = new Vector3[locCount];
         for (int x = 0; x < locCount; x++)
@@ -198,7 +217,7 @@ public class TurretController : MonoBehaviour
         for (int x = 0; x < points.Length; x++)
         {
             float y = initialHeight + (x * Mathf.Tan(angle));
-            y -= (9.81f * (Mathf.Pow(x, 2) / (2 * Mathf.Pow(force, 2) * Mathf.Pow(Mathf.Cos(angle), 2))));
+            y -= (gravity * (Mathf.Pow(x, 2) / (2 * Mathf.Pow(force, 2) * Mathf.Pow(Mathf.Cos(angle), 2))));
             points[x] = y;
         }
 
@@ -207,7 +226,21 @@ public class TurretController : MonoBehaviour
     float GetHeightAtTime(float force, float angle, float initialHeight, float time)
     {
         float y = initialHeight + (time * Mathf.Tan(angle));
-        y -= (9.81f * (Mathf.Pow(time, 2) / (2 * Mathf.Pow(force, 2) * Mathf.Pow(Mathf.Cos(angle), 2))));
+        y -= (gravity * (Mathf.Pow(time, 2) / (2 * Mathf.Pow(force, 2) * Mathf.Pow(Mathf.Cos(angle), 2))));
         return y;
+    }
+    public Vector3 Rotated(Vector3 vector, Quaternion rotation, Vector3 pivot)
+    {
+        return rotation * (vector - pivot) + pivot;
+    }
+
+    public Vector3 Rotated(Vector3 vector, Vector3 rotation, Vector3 pivot)
+    {
+        return Rotated(vector, Quaternion.Euler(rotation), pivot);
+    }
+
+    public Vector3 Rotated(Vector3 vector, float x, float y, float z, Vector3 pivot)
+    {
+        return Rotated(vector, Quaternion.Euler(x, y, z), pivot);
     }
 }

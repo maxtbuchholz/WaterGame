@@ -62,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets/Scripts/ShipMove/ShipMovement.cs" />
+    <Compile Include="Assets/Scripts/healthandteam/DetectHit.cs" />
     <Compile Include="Assets/Scripts/x/LoadWaterTiles.cs" />
     <Compile Include="Assets/Scripts/ShipMove/ShipValueControl.cs" />
     <Compile Include="Assets/Scripts/Shooting/ProjectileHit.cs" />
@@ -70,6 +71,7 @@
     <Compile Include="Assets/Scripts/Noise.cs" />
     <Compile Include="Assets/Scripts/FrontTrail.cs" />
     <Compile Include="Assets/Scripts/Touch/PlayerInput.cs" />
+    <Compile Include="Assets/Scripts/healthandteam/TeamsController.cs" />
     <Compile Include="Assets/Scripts/Shooting/FortValues.cs" />
     <Compile Include="Assets/Scripts/Shooting/FortTurretControl.cs" />
     <Compile Include="Assets/Scripts/Camera/FoamCameraFollow.cs" />
@@ -81,6 +83,7 @@
     <Compile Include="Assets/Scripts/Shooting/PlayerFireControl.cs" />
     <Compile Include="Assets/Scripts/Camera/FocalPointFollow.cs" />
     <Compile Include="Assets/Scripts/WaterLoad.cs" />
+    <Compile Include="Assets/Scripts/healthandteam/HealthController.cs" />
     <Compile Include="Assets/Terrain/SetTerrainShader.cs" />
     <Compile Include="Assets/Scripts/WaterMovement.cs" />
     <Compile Include="Assets/Scripts/SimpleBob.cs" />

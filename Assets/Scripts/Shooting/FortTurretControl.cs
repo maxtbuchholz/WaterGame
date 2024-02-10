@@ -28,11 +28,22 @@ public class FortTurretControl : MonoBehaviour
                         turretNormalVec.Add(normalVec);
                     }
                 }
-                for(int i = 0; i < ableTurretIndexes.Count; i++)
+                Queue<KeyValuePair<int, Vector3>> turretShootQueue = new();
+                for (int i = 0; i < ableTurretIndexes.Count; i++)
                 {
-                    turrets[ableTurretIndexes[i]].ShootProjectile(turretNormalVec[i]);
+                    turretShootQueue.Enqueue(new KeyValuePair<int, Vector3>(ableTurretIndexes[i], turretNormalVec[i]));
                 }
+                StartCoroutine(FireProjectiles(turretShootQueue));
             }
+        }
+    }
+    IEnumerator FireProjectiles(Queue<KeyValuePair<int, Vector3>> turretShootQueue)
+    {
+        while(turretShootQueue.Count > 0)
+        {
+            KeyValuePair<int, Vector3> turNor = turretShootQueue.Dequeue();
+            turrets[turNor.Key].ShootProjectile(turNor.Value);
+            yield return new WaitForSeconds(Random.Range(0.02f, 0.15f));
         }
     }
 }
