@@ -17,13 +17,14 @@ public class TurretController : MonoBehaviour
     [SerializeField] GameObject barrelRotationPoint;
     [SerializeField] float distanceMultiplyer = 1;
     [SerializeField] float distanceAdd = 0;
+    [SerializeField] float radAngleAdd = 0;
     [SerializeField] bool overhead = false;
     Vector3[] trajectory = new Vector3[] { };
     [SerializeField] float force = 100;
     private float maxDistance;
     Dictionary<float, float> cannonDistanceToTime = new();
     Dictionary<float, float> cannonDistanceToAngle = new();
-    private float gravity = 50;
+    private float gravity = 30;
     private void Start()
     {
         cannonDistanceToTime = new();
@@ -48,16 +49,20 @@ public class TurretController : MonoBehaviour
     {
         Vector3 vDistance = (targetPos - shootPoint.transform.position) * distanceMultiplyer;
         vDistance.y = -vDistance.y;
-        Vector3 normalDist = (new Vector3(targetPos.x, 0, targetPos.z) - new Vector3(shootPoint.transform.position.x, 0, shootPoint.transform.position.z)).normalized;
+        Vector3 turn = (new Vector3(targetPos.x, 0, targetPos.z) - new Vector3(shootPoint.transform.position.x, 0, shootPoint.transform.position.z)).normalized;
         float d = Mathf.Pow(Mathf.Pow(vDistance.x, 2) + Mathf.Pow(vDistance.z, 2), 0.5f);
-        float angle = GetAngle(gravity, force, d, vDistance.y);
+        float angle = GetAngle(gravity, force, d, vDistance.y) + radAngleAdd;
         if (float.IsNaN(angle)) { shootAbility = ShootAbility.toFar; return Vector3.zero; }
         if (overhead) angle = 1.5708f - angle;
-        float rotY = Mathf.Atan2(normalDist.x, normalDist.z) * Mathf.Rad2Deg;
+        Vector3 normalDist = new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0);
+        float rotY = Mathf.Atan2(turn.x, turn.z) * Mathf.Rad2Deg;
+        normalDist = Rotated(normalDist, 0, rotY - 90, 0, Vector3.down);
         normalDist.y = Mathf.Sin(angle);
         //Debug.DrawLine(shootPoint.transform.position, (normalDist * 5f) + shootPoint.transform.position, Color.red);
         //Debug.Break();
-        RaycastHit[] hits = (Physics.RaycastAll(turret.transform.position + new Vector3(0, 0.15f, 0), normalDist, 5f));
+        Vector3 turretCast = normalDist;
+        turretCast.y = 0;
+        RaycastHit[] hits = (Physics.RaycastAll(turret.transform.position + new Vector3(0, 0.15f, 0), turretCast.normalized, 5f));
         foreach (RaycastHit hit in hits)
             if (!hit.collider.CompareTag("IslandOuterCollider") && !hit.collider.CompareTag("SeaTile") && ((hit.collider.gameObject != turret) && (hit.collider.gameObject != barrel) && (hit.collider.gameObject != shootPoint) && (hit.collider.gameObject != turretCube)))
             {
@@ -132,14 +137,15 @@ public class TurretController : MonoBehaviour
         }
         //float angle = (Mathf.Asin((9.18F * closestDst) / (Mathf.Pow(force, 2)))) / 2;
         //if (overhead) angle = 1.5708f - angle;
-        float angle = cannonDistanceToAngle[closestDst];
+        float angle = cannonDistanceToAngle[closestDst] + radAngleAdd;
         Vector3 turn = (new Vector3(targetPos.x, 0, targetPos.y) - new Vector3(shootPoint.transform.position.x, 0, shootPoint.transform.position.z)).normalized;
         Vector3 normalDist = new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0);
         float rotY = Mathf.Atan2(turn.x, turn.z) * Mathf.Rad2Deg;
         normalDist = Rotated(normalDist, 0, rotY - 90, 0, Vector3.down);
         normalDist.y = Mathf.Sin(angle);
-
-        hits = (Physics.RaycastAll(turret.transform.position + new Vector3(0, 0.15f, 0), normalDist, 5f));
+        Vector3 turretCast = normalDist;
+        turretCast.y = 0;
+        hits = (Physics.RaycastAll(turret.transform.position + new Vector3(0, 0.15f, 0), turretCast.normalized, 5f));
         foreach (RaycastHit hit in hits)
             if (!hit.collider.CompareTag("IslandOuterCollider") && !hit.collider.CompareTag("SeaTile") && ((hit.collider.gameObject != turret) && (hit.collider.gameObject != barrel) && (hit.collider.gameObject != shootPoint) && (hit.collider.gameObject != turretCube)))
             {

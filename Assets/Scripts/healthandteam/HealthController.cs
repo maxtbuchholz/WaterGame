@@ -9,6 +9,7 @@ public class HealthController : MonoBehaviour
     private float maxHealth = 100;
     [SerializeField] GameObject healthBarPrefab;
     [SerializeField] Camera camera;
+    [SerializeField] LocalTeamController localTeamController;
     private GameObject healthBar;
     private Transform MoveBar;
     private void Start()
@@ -16,18 +17,20 @@ public class HealthController : MonoBehaviour
         currentHealth = maxHealth;
         healthBar = GameObject.Instantiate(healthBarPrefab);
         healthBar.transform.parent = transform;
-        healthBar.transform.localPosition = new Vector3(0, 5, 0);
+        healthBar.transform.localPosition = new Vector3(0, 3, 0);
         foreach (Transform child in healthBar.transform)
         {
             if (child.name == "MoveBar")
             {
                 MoveBar = child;
+                localTeamController.AddObjectToColored(MoveBar.gameObject);
             }
         }
     }
     public void Update()
     {
         healthBar.transform.forward = camera.transform.forward;
+        healthBar.transform.localRotation = Quaternion.Euler(healthBar.transform.localRotation.eulerAngles.x, healthBar.transform.localRotation.eulerAngles.y, -90);
     }
     public void EffectHealth(float change)
     {

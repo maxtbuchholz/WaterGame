@@ -44,9 +44,12 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: Default
-    uniqueID: 0
-    locked: 0
   - name: NavBar
     uniqueID: 2844876987
+    locked: 0
+  - name: WorldUI
+    uniqueID: 1815381433
+    locked: 0
+  - name: Default
+    uniqueID: 0
     locked: 0
