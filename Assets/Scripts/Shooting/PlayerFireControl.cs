@@ -9,12 +9,14 @@ public class PlayerFireControl : MonoBehaviour
     [SerializeField] Camera camera;
     [SerializeField] GameObject debugBall;
     // Start is called before the first frame update
+    private FindTargetController findtarget;
     void Start()
     {
-        
+        findtarget = FindTargetController.Instance;
+        findtarget.ModifyTargetable(this.gameObject, 0, FindTargetController.targetType.ship, FindTargetController.targetContition.targetable);
     }
 
-    //// Update is called once per frame
+    // Update is called once per frame
     //void Update()
     //{
     //    if (Input.GetMouseButtonDown(0))
@@ -36,6 +38,7 @@ public class PlayerFireControl : MonoBehaviour
     //}
     public void RequestShot(Vector3 touchPos)
     {
+        if (teamId == -1) return;
         Ray ray = camera.ScreenPointToRay(touchPos);
         RaycastHit[] hits = Physics.RaycastAll(ray);
         Vector3 currentBestShot = new();
@@ -68,11 +71,16 @@ public class PlayerFireControl : MonoBehaviour
             }
             for (int i = 0; i < ableTurretIndexes.Count; i++)
             {
-                turrets[ableTurretIndexes[i]].ShootProjectile(turretNormalVec[i]);
+                turrets[ableTurretIndexes[i]].ShootProjectile(turretNormalVec[i], teamId);
             }
             //foreach (TurretController tC in turrets)
             //    tC.RequestShot(currentBestShot);
             debugBall.transform.position = currentBestShot;
         }
+    }
+    private int teamId = -1;
+    public void SetTeamId(int teamId)
+    {
+        this.teamId = teamId;
     }
 }

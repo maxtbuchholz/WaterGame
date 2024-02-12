@@ -5361,7 +5361,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!135 &186347782
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -6869,6 +6869,11 @@ Transform:
 --- !u!1 &571415766 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8164078558771037576, guid: 3b0bad687ede14e4ab1b33b2f8012c7d, type: 3}
+  m_PrefabInstance: {fileID: 1212514719}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &571415768 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7635826562936255635, guid: 3b0bad687ede14e4ab1b33b2f8012c7d, type: 3}
   m_PrefabInstance: {fileID: 1212514719}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &574600478
@@ -9663,6 +9668,9 @@ GameObject:
   - component: {fileID: 1236655863}
   - component: {fileID: 1236655862}
   - component: {fileID: 1236655864}
+  - component: {fileID: 1236655865}
+  - component: {fileID: 1236655866}
+  - component: {fileID: 1236655867}
   m_Layer: 0
   m_Name: Controller
   m_TagString: Untagged
@@ -9712,6 +9720,44 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waterHeightTex: {fileID: 2800000, guid: dafc0f4776a1e448aa42a0bc229f1365, type: 3}
+--- !u!114 &1236655865
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1236655861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 666d27bb1506b4e459f4842f52dbbe1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  camera: {fileID: 1070980776}
+  DebugBall: {fileID: 186347785}
+--- !u!114 &1236655866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1236655861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92a1f774f43a64200a8b9d94b3e17692, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1236655867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1236655861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00211049ac60248bb8fc7bbd83a93bc2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1245790424
 GameObject:
   m_ObjectHideFlags: 0
@@ -10182,7 +10228,7 @@ SortingGroup:
   m_GameObject: {fileID: 1350297711}
   m_Enabled: 1
   m_SortingLayerID: -1450090309
-  m_SortingLayer: 1
+  m_SortingLayer: -2
   m_SortingOrder: 0
   m_SortAtRoot: 0
 --- !u!1 &1353227916
@@ -15806,9 +15852,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1708547816}
   - component: {fileID: 1708547817}
-  - component: {fileID: 1708547818}
+  - component: {fileID: 1708547820}
   m_Layer: 0
-  m_Name: Controller
+  m_Name: OtherController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15841,7 +15887,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0bddd0c7a67d4ccca2cf9b182c3234d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1708547818
+--- !u!114 &1708547820
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -15850,9 +15896,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1708547815}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92a1f774f43a64200a8b9d94b3e17692, type: 3}
+  m_Script: {fileID: 11500000, guid: 666d27bb1506b4e459f4842f52dbbe1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  camera: {fileID: 1070980776}
+  DebugBall: {fileID: 186347785}
 --- !u!1 &1715038579
 GameObject:
   m_ObjectHideFlags: 0
@@ -15943,7 +15991,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e83f69dc3481e47a5b989ffd89f184e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 97424760}
   turrets:
   - {fileID: 1996483292}
   - {fileID: 2084327847}
@@ -15962,6 +16009,11 @@ MonoBehaviour:
   healthBarPrefab: {fileID: 5708455843569552123, guid: 9bb8759a1f4d84cfbb2166347202fd0a, type: 3}
   camera: {fileID: 1070980776}
   localTeamController: {fileID: 1732556785}
+  isFort: 1
+  fortTurretControl: {fileID: 1732556782}
+  fortRenderer: {fileID: 571415768}
+  fortCaptureCircle: {fileID: 6222878789040752236, guid: 92593c93386fa4b04bb9561c080ba9fe, type: 3}
+  captureButtonPrefab: {fileID: 3518033570003867866, guid: 75825f330823349469dd66b82362ce5b, type: 3}
 --- !u!114 &1732556784
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15990,6 +16042,10 @@ MonoBehaviour:
   teamId: -1
   coloredObjects:
   - {fileID: 571415766}
+  fortTurretControl: {fileID: 1732556782}
+  playerFireControl: {fileID: 0}
+  isplayer: 0
+  healthController: {fileID: 1732556783}
 --- !u!1 &1743962096
 GameObject:
   m_ObjectHideFlags: 0
@@ -16270,6 +16326,8 @@ GameObject:
   - component: {fileID: 1872215393}
   - component: {fileID: 1872215397}
   - component: {fileID: 1872215398}
+  - component: {fileID: 1872215400}
+  - component: {fileID: 1872215399}
   m_Layer: 0
   m_Name: Cylinder
   m_TagString: Untagged
@@ -16393,9 +16451,46 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e83f69dc3481e47a5b989ffd89f184e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 97424760}
   turrets:
   - {fileID: 107651883}
+--- !u!114 &1872215399
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1872215392}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46822a8e851fc420287f2b9194c73759, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  teamId: -1
+  coloredObjects: []
+  fortTurretControl: {fileID: 1872215398}
+  playerFireControl: {fileID: 0}
+  isplayer: 0
+  healthController: {fileID: 1872215400}
+--- !u!114 &1872215400
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1872215392}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a03caa3044bb4df08a1857a7072a47d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthBarPrefab: {fileID: 5708455843569552123, guid: 9bb8759a1f4d84cfbb2166347202fd0a, type: 3}
+  camera: {fileID: 1070980776}
+  localTeamController: {fileID: 1872215399}
+  isFort: 1
+  fortTurretControl: {fileID: 1872215398}
+  fortRenderer: {fileID: 1872215394}
+  fortCaptureCircle: {fileID: 0}
+  captureButtonPrefab: {fileID: 0}
 --- !u!1001 &1885345387
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16480,6 +16575,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 187f01985d84645e9be9aafc46d668e1, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1885345391}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 187f01985d84645e9be9aafc46d668e1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1885345392}
     - targetCorrespondingSourceObject: {fileID: 8164078558771037576, guid: 187f01985d84645e9be9aafc46d668e1, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1120692580}
@@ -16527,7 +16625,25 @@ MonoBehaviour:
   - {fileID: 1248900964}
   - {fileID: 1457619377}
   camera: {fileID: 1070980776}
-  debugBall: {fileID: 186347781}
+  debugBall: {fileID: 0}
+--- !u!114 &1885345392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1885345389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46822a8e851fc420287f2b9194c73759, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  teamId: -1
+  coloredObjects: []
+  fortTurretControl: {fileID: 0}
+  playerFireControl: {fileID: 1885345391}
+  isplayer: 1
+  healthController: {fileID: 0}
 --- !u!1 &1896776697
 GameObject:
   m_ObjectHideFlags: 0
@@ -21779,7 +21895,7 @@ SortingGroup:
   m_GameObject: {fileID: 2041990476}
   m_Enabled: 1
   m_SortingLayerID: -1450090309
-  m_SortingLayer: 1
+  m_SortingLayer: -2
   m_SortingOrder: 867
   m_SortAtRoot: 0
 --- !u!1 &2056133710

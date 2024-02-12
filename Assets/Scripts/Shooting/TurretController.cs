@@ -51,7 +51,7 @@ public class TurretController : MonoBehaviour
         vDistance.y = -vDistance.y;
         Vector3 turn = (new Vector3(targetPos.x, 0, targetPos.z) - new Vector3(shootPoint.transform.position.x, 0, shootPoint.transform.position.z)).normalized;
         float d = Mathf.Pow(Mathf.Pow(vDistance.x, 2) + Mathf.Pow(vDistance.z, 2), 0.5f);
-        float angle = GetAngle(gravity, force, d, vDistance.y) + radAngleAdd;
+        float angle = GetAngle(gravity, force, d, vDistance.y);
         if (float.IsNaN(angle)) { shootAbility = ShootAbility.toFar; return Vector3.zero; }
         if (overhead) angle = 1.5708f - angle;
         Vector3 normalDist = new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0);
@@ -103,7 +103,7 @@ public class TurretController : MonoBehaviour
         float diffInDst = futureDst - currDst;
         //Debug.Log(diffInDst);
 
-        if (futureDst > maxDistance) shootAbility = ShootAbility.toFar;
+        if (futureDst > maxDistance) { shootAbility = ShootAbility.toFar; return Vector3.zero; };
 
         float closestTime = 0;
         float closestDst = 0;
@@ -170,13 +170,14 @@ public class TurretController : MonoBehaviour
         shootAbility = ShootAbility.able;
         return normalDist;
     }
-    public bool ShootProjectile(Vector3 normalDist)
+    public bool ShootProjectile(Vector3 normalDist, int teamId)
     {
         GameObject proj = GameObject.Instantiate(projectile);
         if (shipValues != null)
             proj.GetComponent<ProjectileHit>().shipParts = shipValues.shipParts;
         else if (fortValues != null)
             proj.GetComponent<ProjectileHit>().shipParts = fortValues.fortParts;
+        proj.GetComponent<ProjectileHit>().SetTeam(teamId);
         proj.transform.position = shootPoint.transform.position;
         proj.GetComponent<Rigidbody>().velocity = normalDist * force;
         //Debug.Break();

@@ -10,6 +10,7 @@ TagManager:
   - Projectile
   - Ship
   - ShipDrive
+  - UI
   layers:
   - Default
   - TransparentFX

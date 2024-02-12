@@ -7,6 +7,6 @@ public class DetectHit : MonoBehaviour
     [SerializeField] HealthController healthController;
     public void DealtDamage(float damage, int teamID)
     {
-        healthController.EffectHealth(damage);
+        healthController.EffectHealth(damage, teamID);
     }
 }

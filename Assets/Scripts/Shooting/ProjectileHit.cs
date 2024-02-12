@@ -23,12 +23,18 @@ public class ProjectileHit : MonoBehaviour
         GameObject explosion = GameObject.Instantiate(cannonFireEffect);
         explosion.transform.position = transform.position;
     }
+    private int teamId = -1;
+    public void SetTeam(int teamId)
+    {
+        this.teamId = teamId;
+    }
     void OnCollisionEnter(Collision collision)
     {
+        if (teamId == -1) return;
         Collide(collision.gameObject.tag);
         if(collision.gameObject.TryGetComponent<DetectHit>(out DetectHit detectHit))
         {
-            detectHit.DealtDamage(-20, 0);
+            detectHit.DealtDamage(-20, teamId);
         }
         //Debug.Break();
     }

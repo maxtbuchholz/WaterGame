@@ -5,36 +5,65 @@ using UnityEngine.UIElements;
 
 public class FortTurretControl : MonoBehaviour
 {
-    [SerializeField] Transform target;
+    private Transform target;
     [SerializeField] List<TurretController> turrets;
+    private FindTargetController findTargetController;
     float time = 0.0f;
+    private bool gunsEnabled = true;
+    private void Start()
+    {
+        findTargetController = FindTargetController.Instance;
+    }
     private void Update()
     {
+        if (!gunsEnabled) return;
+        if (teamId == -1) return;
         time += Time.deltaTime;
         if(time >= 1)
         {
             time %= 1;
-            if (target.TryGetComponent<Rigidbody>(out Rigidbody rb))
+            target = findTargetController.GetTarget(transform.position, teamId, FindTargetController.targetType.fort);
+            if (target == null) return;
+            List<int> ableTurretIndexes = new();
+            List<Vector3> turretNormalVec = new();
+            TurretController.ShootAbility shootAbility;
+            Rigidbody rb = null;
+            if(target.TryGetComponent<ShipValueControl>(out ShipValueControl sVC))
             {
-                List<int> ableTurretIndexes = new();
-                List<Vector3> turretNormalVec = new();
-                TurretController.ShootAbility shootAbility;
+                rb = sVC.ship_drive.GetComponent<Rigidbody>();
+            }
+            if (rb != null)        //targeing movable target
+            {
                 for (int i = 0; i < turrets.Count; i++)
                 {
                     Vector3 normalVec = turrets[i].RequestShot(new Vector2(target.position.x, target.position.z), new Vector2(rb.velocity.x, rb.velocity.z), out shootAbility);
-                    if(shootAbility == TurretController.ShootAbility.able)
+                    if (shootAbility == TurretController.ShootAbility.able)
                     {
                         ableTurretIndexes.Add(i);
                         turretNormalVec.Add(normalVec);
                     }
                 }
-                Queue<KeyValuePair<int, Vector3>> turretShootQueue = new();
-                for (int i = 0; i < ableTurretIndexes.Count; i++)
-                {
-                    turretShootQueue.Enqueue(new KeyValuePair<int, Vector3>(ableTurretIndexes[i], turretNormalVec[i]));
-                }
-                StartCoroutine(FireProjectiles(turretShootQueue));
             }
+            else
+            {
+                Vector3 targetPos = target.position;
+                targetPos.y = 0;
+                for (int i = 0; i < turrets.Count; i++)
+                {
+                    Vector3 normalVec = turrets[i].RequestShot(targetPos, out shootAbility);
+                    if (shootAbility == TurretController.ShootAbility.able)
+                    {
+                        ableTurretIndexes.Add(i);
+                        turretNormalVec.Add(normalVec);
+                    }
+                }
+            }
+            Queue<KeyValuePair<int, Vector3>> turretShootQueue = new();
+            for (int i = 0; i < ableTurretIndexes.Count; i++)
+            {
+                turretShootQueue.Enqueue(new KeyValuePair<int, Vector3>(ableTurretIndexes[i], turretNormalVec[i]));
+            }
+            StartCoroutine(FireProjectiles(turretShootQueue));
         }
     }
     IEnumerator FireProjectiles(Queue<KeyValuePair<int, Vector3>> turretShootQueue)
@@ -42,8 +71,17 @@ public class FortTurretControl : MonoBehaviour
         while(turretShootQueue.Count > 0)
         {
             KeyValuePair<int, Vector3> turNor = turretShootQueue.Dequeue();
-            turrets[turNor.Key].ShootProjectile(turNor.Value);
+            turrets[turNor.Key].ShootProjectile(turNor.Value, teamId);
             yield return new WaitForSeconds(Random.Range(0.02f, 0.15f));
         }
+    }
+    public void SetEnabled(bool enabled)
+    {
+        gunsEnabled = enabled;
+    }
+    private int teamId = -1;
+    public void SetTeam(int teamId)
+    {
+        this.teamId = teamId;
     }
 }
