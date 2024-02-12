@@ -16,7 +16,7 @@ public class LocalTeamController : MonoBehaviour
     void Start()
     {
         if (!isplayer)
-            teamId = Random.Range(1, 7);
+            teamId = 1;// Random.Range(1, 7);
         else
             teamId = 0;
         SetGameObjectColors();

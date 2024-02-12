@@ -16,6 +16,7 @@ public class HealthController : MonoBehaviour
     [SerializeField] Renderer fortRenderer;
     [SerializeField] GameObject fortCaptureCircle;
     [SerializeField] GameObject captureButtonPrefab;
+    [SerializeField] GameObject fortExplosion;
     private GameObject healthBar;
     private Transform MoveBar;
     private bool healthRefiling = false;
@@ -63,6 +64,7 @@ public class HealthController : MonoBehaviour
         {
             if (isFort)
             {
+                GameObject.Instantiate(fortExplosion, transform.position + new Vector3(0, 1, 0), Quaternion.identity);
                 healthRefiling = true;
                 if (attackerTeamId == 0)
                     StartCoroutine(FortRefilHealthOrCapture(20.0f, currentHealth));

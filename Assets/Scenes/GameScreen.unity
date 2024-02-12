@@ -16014,6 +16014,7 @@ MonoBehaviour:
   fortRenderer: {fileID: 571415768}
   fortCaptureCircle: {fileID: 6222878789040752236, guid: 92593c93386fa4b04bb9561c080ba9fe, type: 3}
   captureButtonPrefab: {fileID: 3518033570003867866, guid: 75825f330823349469dd66b82362ce5b, type: 3}
+  fortExplosion: {fileID: 3945905181827361489, guid: d0e4f20e0b843413eb8ac53de0014408, type: 3}
 --- !u!114 &1732556784
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16491,6 +16492,7 @@ MonoBehaviour:
   fortRenderer: {fileID: 1872215394}
   fortCaptureCircle: {fileID: 0}
   captureButtonPrefab: {fileID: 0}
+  fortExplosion: {fileID: 0}
 --- !u!1001 &1885345387
 PrefabInstance:
   m_ObjectHideFlags: 0
