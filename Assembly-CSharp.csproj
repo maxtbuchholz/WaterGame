@@ -65,6 +65,7 @@
     <Compile Include="Assets/Scripts/healthandteam/LocalTeamController.cs" />
     <Compile Include="Assets/Scripts/healthandteam/DetectHit.cs" />
     <Compile Include="Assets/Scripts/x/LoadWaterTiles.cs" />
+    <Compile Include="Assets/Scripts/ShipSurroundFoam.cs" />
     <Compile Include="Assets/Scripts/ButtonCollisionTracker.cs" />
     <Compile Include="Assets/Scripts/ShipMove/ShipValueControl.cs" />
     <Compile Include="Assets/Scripts/Shooting/ProjectileHit.cs" />

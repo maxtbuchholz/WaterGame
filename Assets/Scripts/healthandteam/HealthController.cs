@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
+using UnityEngine.VFX;
 
 public class HealthController : MonoBehaviour
 {
@@ -17,12 +18,15 @@ public class HealthController : MonoBehaviour
     [SerializeField] GameObject fortCaptureCircle;
     [SerializeField] GameObject captureButtonPrefab;
     [SerializeField] GameObject fortExplosion;
+    [SerializeField] GameObject fortCapturedParticle;
     private GameObject healthBar;
     private Transform MoveBar;
     private bool healthRefiling = false;
     private FindTargetController findTarget;
+    private TeamsController teamsController;
     private void Start()
     {
+        teamsController = TeamsController.Instance;
         findTarget = FindTargetController.Instance;
         currentHealth = maxHealth;
         healthBar = GameObject.Instantiate(healthBarPrefab);
@@ -45,7 +49,6 @@ public class HealthController : MonoBehaviour
     private int teamId = -1;
     public void SetTeam(int teamId)
     {
-        Debug.Log("findTarget = null: " + (findTarget == null));
         if (findTarget == null) findTarget = FindTargetController.Instance;
         if (findTarget == null) return;
         if (teamId != -1) findTarget.ModifyTargetable(this.gameObject, teamId, isFort ? FindTargetController.targetType.fort : FindTargetController.targetType.ship, FindTargetController.targetContition.destoyed);
@@ -69,7 +72,11 @@ public class HealthController : MonoBehaviour
                 if (attackerTeamId == 0)
                     StartCoroutine(FortRefilHealthOrCapture(20.0f, currentHealth));
                 else
+                {
                     FortCaptuerdByAI(attackerTeamId);
+                    GameObject fC = GameObject.Instantiate(fortCapturedParticle, transform.position + new Vector3(0, 0.5f, 0), Quaternion.identity);
+                    fC.GetComponent<VisualEffect>().SetVector4("_TeamColor", teamsController.GetTeamColor(attackerTeamId));
+                }
             }
             else
             {           //destroy ship
@@ -93,7 +100,7 @@ public class HealthController : MonoBehaviour
     IEnumerator FortRefilHealthOrCapture(float timeToFill, float curMin)        //starts play cycle for a player to capture a fort
     {
         GameObject captureButton = GameObject.Instantiate(captureButtonPrefab);
-        captureButton.GetComponent<CaptureButton>().inFrontOf = transform.position + new Vector3(0, 1, 0);
+        captureButton.GetComponent<CaptureButton>().inFrontOf = transform.position + new Vector3(0, 0.5f, 0);
         captureButton.GetComponent<CaptureButton>().healthController = this;
         captureButton.transform.position = new Vector3(transform.position.x, transform.position.y + 2, transform.position.z);
         GameObject captureCircle = GameObject.Instantiate(fortCaptureCircle);
@@ -147,6 +154,8 @@ public class HealthController : MonoBehaviour
             forMat.SetColor("_BaseColor", color);
             barCol.a = 1;
             barMat.SetColor("_BaseColor", color);
+            GameObject fC = GameObject.Instantiate(fortCapturedParticle, transform.position + new Vector3(0, 1, 0), Quaternion.identity);
+            fC.GetComponent<VisualEffect>().SetVector4("_TeamColor", teamsController.GetTeamColor(0));
         }
         healthRefiling = false;
         fortTurretControl.SetEnabled(true);

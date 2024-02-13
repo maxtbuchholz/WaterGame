@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1674257232197536396}
   - component: {fileID: 8644315636657003015}
   m_Layer: 0
-  m_Name: FortExplosion
+  m_Name: FortCaptured
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -42,7 +42,7 @@ VisualEffect:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3945905181827361489}
   m_Enabled: 1
-  m_Asset: {fileID: 8926484042661614526, guid: 861d486dc4e9c447496c5403355d40fd, type: 3}
+  m_Asset: {fileID: 8926484042661614526, guid: 397b362d333f944e0aab119ea5794a13, type: 3}
   m_InitialEventName: OnPlay
   m_InitialEventNameOverriden: 0
   m_StartSeed: 0

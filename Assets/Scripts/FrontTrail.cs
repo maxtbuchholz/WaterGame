@@ -13,6 +13,7 @@ public class FrontTrail : MonoBehaviour
     [SerializeField] Transform wakeTransLeft;
     [SerializeField] ShipMovement shipMovement;
     private TrailRenderer wakeLeft;
+    [SerializeField] ShipSurroundFoam surroundFoam;
     private void Start()
     {
         wake = wakeTrans.GetComponent<TrailRenderer>();
@@ -49,6 +50,7 @@ public class FrontTrail : MonoBehaviour
                     newTrailPosLeft.Add(newPos + leftAngle);
                 }
             }
+            surroundFoam.SetWakeFoam(newTrailPos, newTrailPosLeft);
             //if(newTrailPos.Count > 0)
             //{
             //    int curOkCheck = 0;
