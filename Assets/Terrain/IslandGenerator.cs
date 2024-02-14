@@ -22,6 +22,7 @@ public class IslandGenerator : MonoBehaviour
     [SerializeField] int octaves = 6;
     [SerializeField] int xWidth = 400;
     [SerializeField] int zWidth = 400;
+    [SerializeField] FortGenerator fortGenerator;
     [SerializeField] Material clearIslandOuterColliderMaterial;
     void Start()
     {
@@ -30,6 +31,7 @@ public class IslandGenerator : MonoBehaviour
         xSize = Mathf.RoundToInt((WorldXWidth / 10.0f) * vertsPerTenWidth);
         zSize = Mathf.RoundToInt((WorldZWidth / 10.0f) * vertsPerTenWidth);
         Generate(transform.position);
+        fortGenerator.LoadFort(transform.position.x, transform.position.z, WorldXWidth, WorldZWidth);
         //await Task.Run(() =>
         //{
         //    await Generate(transform.position);

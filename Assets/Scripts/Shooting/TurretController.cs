@@ -62,7 +62,7 @@ public class TurretController : MonoBehaviour
         //Debug.Break();
         Vector3 turretCast = normalDist;
         turretCast.y = 0;
-        RaycastHit[] hits = (Physics.RaycastAll(turret.transform.position + new Vector3(0, 0.15f, 0), turretCast.normalized, 5f));
+        RaycastHit[] hits = (Physics.RaycastAll(turret.transform.position + new Vector3(0, 0.15f, 0), turretCast.normalized, 2.5f));
         foreach (RaycastHit hit in hits)
             if (!hit.collider.CompareTag("IslandOuterCollider") && !hit.collider.CompareTag("SeaTile") && ((hit.collider.gameObject != turret) && (hit.collider.gameObject != barrel) && (hit.collider.gameObject != shootPoint) && (hit.collider.gameObject != turretCube)))
             {
@@ -75,7 +75,7 @@ public class TurretController : MonoBehaviour
             barrel.transform.localRotation = Quaternion.Euler(-angle * Mathf.Rad2Deg, 0, 0);
         else
             barrelRotationPoint.transform.localRotation = Quaternion.Euler(-angle * Mathf.Rad2Deg, 0, 0);
-        hits = (Physics.RaycastAll(shootPoint.transform.position, normalDist, 5f));
+        hits = (Physics.RaycastAll(shootPoint.transform.position, normalDist, 2.5f));
         foreach (RaycastHit hit in hits)
             if (!hit.collider.CompareTag("IslandOuterCollider") && !hit.collider.CompareTag("SeaTile") && ((hit.collider.gameObject != turret) && (hit.collider.gameObject != barrel) && (hit.collider.gameObject != shootPoint) && (hit.collider.gameObject != turretCube)))
             {

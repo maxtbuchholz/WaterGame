@@ -49,7 +49,7 @@ public class IslandTracker : MonoBehaviour
     }
     public void TrySpawnIsland(Vector2 pos)
     {
-        if (Random.Range(0.0f, 1.0f) > 0.8f)
+        if (Random.Range(0.0f, 1.0f) > 0.95f)
         {
             bool farEnoughOut = true;
             foreach (Vector2 checkPos in existingIslands)

@@ -10,7 +10,7 @@ public class HealthController : MonoBehaviour
     private float currentHealth;
     private float maxHealth = 100;
     [SerializeField] GameObject healthBarPrefab;
-    [SerializeField] Camera camera;
+    [SerializeField] public Camera camera;
     [SerializeField] LocalTeamController localTeamController;
     [SerializeField] bool isFort = true;
     [SerializeField] FortTurretControl fortTurretControl;

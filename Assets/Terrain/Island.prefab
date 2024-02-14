@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 7584345837521071784}
   - component: {fileID: 3568114478940692836}
   - component: {fileID: 2486744021333199061}
+  - component: {fileID: 8668959853621918800}
   m_Layer: 11
   m_Name: Island
   m_TagString: Land
@@ -105,6 +106,7 @@ MonoBehaviour:
   octaves: 6
   xWidth: 300
   zWidth: 300
+  fortGenerator: {fileID: 8668959853621918800}
   clearIslandOuterColliderMaterial: {fileID: 2100000, guid: 107d2505d28b341a9be2f1f47f39bacf, type: 2}
 --- !u!114 &3568114478940692836
 MonoBehaviour:
@@ -140,3 +142,16 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
+--- !u!114 &8668959853621918800
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9104232350504377752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 322afc8f448f540aba9a8acdbcc46847, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fortPrefab: {fileID: 2603587179921151470, guid: 79382d1977a9c4c52aa168fce6fc721c, type: 3}

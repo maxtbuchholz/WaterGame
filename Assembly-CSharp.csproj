@@ -62,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets/Scripts/ShipMove/ShipMovement.cs" />
+    <Compile Include="Assets/Scripts/FortGenerator.cs" />
     <Compile Include="Assets/Scripts/healthandteam/LocalTeamController.cs" />
     <Compile Include="Assets/Scripts/healthandteam/DetectHit.cs" />
     <Compile Include="Assets/Scripts/x/LoadWaterTiles.cs" />
