@@ -37,10 +37,10 @@ public class IslandGenerator : MonoBehaviour
         //    await Generate(transform.position);
         //});
     }
-    private void Update()
-    {
-        Debug.Log(GetComponent<MeshFilter>().mesh.vertexCount + " " + transform.position);
-    }
+    //private void Update()
+    //{
+    //    Debug.Log(GetComponent<MeshFilter>().mesh.vertexCount + " " + transform.position);
+    //}
     //private async void Update()
     //{
     //    if(generationStep == 0)
@@ -78,6 +78,7 @@ public class IslandGenerator : MonoBehaviour
 
         //vaT = await Task.Run(() => CreateShape(currPos));
         vaT = CreateShape(currPos);
+        vaT = RemoveDeadVerts(vaT);
         UpdateMesh(vaT);
         GetComponent<MeshCollider>().sharedMesh = meshIsland;
         GetComponent<MeshCollider>().sharedMesh.RecalculateNormals();
@@ -88,6 +89,27 @@ public class IslandGenerator : MonoBehaviour
         generationStep = 1;
         //SetUpIslandColliders(CreateIslandCollider(botLeft, topRight, vertAndTri.foundColliderEdgePlaces));
         return;
+    }
+    private VertAndTri RemoveDeadVerts(VertAndTri vaT)
+    {
+        List<int> usedVertIndex = new();
+        foreach(int index in vaT.triangles)
+        {
+            if (!usedVertIndex.Contains(index)) usedVertIndex.Add(index);
+        }
+        Vector3[] uVerticies = new Vector3[usedVertIndex.Count];
+        int[] uTriangles = new int[vaT.triangles.Length];    //vaT.triangles.length
+        for (int i = 0; i < usedVertIndex.Count; i++)
+        {
+            uVerticies[i] = vaT.verticies[usedVertIndex[i]];
+        }
+        for(int i = 0; i < uTriangles.Length; i++)
+        {
+            uTriangles[i] = usedVertIndex.IndexOf(vaT.triangles[i]);
+        }
+        vaT.verticies = uVerticies.ToArray();
+        vaT.triangles = uTriangles.ToArray();
+        return vaT;
     }
     //private VertAndTri RemoveWrongNeighbors(VertAndTri vT)
     //{
