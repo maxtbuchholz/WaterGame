@@ -20,8 +20,8 @@ public class IslandGenerator : MonoBehaviour
     [SerializeField] float lacunarity = 2;
     [SerializeField] float persistance = 0.5f;
     [SerializeField] int octaves = 6;
-    [SerializeField] int xWidth = 400;
-    [SerializeField] int zWidth = 400;
+    int xWidth = 300;
+    int zWidth = 300;
     [SerializeField] FortGenerator fortGenerator;
     [SerializeField] Material clearIslandOuterColliderMaterial;
     void Start()
@@ -36,6 +36,10 @@ public class IslandGenerator : MonoBehaviour
         //{
         //    await Generate(transform.position);
         //});
+    }
+    private void Update()
+    {
+        Debug.Log(GetComponent<MeshFilter>().mesh.vertexCount + " " + transform.position);
     }
     //private async void Update()
     //{

@@ -28,15 +28,19 @@ public class FortTurretControl : MonoBehaviour
             List<Vector3> turretNormalVec = new();
             TurretController.ShootAbility shootAbility;
             Rigidbody rb = null;
+            //bool forceStraight = false;
+            //if ((target.position - transform.position).magnitude < 10) forceStraight = true;
+            Vector3 targetPos = new Vector3(target.position.x + Random.Range(-1.0f, 1.0f), 0, target.position.z + Random.Range(-1.0f, 1.0f));
             if(target.TryGetComponent<ShipValueControl>(out ShipValueControl sVC))
             {
                 rb = sVC.ship_drive.GetComponent<Rigidbody>();
+                //if (rb.velocity.magnitude < 0.5f) forceStraight = true;
             }
             if (rb != null)        //targeing movable target
             {
                 for (int i = 0; i < turrets.Count; i++)
                 {
-                    Vector3 normalVec = turrets[i].RequestShot(new Vector2(target.position.x, target.position.z), new Vector2(rb.velocity.x, rb.velocity.z), out shootAbility);
+                    Vector3 normalVec = turrets[i].RequestShot(new Vector2(targetPos.x, targetPos.z), new Vector2(rb.velocity.x, rb.velocity.z), out shootAbility);
                     if (shootAbility == TurretController.ShootAbility.able)
                     {
                         ableTurretIndexes.Add(i);
@@ -46,7 +50,7 @@ public class FortTurretControl : MonoBehaviour
             }
             else
             {
-                Vector3 targetPos = target.position;
+                //Vector3 targetPos = target.position;
                 targetPos.y = 0;
                 for (int i = 0; i < turrets.Count; i++)
                 {

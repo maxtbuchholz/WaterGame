@@ -100,7 +100,7 @@ public class HealthController : MonoBehaviour
     IEnumerator FortRefilHealthOrCapture(float timeToFill, float curMin)        //starts play cycle for a player to capture a fort
     {
         GameObject captureButton = GameObject.Instantiate(captureButtonPrefab);
-        captureButton.GetComponent<CaptureButton>().inFrontOf = transform.position + new Vector3(0, 0.5f, 0);
+        captureButton.GetComponent<CaptureButton>().inFrontOf = transform.position + new Vector3(0, 1.0f, 0);
         captureButton.GetComponent<CaptureButton>().healthController = this;
         captureButton.transform.position = new Vector3(transform.position.x, transform.position.y + 2, transform.position.z);
         GameObject captureCircle = GameObject.Instantiate(fortCaptureCircle);

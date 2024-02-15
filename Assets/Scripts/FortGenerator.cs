@@ -34,7 +34,7 @@ public class FortGenerator : MonoBehaviour
         }
         if (furthestDstIn != -1)
         {
-            GameObject fort = GameObject.Instantiate(fortPrefab, new Vector3(bestFortPos.x, 0, bestFortPos.z), Quaternion.identity);
+            GameObject fort = GameObject.Instantiate(fortPrefab, new Vector3(bestFortPos.x, 0.1f, bestFortPos.z), Quaternion.identity);
             fort.transform.parent = transform;
             fort.GetComponent<HealthController>().camera = Camera.main;
         }
@@ -62,6 +62,9 @@ public class FortGenerator : MonoBehaviour
                     closestLandDst = hit.distance;
                     closestLandPos = hit.point;
                 }
+        Vector3 normDir = (outerPos - closestLandPos).normalized;
+        normDir.y = 0;
+        closestLandPos += (2 * normDir);
         fortTryPos = closestLandPos;
         return closestLandDst;
     }
