@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="8.2867441mm"
+   height="9.3060389mm"
+   viewBox="0 0 8.2867441 9.3060389"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.3 (0e150ed, 2023-07-21)"
+   sodipodi:docname="x.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="5.1583141"
+     inkscape:cx="84.911464"
+     inkscape:cy="64.846769"
+     inkscape:window-width="1512"
+     inkscape:window-height="864"
+     inkscape:window-x="0"
+     inkscape:window-y="38"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1">
+    <inkscape:path-effect
+       effect="fillet_chamfer"
+       id="path-effect2"
+       is_visible="true"
+       lpeversion="1"
+       nodesatellites_param="F,0,0,1,0,0.48462964,0,1 @ F,0,0,1,0,0.34696446,0,1 @ F,0,0,1,0,0.36626435,0,1 @ F,0,0,1,0,0.19968423,0,1 @ F,0,0,1,0,0.59124933,0,1 @ F,0,0,1,0,0.41452532,0,1 @ F,0,0,1,0,0.57903439,0,1 @ F,0,0,1,0,0.17434073,0,1 @ F,0,0,1,0,0.31699469,0,1 @ F,0,0,1,0,0.32183904,0,1 @ F,0,0,1,0,0.35534616,0,1 @ F,0,0,1,0,0.39042394,0,1"
+       radius="0"
+       unit="px"
+       method="auto"
+       mode="F"
+       chamfer_steps="1"
+       flexible="false"
+       use_knot_distance="true"
+       apply_no_radius="true"
+       apply_with_radius="true"
+       only_selected="false"
+       hide_knots="false" />
+    <inkscape:path-effect
+       effect="fillet_chamfer"
+       id="path-effect2-8"
+       is_visible="true"
+       lpeversion="1"
+       nodesatellites_param="F,0,0,1,0,0.48462964,0,1 @ F,0,0,1,0,0.34696446,0,1 @ F,0,0,1,0,0.36626435,0,1 @ F,0,0,1,0,0.19968423,0,1 @ F,0,0,1,0,0.59124933,0,1 @ F,0,0,1,0,0.41452532,0,1 @ F,0,0,1,0,0.57903439,0,1 @ F,0,0,1,0,0.17434073,0,1 @ F,0,0,1,0,0.31699469,0,1 @ F,0,0,1,0,0.32183904,0,1 @ F,0,0,1,0,0.35534616,0,1 @ F,0,0,1,0,0.39042394,0,1"
+       radius="0"
+       unit="px"
+       method="auto"
+       mode="F"
+       chamfer_steps="1"
+       flexible="false"
+       use_knot_distance="true"
+       apply_no_radius="true"
+       apply_with_radius="true"
+       only_selected="false"
+       hide_knots="false" />
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-9.8564398,-9.8469979)">
+    <path
+       d="m 21.534321,65.232941 h -1.127972 a 0.68779318,0.68779318 26.769138 0 1 -0.55316,-0.279048 L 17.656027,61.980447 A 0.27149568,0.27149568 0.08619313 0 0 17.21981,61.97979 l -2.299857,3.092912 a 0.39732249,0.39732249 153.31705 0 1 -0.318836,0.160239 H 13.581312 A 0.28803576,0.28803576 64.026294 0 1 13.3545,64.767364 l 2.984997,-3.813402 a 0.53343892,0.53343892 90.202483 0 0 0.0023,-0.65463 l -2.964998,-3.843516 a 0.2846214,0.2846214 116.17619 0 1 0.225358,-0.458469 l 1.206191,0 a 0.3476905,0.3476905 26.630334 0 1 0.278627,0.139711 l 2.310583,3.095446 a 0.23699461,0.23699461 0.04354483 0 0 0.379622,2.89e-4 l 2.229843,-2.977828 a 0.64306802,0.64306802 153.41321 0 1 0.514747,-0.257618 h 1.141822 a 0.17103096,0.17103096 64.298114 0 1 0.133671,0.277725 l -3.164513,3.964652 a 0.49663004,0.49663004 90.423695 0 0 -0.0045,0.613849 l 3.094036,3.99617 a 0.23768597,0.23768597 116.12558 0 1 -0.187939,0.383198 z"
+       id="text2-5"
+       style="font-size:16.9333px;line-height:50;-inkscape-font-specification:sans-serif;display:none;fill:#000000;fill-opacity:1;stroke-width:10"
+       aria-label="x"
+       sodipodi:nodetypes="ccccccccccccc"
+       inkscape:path-effect="#path-effect2-8"
+       inkscape:original-d="m 22.018951,65.232941 h -1.959566 l -2.621024,-3.547064 -2.63756,3.547064 h -1.810738 l 3.604941,-4.605395 -3.571868,-4.630199 h 1.959566 l 2.604487,3.489186 2.612755,-3.489186 h 1.819007 l -3.629745,4.547517 z"
+       transform="matrix(1.0536965,0,0,1.0827674,-4.507079,-51.132102)" />
+    <path
+       d="m 21.534321,65.232941 h -1.127972 a 0.66970672,0.66970672 27.38796 0 1 -0.547085,-0.283436 l -2.125623,-3.010576 a 0.26789449,0.26789449 0.95854806 0 0 -0.432395,-0.0072 l -2.379879,3.142068 a 0.40174333,0.40174333 153.57059 0 1 -0.32025,0.159178 H 13.581312 A 0.28803576,0.28803576 64.026294 0 1 13.3545,64.767364 l 2.984997,-3.813402 a 0.53343892,0.53343892 90.202483 0 0 0.0023,-0.65463 l -2.964998,-3.843516 a 0.2846214,0.2846214 116.17619 0 1 0.225358,-0.458469 l 1.206191,0 a 0.3476905,0.3476905 26.630334 0 1 0.278627,0.139711 l 2.310583,3.095446 a 0.23699461,0.23699461 0.04354483 0 0 0.379622,2.89e-4 l 2.229843,-2.977828 a 0.64306802,0.64306802 153.41321 0 1 0.514747,-0.257618 h 1.141822 a 0.17103096,0.17103096 64.298114 0 1 0.133671,0.277725 l -3.164513,3.964652 a 0.49663004,0.49663004 90.423695 0 0 -0.0045,0.613849 l 3.094036,3.99617 a 0.23768597,0.23768597 116.12558 0 1 -0.187939,0.383198 z"
+       id="text2"
+       style="font-size:16.9333px;line-height:50;-inkscape-font-specification:sans-serif;display:inline;fill:#ff4040;fill-opacity:1;stroke:#000000;stroke-width:0.314015;stroke-dasharray:none;stroke-opacity:1"
+       aria-label="x"
+       sodipodi:nodetypes="ccccccccccccc"
+       inkscape:path-effect="#path-effect2"
+       inkscape:original-d="m 22.018951,65.232941 h -1.959566 l -2.536996,-3.593214 -2.721588,3.593214 h -1.810738 l 3.604941,-4.605395 -3.571868,-4.630199 h 1.959566 l 2.604487,3.489186 2.612755,-3.489186 h 1.819007 l -3.629745,4.547517 z"
+       transform="matrix(0.93661908,0,0,0.97449065,-2.4507365,-44.568891)"
+       inkscape:export-filename="../WaterGame/Assets/Models/Menus/Buttons/exit.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+  </g>
+</svg>

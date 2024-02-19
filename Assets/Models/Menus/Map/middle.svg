@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="24.99996mm"
+   height="100.00001mm"
+   viewBox="0 0 24.99996 100.00001"
+   version="1.1"
+   id="svg1"
+   sodipodi:docname="Unnamed document 1"
+   inkscape:version="1.3 (0e150ed, 2023-07-21)"
+   inkscape:export-filename="../WaterGame/Assets/Models/Menus/middle.svg"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="0.4984542"
+     inkscape:cx="-322.99858"
+     inkscape:cy="761.35381"
+     inkscape:window-width="1512"
+     inkscape:window-height="864"
+     inkscape:window-x="0"
+     inkscape:window-y="38"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="g36" />
+  <defs
+     id="defs1">
+    <filter
+       inkscape:label="Combined Lighting"
+       inkscape:menu="Bevels"
+       inkscape:menu-tooltip="Basic specular bevel to use for building textures"
+       style="color-interpolation-filters:sRGB"
+       id="filter2-5"
+       x="0"
+       y="0"
+       width="1"
+       height="1">
+      <feComposite
+         operator="in"
+         in2="SourceAlpha"
+         id="feComposite2-37"
+         result="fbSourceGraphic" />
+    </filter>
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-101.07036,-115.01077)">
+    <g
+       transform="translate(144.52311,138.36631)"
+       id="g36"
+       style="display:inline"
+       inkscape:export-filename="../WaterGame/Assets/Models/Menus/Map/middle.svg"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96">
+      <g
+         id="g35"
+         transform="translate(-93.4528,-23.355539)"
+         inkscape:export-filename="middle.svg"
+         inkscape:export-xdpi="96"
+         inkscape:export-ydpi="96">
+        <path
+           id="path31"
+           d="M 50.00005,87.642578 H 75 v -50 H 50.00005 Z"
+           style="fill:#a99678;fill-opacity:1;stroke-width:13.1345" />
+        <path
+           id="path32"
+           d="M 50.00005,57.708984 H 75 V 7.7089844 H 50.00005 Z"
+           style="fill:#cabfab;fill-opacity:1;stroke-width:13.1345" />
+        <path
+           id="path33"
+           d="M 50.00005,96.050781 H 75 v -30 H 50.00005 Z"
+           style="fill:#9d8a67;fill-opacity:1;stroke-width:8.35201" />
+        <path
+           id="path34"
+           d="M 50.00005,44.046875 H 75 v -30 H 50.00005 Z"
+           style="fill:#c0b29c;fill-opacity:1;stroke-width:8.97254" />
+        <path
+           id="path35"
+           d="M 50.00005,14.695313 H 75 V 4.6953125 H 50.00005 Z"
+           style="fill:#b2a186;fill-opacity:1;stroke-width:5.87393" />
+      </g>
+      <path
+         id="path36"
+         d="m -43.45275,-18.355539 h 24.99995 v -5 h -24.99995 z m 0,95 h 24.99995 v -5 h -24.99995 z"
+         style="display:inline;fill:#877859;fill-opacity:1;stroke-width:10;filter:url(#filter2-5)" />
+    </g>
+  </g>
+</svg>

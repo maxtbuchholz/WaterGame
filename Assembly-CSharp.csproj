@@ -61,6 +61,7 @@
     <Analyzer Include="/Applications/Unity/Hub/Editor/2023.2.5f1/Unity.app/Contents/Tools/Unity.SourceGenerators/Unity.UIToolkit.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets/Models/Menus/Map/FitCardUI.cs" />
     <Compile Include="Assets/Scripts/ShipMove/ShipMovement.cs" />
     <Compile Include="Assets/Scripts/FortGenerator.cs" />
     <Compile Include="Assets/Scripts/healthandteam/LocalTeamController.cs" />
@@ -1111,6 +1112,10 @@
       <HintPath>Library/ScriptAssemblies/Unity.RenderPipeline.Universal.ShaderLibrary.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Unity.InternalAPIEditorBridge.003">
+      <HintPath>Library/ScriptAssemblies/Unity.InternalAPIEditorBridge.003.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Unity.RenderPipelines.Universal.Shaders">
       <HintPath>Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Shaders.dll</HintPath>
       <Private>False</Private>
@@ -1173,6 +1178,10 @@
     </Reference>
     <Reference Include="Unity.ScriptableBuildPipeline">
       <HintPath>Library/ScriptAssemblies/Unity.ScriptableBuildPipeline.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.VectorGraphics.Editor">
+      <HintPath>Library/ScriptAssemblies/Unity.VectorGraphics.Editor.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.Collections">
@@ -1279,6 +1288,10 @@
       <HintPath>Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Runtime.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Unity.InternalAPIEngineBridge.003">
+      <HintPath>Library/ScriptAssemblies/Unity.InternalAPIEngineBridge.003.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Unity.VisualScripting.State">
       <HintPath>Library/ScriptAssemblies/Unity.VisualScripting.State.dll</HintPath>
       <Private>False</Private>
@@ -1305,6 +1318,10 @@
     </Reference>
     <Reference Include="Unity.Burst.Editor">
       <HintPath>Library/ScriptAssemblies/Unity.Burst.Editor.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.VectorGraphics">
+      <HintPath>Library/ScriptAssemblies/Unity.VectorGraphics.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.2D.PixelPerfect">
