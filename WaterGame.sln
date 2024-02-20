@@ -1,6 +1,10 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityFigmaBridgeEditor", "UnityFigmaBridgeEditor.csproj", "{26E900F3-40A6-9474-6B7E-E2C773378952}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityFigmaBridgeRuntime", "UnityFigmaBridgeRuntime.csproj", "{471E7B35-A65B-5819-0593-81F3CBBF7397}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{E7211BA7-91A2-8C59-25C2-4EC78B696485}"
 EndProject
 Global
@@ -9,6 +13,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{26E900F3-40A6-9474-6B7E-E2C773378952}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26E900F3-40A6-9474-6B7E-E2C773378952}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26E900F3-40A6-9474-6B7E-E2C773378952}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26E900F3-40A6-9474-6B7E-E2C773378952}.Release|Any CPU.Build.0 = Release|Any CPU
+		{471E7B35-A65B-5819-0593-81F3CBBF7397}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{471E7B35-A65B-5819-0593-81F3CBBF7397}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{471E7B35-A65B-5819-0593-81F3CBBF7397}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{471E7B35-A65B-5819-0593-81F3CBBF7397}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E7211BA7-91A2-8C59-25C2-4EC78B696485}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E7211BA7-91A2-8C59-25C2-4EC78B696485}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E7211BA7-91A2-8C59-25C2-4EC78B696485}.Release|Any CPU.ActiveCfg = Release|Any CPU
