@@ -19,10 +19,14 @@ public class WaterLoad : MonoBehaviour
     private float inBetween = 100.0f;
     Dictionary<Vector2, GameObject> waterTiles = new();
 
-    List<Vector2> AllreadySearchedTiles = new();
     List<Vector2> extraNoDeleteTiles = new();
     Vector2 prevLoc = new();
     bool firstLoaded = false;
+    private SaveData saveData;
+    private void Start()
+    {
+        saveData = SaveData.Instance;
+    }
     private void Update()
     {
         Vector2 curFocusPos = new Vector2(Mathf.FloorToInt(transform.position.x / inBetween) * inBetween, Mathf.FloorToInt(transform.position.z / inBetween) * inBetween);
@@ -38,10 +42,10 @@ public class WaterLoad : MonoBehaviour
                     if (Mathf.Pow(Mathf.Pow(x, 2) + Mathf.Pow(z, 2), 0.5f) < radii)
                     {
                         wantedTiles.Add(new Vector2(curFocusPos.x + x, curFocusPos.y + z));
-                        if (!AllreadySearchedTiles.Contains(wantedTiles[^1]))
+                        if (!saveData.GetSeaCoords().Contains(wantedTiles[^1]))
                         {
-                            AllreadySearchedTiles.Add(wantedTiles[^1]);
-                            islandTracker.TrySpawnIsland(wantedTiles[^1]);
+                            saveData.AddSeaCoords(wantedTiles[^1]);
+                            islandTracker.TrySpawnIsland(wantedTiles[^1], false);
                         }
                     }
                 }

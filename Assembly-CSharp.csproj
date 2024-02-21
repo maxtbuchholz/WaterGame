@@ -61,6 +61,7 @@
     <Analyzer Include="/Applications/Unity/Hub/Editor/2023.2.5f1/Unity.app/Contents/Tools/Unity.SourceGenerators/Unity.UIToolkit.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets/Scripts/LoadMap.cs" />
     <Compile Include="Assets/Models/Menus/Map/FitCardUI.cs" />
     <Compile Include="Assets/Scripts/Canvas/MainCanvas.cs" />
     <Compile Include="Assets/Scripts/ShipMove/ShipMovement.cs" />
@@ -83,6 +84,7 @@
     <Compile Include="Assets/Scripts/Shooting/FortValues.cs" />
     <Compile Include="Assets/Scripts/Shooting/FortTurretControl.cs" />
     <Compile Include="Assets/Scripts/Camera/FoamCameraFollow.cs" />
+    <Compile Include="Assets/Scripts/SaveData.cs" />
     <Compile Include="Assets/Scripts/GroundLoader.cs" />
     <Compile Include="Assets/Scripts/CaptureButton.cs" />
     <Compile Include="Assets/Scripts/Shooting/DestroyOnEffectComplete.cs" />
@@ -94,6 +96,7 @@
     <Compile Include="Assets/Scripts/Camera/FocalPointFollow.cs" />
     <Compile Include="Assets/Scripts/WaterLoad.cs" />
     <Compile Include="Assets/Scripts/healthandteam/HealthController.cs" />
+    <Compile Include="Assets/Scripts/Touch/MapTouchControl.cs" />
     <Compile Include="Assets/Terrain/SetTerrainShader.cs" />
     <Compile Include="Assets/Scripts/WaterMovement.cs" />
     <Compile Include="Assets/Scripts/SimpleBob.cs" />
@@ -104,6 +107,7 @@
     <Compile Include="Assets/Scripts/Touch/NavTouch.cs" />
     <Compile Include="Assets/Scripts/WaterGetHeight.cs" />
     <Compile Include="Assets/Terrain/MeshGenerator.cs" />
+    <Compile Include="Assets/Scripts/IslandImager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets/TextMesh Pro/Shaders/TMPro.cginc" />

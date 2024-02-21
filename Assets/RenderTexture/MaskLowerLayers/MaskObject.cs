@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityFigmaBridge.Runtime.UI;
 
 public class MaskObject : MonoBehaviour
 {

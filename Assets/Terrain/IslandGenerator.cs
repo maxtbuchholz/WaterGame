@@ -24,18 +24,25 @@ public class IslandGenerator : MonoBehaviour
     int zWidth = 300;
     [SerializeField] FortGenerator fortGenerator;
     [SerializeField] Material clearIslandOuterColliderMaterial;
+    [SerializeField] IslandImager islandImager;
     void Start()
+    {
+        //await Task.Run(() =>
+        //{
+        //    await Generate(transform.position);
+        //});
+    }
+    public void StartGenerate(int key)
     {
         WorldXWidth = xWidth;
         WorldZWidth = zWidth;
         xSize = Mathf.RoundToInt((WorldXWidth / 10.0f) * vertsPerTenWidth);
         zSize = Mathf.RoundToInt((WorldZWidth / 10.0f) * vertsPerTenWidth);
         Generate(transform.position);
+        islandImager = IslandImager.Instance;
+        if (key != -1)
+            StartCoroutine(islandImager.ImageOfIsland(new Vector2(transform.position.x, transform.position.z), key, gameObject));
         fortGenerator.LoadFort(transform.position.x, transform.position.z, WorldXWidth, WorldZWidth);
-        //await Task.Run(() =>
-        //{
-        //    await Generate(transform.position);
-        //});
     }
     //private void Update()
     //{

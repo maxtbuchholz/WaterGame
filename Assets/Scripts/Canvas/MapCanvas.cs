@@ -5,6 +5,8 @@ using UnityEngine;
 public class MapCanvas : MonoBehaviour
 {
     [SerializeField] RectTransform mapFrame;
+    [SerializeField] RectTransform buttonFrame;
+    [SerializeField] LoadMap loadMap;
     int screenHeight;
     int screenWidth;
     Vector2 currentPos;
@@ -16,7 +18,9 @@ public class MapCanvas : MonoBehaviour
         //rect.position = new Vector2(0, -screenHeight);
         currentPos = new Vector2(0, -screenHeight);
         mapFrame.anchoredPosition = currentPos;
-        mapFrame.sizeDelta = new Vector2(200, screenHeight * 0.9f);
+        mapFrame.sizeDelta = new Vector2(100, screenHeight * 0.8f);
+        buttonFrame.anchoredPosition = currentPos;
+        buttonFrame.sizeDelta = new Vector2(100, screenHeight * 0.8f);
     }
     public void MoveToFrame()
     {
@@ -39,16 +43,19 @@ public class MapCanvas : MonoBehaviour
             float setHeight = initialHeight + (heightDiff * (currentTime / timeToCenter));
             currentPos = new Vector2(0, setHeight);
             mapFrame.anchoredPosition = currentPos;
+            buttonFrame.anchoredPosition = currentPos;
             yield return null;
         }
         currentPos = Vector2.zero;
         mapFrame.anchoredPosition = currentPos;
+        buttonFrame.anchoredPosition = currentPos;
+        loadMap.LoadStart();
         StartCoroutine(MoveToExpand(0.2f));
     }
     IEnumerator MoveToExpand(float timeToCenter)
     {
         float currentTime = 0;
-        float finalWidth = (screenWidth * 0.9f);
+        float finalWidth = (screenWidth * 0.8f);
         float initialSize = mapFrame.rect.size.x;
         float widthDiff = (finalWidth - initialSize);
         while (currentTime < timeToCenter)
@@ -57,9 +64,11 @@ public class MapCanvas : MonoBehaviour
             if (currentTime > timeToCenter) currentTime = timeToCenter;
             float setSize = initialSize + (widthDiff * (currentTime / timeToCenter));
             mapFrame.sizeDelta = new Vector2(setSize, mapFrame.rect.height);
+            buttonFrame.sizeDelta = new Vector2(setSize, mapFrame.rect.height);
             yield return null;
         }
         mapFrame.sizeDelta = new Vector2(finalWidth, mapFrame.rect.height);
+        buttonFrame.sizeDelta = new Vector2(finalWidth, mapFrame.rect.height);
     }
     IEnumerator MoveToBottom(float timeToCenter)
     {
@@ -74,15 +83,17 @@ public class MapCanvas : MonoBehaviour
             float setHeight = initialHeight + (heightDiff * (currentTime / timeToCenter));
             currentPos = new Vector2(0, setHeight);
             mapFrame.anchoredPosition = currentPos;
+            buttonFrame.anchoredPosition = currentPos;
             yield return null;
         }
         currentPos = new Vector2(0, finalHeight);
         mapFrame.anchoredPosition = currentPos;
+        buttonFrame.anchoredPosition = currentPos;
     }
     IEnumerator MoveToShrink(float timeToCenter)
     {
         float currentTime = 0;
-        float finalWidth = 200;
+        float finalWidth = 100;
         float initialSize = mapFrame.rect.size.x;
         float widthDiff = (finalWidth - initialSize);
         while (currentTime < timeToCenter)
@@ -91,9 +102,10 @@ public class MapCanvas : MonoBehaviour
             if (currentTime > timeToCenter) currentTime = timeToCenter;
             float setSize = initialSize + (widthDiff * (currentTime / timeToCenter));
             mapFrame.sizeDelta = new Vector2(setSize, mapFrame.rect.height);
+            buttonFrame.sizeDelta = new Vector2(setSize, mapFrame.rect.height);
             yield return null;
         }
-        mapFrame.sizeDelta = new Vector2(200, mapFrame.rect.height);
+        mapFrame.sizeDelta = new Vector2(100, mapFrame.rect.height);
         StartCoroutine(MoveToBottom(0.2f));
     }
 }

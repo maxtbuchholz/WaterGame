@@ -296,7 +296,7 @@ MonoBehaviour:
   m_PrototypeFlowInitialScreenId: 
   m_Screens:
   - FigmaNodeId: 59:666
-    FigmaScreenPrefab: {fileID: 7446203421900075811, guid: 0a9b50061508948bd9b0f336bc561a4a, type: 3}
+    FigmaScreenPrefab: {fileID: 3792273437300349415, guid: 0a9b50061508948bd9b0f336bc561a4a, type: 3}
     FigmaScreenName: Map
     ParentSectionNodeId: 
   m_Sections: []
