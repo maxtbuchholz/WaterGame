@@ -5175,6 +5175,63 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &75546268
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 75546269}
+  - component: {fileID: 75546270}
+  m_Layer: 0
+  m_Name: ShipLoadedParent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &75546269
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 75546268}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1088256034}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &75546270
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 75546268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a5f723a102d04231b11bf26a9ad3cd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  focalPosition: {fileID: 1264311711}
+  waterPrefab: {fileID: 5089739084538992074, guid: cd58c6178365c43ac98a8a8df7e3347d, type: 3}
+  islandDebugPrefab: {fileID: 5089739084538992074, guid: 439111c8cb51b4d5685b874a4dab12ab, type: 3}
+  shipPrefab: {fileID: 6158522219105506316, guid: bdd3e8db138e54f07931f9b669bc3cbf, type: 3}
+  overlayCanvas: {fileID: 359066783}
+  waterparent: {fileID: 736740892}
+  shipparent: {fileID: 0}
+  mapTouchControl: {fileID: 1180234279}
+  shipDrive: {fileID: 0}
 --- !u!1 &97424756
 GameObject:
   m_ObjectHideFlags: 0
@@ -5332,8 +5389,12 @@ MonoBehaviour:
   focalPosition: {fileID: 1264311711}
   waterPrefab: {fileID: 5089739084538992074, guid: cd58c6178365c43ac98a8a8df7e3347d, type: 3}
   islandDebugPrefab: {fileID: 5089739084538992074, guid: 439111c8cb51b4d5685b874a4dab12ab, type: 3}
+  shipPrefab: {fileID: 6158522219105506316, guid: bdd3e8db138e54f07931f9b669bc3cbf, type: 3}
   overlayCanvas: {fileID: 359066783}
   waterparent: {fileID: 736740892}
+  shipparent: {fileID: 75546269}
+  mapTouchControl: {fileID: 1180234279}
+  shipDrive: {fileID: 97424760}
 --- !u!1 &107651881
 GameObject:
   m_ObjectHideFlags: 0
@@ -8413,6 +8474,34 @@ PrefabInstance:
       propertyPath: m_Name
       value: MapLocationButton
       objectReference: {fileID: 0}
+    - target: {fileID: 296500994101910606, guid: b1da5dc510c2f48038cf68dd0a3be8f8, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 296500994101910606, guid: b1da5dc510c2f48038cf68dd0a3be8f8, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 296500994101910606, guid: b1da5dc510c2f48038cf68dd0a3be8f8, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 104897029}
+    - target: {fileID: 296500994101910606, guid: b1da5dc510c2f48038cf68dd0a3be8f8, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 296500994101910606, guid: b1da5dc510c2f48038cf68dd0a3be8f8, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ToCenter
+      objectReference: {fileID: 0}
+    - target: {fileID: 296500994101910606, guid: b1da5dc510c2f48038cf68dd0a3be8f8, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: LoadMap, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 296500994101910606, guid: b1da5dc510c2f48038cf68dd0a3be8f8, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 3884475633726507580, guid: b1da5dc510c2f48038cf68dd0a3be8f8, type: 3}
       propertyPath: NodeId
       value: 59:658
@@ -10340,6 +10429,7 @@ RectTransform:
   - {fileID: 883448499}
   - {fileID: 736740892}
   - {fileID: 104897028}
+  - {fileID: 75546269}
   m_Father: {fileID: 1180234273}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -24452,7 +24542,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0.5772448, b: 0.6603774, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
