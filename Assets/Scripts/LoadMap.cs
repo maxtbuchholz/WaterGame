@@ -14,9 +14,11 @@ public class LoadMap : MonoBehaviour
     [SerializeField] GameObject waterPrefab;
     [SerializeField] GameObject islandDebugPrefab;
     [SerializeField] GameObject shipPrefab;
+    [SerializeField] GameObject fortPrefab;
     [SerializeField] RectTransform overlayCanvas;
     [SerializeField] Transform waterparent;
     [SerializeField] Transform shipparent;
+    [SerializeField] Transform fortparent;
     [SerializeField] MapTouchControl mapTouchControl;
     [SerializeField] Transform shipDrive;
     private GameObject ship;
@@ -28,6 +30,7 @@ public class LoadMap : MonoBehaviour
     HashSet<Vector2> seaTiles;
     Dictionary<Vector2, GameObject> loadedTiles = new();
     Dictionary<Vector2, GameObject> loadedIslands = new();
+    Dictionary<Vector2, GameObject> loadedForts = new();
     HashSet<Vector2> unloadedNeighborTiles = new();
     private Vector2[] neighbors;
     private Rect overlayRect;
@@ -48,9 +51,16 @@ public class LoadMap : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
+        foreach (Transform child in fortparent)
+        {
+            Destroy(child.gameObject);
+        }
         loadedTiles = new();
         loadedIslands = new();
+        loadedForts = new();
         unloadedNeighborTiles = new();
+        //Destroy(ship);
+        //ship = null;
         addPan = Vector2.zero;
         currentZoom = 8;
         mapTouchControl.ResetStart();
@@ -67,8 +77,8 @@ public class LoadMap : MonoBehaviour
         seaTiles = saveData.GetSeaCoords();
         islands = saveData.GetIslandCoords();
         overlayRect = overlayCanvas.rect;
-        overlayRect.min -= new Vector2(tileSize / 2, tileSize / 2);
-        overlayRect.max += new Vector2(tileSize / 2, tileSize / 2);
+        overlayRect.min -= new Vector2(tileSize, tileSize);
+        overlayRect.max += new Vector2(tileSize, tileSize);
         if (seaTiles.Contains(focalTile))
         {
             GameObject tile = GameObject.Instantiate(waterPrefab);
@@ -77,7 +87,6 @@ public class LoadMap : MonoBehaviour
             tile.GetComponent<RectTransform>().sizeDelta = new Vector2(tileSize, tileSize);
             loadedTiles.Add(focalTile, tile);
             await TryLoadIsland(focalTile);
-            TryAddNeighbors();
             tile.transform.localPosition = Vector3.zero;
         }
         ship = GameObject.Instantiate(shipPrefab);
@@ -87,6 +96,7 @@ public class LoadMap : MonoBehaviour
         ship.transform.localPosition = addPan;// new Vector2(((focalPosition.position.x / waterTileWidth) * tileSize), ((focalPosition.position.y / waterTileWidth) * tileSize));
         ship.GetComponent<RectTransform>().sizeDelta = new Vector2((tileSize / 8) * shipWidthToHeight, tileSize / 8);
         ship.transform.rotation = Quaternion.Euler(0, 0, -shipDrive.rotation.eulerAngles.y);
+        TryAddNeighbors();
     }
     private async Task TryLoadIsland(Vector2 pos)
     {
@@ -100,14 +110,27 @@ public class LoadMap : MonoBehaviour
                 GameObject isl = GameObject.Instantiate(islandDebugPrefab);
                 Texture2D tex = new Texture2D(2, 2);
                 tex.LoadImage(bytes);
+                tex.filterMode = FilterMode.Point;
                 isl.GetComponent<RawImage>().texture = tex;
                 //float multiplyer = tileSize * (float)tex.width;
                 isl.GetComponent<RectTransform>().sizeDelta = new Vector2(tileSize * 3, tileSize * 3);
                 isl.transform.parent = transform;
                 isl.transform.localPosition = new Vector3((pos.x / waterTileWidth) * tileSize, (pos.y / waterTileWidth) * tileSize, -1);
+                //isl.GetComponent<RawImage>().SetNativeSize();
                 loadedIslands.Add(pos, isl);
                 //isl.transform.localScale *= multiplyer;
                 //Destroy(tex);
+                string fortKey = keyS + "_fort";
+                if (saveData.FortExists(fortKey))
+                {
+                    GameObject ft = GameObject.Instantiate(fortPrefab);
+                    ft.transform.parent = fortparent;
+                    Vector3 ftPos = saveData.GetFortPos(fortKey);
+                    ft.transform.localPosition = new Vector3((ftPos.x / waterTileWidth) * tileSize, (ftPos.z / waterTileWidth) * tileSize, -1);
+                    ft.GetComponent<RectTransform>().sizeDelta = new Vector2(tileSize * 0.2f, tileSize * 0.2f);
+                    ft.GetComponent<RawImage>().color = TeamsController.Instance.GetTeamColor(saveData.GetFortTeam(fortKey));
+                    loadedForts.Add(new Vector2(ftPos.x, ftPos.z), ft);
+                }
             }
         }
     }
@@ -163,6 +186,7 @@ public class LoadMap : MonoBehaviour
         ship.transform.rotation = Quaternion.Euler(0, 0, -shipDrive.rotation.eulerAngles.y);
         transform.localPosition = new Vector2(-(focalPosition.position.x / waterTileWidth) * tileSize, -(focalPosition.position.z / waterTileWidth) * tileSize) + addPan;
         waterparent.localPosition = new Vector2(-(focalPosition.position.x / waterTileWidth) * tileSize, -(focalPosition.position.z / waterTileWidth) * tileSize) + addPan;
+        fortparent.localPosition = new Vector2(-(focalPosition.position.x / waterTileWidth) * tileSize, -(focalPosition.position.z / waterTileWidth) * tileSize) + addPan;
         //UnloadUnneeded();
         TryAddNeighbors();
         //transform.localPosition += new Vector3(((pan.x) * tileSize * 2), ((pan.y) * tileSize * 2), 0);
@@ -183,13 +207,18 @@ public class LoadMap : MonoBehaviour
         {
             pair.Value.GetComponent<RectTransform>().sizeDelta = new Vector2(tileSize * 3, tileSize * 3);
             pair.Value.transform.localPosition = new Vector3((pair.Key.x / waterTileWidth) * tileSize, (pair.Key.y / waterTileWidth) * tileSize, -1);
-
+        }
+        foreach (KeyValuePair<Vector2, GameObject> pair in loadedForts)
+        {
+            pair.Value.GetComponent<RectTransform>().sizeDelta = new Vector2(tileSize * 0.2f, tileSize * 0.2f);
+            pair.Value.transform.localPosition = new Vector3((pair.Key.x / waterTileWidth) * tileSize, (pair.Key.y / waterTileWidth) * tileSize, -1);
         }
         ship.GetComponent<RectTransform>().sizeDelta = new Vector2((tileSize / 8) * shipWidthToHeight, tileSize / 8);
         ship.transform.localPosition = addPan;// new Vector2(((focalPosition.position.x / waterTileWidth) * tileSize), ((focalPosition.position.y / waterTileWidth) * tileSize));
         ship.transform.rotation = Quaternion.Euler(0, 0, -shipDrive.rotation.eulerAngles.y);
         transform.localPosition = new Vector2(-(focalPosition.position.x / waterTileWidth) * tileSize, -(focalPosition.position.z / waterTileWidth) * tileSize) + addPan;
         waterparent.localPosition = new Vector2(-(focalPosition.position.x / waterTileWidth) * tileSize, -(focalPosition.position.z / waterTileWidth) * tileSize) + addPan;
+        fortparent.localPosition = new Vector2(-(focalPosition.position.x / waterTileWidth) * tileSize, -(focalPosition.position.z / waterTileWidth) * tileSize) + addPan;
         //UnloadUnneeded();
         TryAddNeighbors();
     }

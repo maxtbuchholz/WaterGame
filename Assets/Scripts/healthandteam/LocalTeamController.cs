@@ -15,6 +15,11 @@ public class LocalTeamController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (teamId == -1)
+            SetTeamRandom();
+    }
+    void SetTeamRandom()
+    {
         if (!isplayer)
             teamId = Random.Range(1, 7);
         else
@@ -42,6 +47,12 @@ public class LocalTeamController : MonoBehaviour
                 }
             }
         }
+    }
+    public int GetTeam()
+    {
+        if (teamId == -1)
+            SetTeamRandom();
+        return teamId;
     }
     public void ForceChangeTeam(int newTeam)
     {

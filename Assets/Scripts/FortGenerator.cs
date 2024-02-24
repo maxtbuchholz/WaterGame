@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -7,34 +8,55 @@ public class FortGenerator : MonoBehaviour
 {
     [SerializeField] GameObject fortPrefab;
     Vector3 center = Vector3.zero;
-    public void LoadFort(float xPos, float zPos, float islandXWidth, float islandZWidth)
+    private SaveData saveData;
+    public void LoadFort(float xPos, float zPos, float islandXWidth, float islandZWidth, string islandKey)
     {
-        islandXWidth /= 2;
-        islandZWidth /= 2;
-        center = new Vector3(transform.position.x, 0, transform.position.z);
-        List<Vector3> corners = new List<Vector3>() {   new Vector3(transform.position.x + islandXWidth, 0, transform.position.z + islandZWidth),
+        string fortKey = islandKey + "_fort";
+        saveData = SaveData.Instance;
+        float furthestDstIn = -1;
+        Vector3 bestFortPos = Vector3.zero;
+        int fortTeam = -1;
+        if (!saveData.FortExists(fortKey))                      //no fort has been loaded for this island before, load new fort
+        {
+            islandXWidth /= 2;
+            islandZWidth /= 2;
+            center = new Vector3(transform.position.x, 0, transform.position.z);
+            List<Vector3> corners = new List<Vector3>() {   new Vector3(transform.position.x + islandXWidth, 0, transform.position.z + islandZWidth),
                                                         new Vector3(transform.position.x + islandXWidth, 0, transform.position.z - islandZWidth),
                                                         new Vector3(transform.position.x - islandXWidth, 0, transform.position.z + islandZWidth),
                                                         new Vector3(transform.position.x - islandXWidth, 0, transform.position.z - islandZWidth),};
-        float furthestDstIn = -1;
-        Vector3 bestFortPos = Vector3.zero;
-        foreach (Vector3 corner in corners)
-        {
-            if (NoLandOverCorner(corner))
+            foreach (Vector3 corner in corners)
             {
-                Vector3 fortTryPos;
-                float distIn = DistanceBeforeLandTowardsCenter(corner, out fortTryPos);
-
-                if ((furthestDstIn == -1) || (distIn > furthestDstIn))
+                if (NoLandOverCorner(corner))
                 {
-                    furthestDstIn = distIn;
-                    bestFortPos = fortTryPos;
+                    Vector3 fortTryPos;
+                    float distIn = DistanceBeforeLandTowardsCenter(corner, out fortTryPos);
+
+                    if ((furthestDstIn == -1) || (distIn > furthestDstIn))
+                    {
+                        furthestDstIn = distIn;
+                        bestFortPos = fortTryPos;
+                    }
                 }
             }
+            if(furthestDstIn != -1)
+            {
+                saveData.AddFort(fortKey, bestFortPos);
+            }
+        }
+        else
+        {                                                   //island loaded before, load previously saved location
+            bestFortPos = saveData.GetFortPos(fortKey);
+            fortTeam = saveData.GetFortTeam(fortKey);
+            furthestDstIn = 0;
         }
         if (furthestDstIn != -1)
         {
             GameObject fort = GameObject.Instantiate(fortPrefab, new Vector3(bestFortPos.x, 0.1f, bestFortPos.z), Quaternion.identity);
+            if (fortTeam != -1)
+                fort.GetComponent<LocalTeamController>().ForceChangeTeam(fortTeam);
+            else
+                saveData.SetFortTeam(fortKey, fort.GetComponent<LocalTeamController>().GetTeam());
             fort.transform.parent = transform;
             fort.GetComponent<HealthController>().camera = Camera.main;
         }

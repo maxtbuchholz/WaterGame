@@ -15,7 +15,7 @@ public class WaterLoad : MonoBehaviour
     [SerializeField] GameObject water;
     [SerializeField] IslandTracker islandTracker;
     //public TileDeleter tileDeleter;
-    private float maxLoadRadius = 1600.0f;
+    private float maxLoadRadius = 1200.0f;
     private float inBetween = 100.0f;
     Dictionary<Vector2, GameObject> waterTiles = new();
 
@@ -32,9 +32,11 @@ public class WaterLoad : MonoBehaviour
         Vector2 curFocusPos = new Vector2(Mathf.FloorToInt(transform.position.x / inBetween) * inBetween, Mathf.FloorToInt(transform.position.z / inBetween) * inBetween);
         if (!firstLoaded || (prevLoc != curFocusPos))
         {
+            firstLoaded = true;
             prevLoc = curFocusPos;
             float radii = maxLoadRadius / 2;
             List<Vector2> wantedTiles = new();
+            HashSet<Vector2> atLeastOnceLoadedSeaCoords = saveData.GetSeaCoords();
             for (float z = -radii; z < radii; z += inBetween)
             {
                 for (float x = -radii; x < radii; x += inBetween)
@@ -42,10 +44,14 @@ public class WaterLoad : MonoBehaviour
                     if (Mathf.Pow(Mathf.Pow(x, 2) + Mathf.Pow(z, 2), 0.5f) < radii)
                     {
                         wantedTiles.Add(new Vector2(curFocusPos.x + x, curFocusPos.y + z));
-                        if (!saveData.GetSeaCoords().Contains(wantedTiles[^1]))
+                        if (!atLeastOnceLoadedSeaCoords.Contains(wantedTiles[^1]))
                         {
                             saveData.AddSeaCoords(wantedTiles[^1]);
                             islandTracker.TrySpawnIsland(wantedTiles[^1], false);
+                        }
+                        else if (saveData.IslandExists(wantedTiles[^1]))
+                        {
+                            islandTracker.ReSpawnIsland(wantedTiles[^1]);
                         }
                     }
                 }

@@ -20,7 +20,7 @@ public class NavTouch : MonoBehaviour
     private float widthOffset;
     private float heightOffset;
     private float zoomDstMult = 0.5f;
-    private float maxZoomDst = -24;
+    private float maxZoomDst = -18;
     private float minZoomDst = -6;
     private Dictionary<int, float> touchTimes = new();
     private List<int> uITouchFinderIds = new();
@@ -125,7 +125,7 @@ public class NavTouch : MonoBehaviour
                         Vector3 prevRotation = focalPoint.rotation.eulerAngles;
                         horDif *= 220;
                         verDif *= -80;
-                        focalPoint.rotation = Quaternion.Euler(Mathf.Max(Mathf.Min((verDif + prevRotation.x) % 360, 60), 5), (horDif + prevRotation.y) % 360, 0);
+                        focalPoint.rotation = Quaternion.Euler(Mathf.Max(Mathf.Min((verDif + prevRotation.x) % 360, 45), 5), (horDif + prevRotation.y) % 360, 0);
                         //Debug.Log(focalPoint.rotation.eulerAngles);
                     }
             }

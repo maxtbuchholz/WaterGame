@@ -7,7 +7,7 @@ public class IslandTracker : MonoBehaviour
 {
     [SerializeField] GameObject islandPrefab;
     // Start is called before the first frame update
-    List<Vector2> existingIslands = new();
+    //List<Vector2> existingIslands = new();
     Dictionary<Vector2, GameObject> loadedIslands = new();
     float islandLoadDistance = 1000; //water tiles is 750
     float minIslandDistacnce = 150;
@@ -19,10 +19,10 @@ public class IslandTracker : MonoBehaviour
     {
         saveData = SaveData.Instance;
         TrySpawnIsland(Vector2.zero, true);
-        TrySpawnIsland(new Vector2(100, 0), true);
-        TrySpawnIsland(new Vector2(-100, 0), true);
-        TrySpawnIsland(new Vector2(0, 100), true);
-        TrySpawnIsland(new Vector2(0, -100), true);
+        //TrySpawnIsland(new Vector2(100, 0), true);
+        //TrySpawnIsland(new Vector2(-100, 0), true);
+        //TrySpawnIsland(new Vector2(0, 100), true);
+        //TrySpawnIsland(new Vector2(0, -100), true);
         //existingIslands.Add(new Vector2(0, 0));
         //int keyI = saveData.GetIslandKey(new Vector2(0, 0));
         //saveData.AddIslandCoords(new Vector2(0, 0), keyI);
@@ -45,33 +45,43 @@ public class IslandTracker : MonoBehaviour
         {
             loadedIslands.Remove(v2);
         }
-        for(int i = 0; i < existingIslands.Count; i++)                              //load 'cached' islands that should be now loaded as they are now in range
+        Dictionary<Vector2, string> existingIslands = saveData.GetIslandCoords();
+        foreach(KeyValuePair<Vector2, string> pos in existingIslands)                                     //load 'cached' islands that should be now loaded as they are now in range
         {
-            if (!loadedIslands.ContainsKey(existingIslands[i]))
+            if (!loadedIslands.ContainsKey(pos.Key))
             {
-                if (Vector2.Distance(existingIslands[i], currentPos2) <= islandLoadDistance)
+                if (Vector2.Distance(pos.Key, currentPos2) <= islandLoadDistance)
                 {
-                    GameObject island = GameObject.Instantiate(islandPrefab, new Vector3(existingIslands[i].x, 0, existingIslands[i].y), Quaternion.identity);
-                    loadedIslands.Add(existingIslands[i], island);
+
+                    GameObject island = GameObject.Instantiate(islandPrefab, new Vector3(pos.Key.x, 0, pos.Key.y), Quaternion.identity);
+                    island.GetComponent<IslandGenerator>().StartGenerate(pos.Value);
+                    loadedIslands.Add(pos.Key, island);
                 }
             }
         }
     }
+    public void ReSpawnIsland(Vector2 pos)
+    {
+        if (loadedIslands.ContainsKey(pos)) return;
+        string keyS = saveData.GetIslandKeyFromCoord(pos);
+        GameObject island = GameObject.Instantiate(islandPrefab, new Vector3(pos.x, 0, pos.y), Quaternion.identity);
+        island.GetComponent<IslandGenerator>().StartGenerate(keyS);
+        loadedIslands.Add(pos, island);
+    }
     public void TrySpawnIsland(Vector2 pos, bool allwaysSpawn)
     {
-        if ((Random.Range(0.0f, 1.0f) > 0.85f) || allwaysSpawn)
+        if ((Random.Range(0.0f, 1.0f) > 0.5f) || allwaysSpawn)
         {
             bool farEnoughOut = true;
-            foreach (Vector2 checkPos in existingIslands)
-                farEnoughOut &= (Vector2.Distance(pos, checkPos) >= minIslandDistacnce);
+            Dictionary<Vector2, string> seaCoords = saveData.GetIslandCoords();
+            foreach (KeyValuePair<Vector2, string> checkPos in seaCoords)
+                farEnoughOut &= (Vector2.Distance(pos, checkPos.Key) >= minIslandDistacnce);
             if (farEnoughOut)
             {
-                existingIslands.Add(pos);
                 GameObject island = GameObject.Instantiate(islandPrefab, new Vector3(pos.x, 0, pos.y), Quaternion.identity);
-                int keyI = saveData.GetIslandKey(pos);
-                island.GetComponent<IslandGenerator>().StartGenerate(keyI);
+                int keyI = saveData.GetNewIslandKey(pos);
+                island.GetComponent<IslandGenerator>().StartGenerate(keyI.ToString());
                 loadedIslands.Add(pos, island);
-                saveData.AddIslandCoords(pos, keyI);
             }
         }
     }

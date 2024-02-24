@@ -1,8 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.XR;
 
 public class IslandImager : MonoBehaviour
 {
@@ -36,20 +39,13 @@ public class IslandImager : MonoBehaviour
         imageCamera = GetComponent<Camera>();
         imageCamera.enabled = false;
     }
-    public IEnumerator ImageOfIsland(Vector2 islandPos, int keyI, GameObject island)
+    public IEnumerator ImageOfIsland(Vector2 islandPos, string keyS, GameObject island)
     {
         //yield return new WaitForSeconds(0.5f);
         yield return null;
+        //TakePictureAsync(islandPos, keyS, island);
         island.layer = 16;
-        //islandPos = Vector2.zero;
         transform.position = new Vector3(islandPos.x, 100, islandPos.y);
-        //imageCamera.Render();
-        //RenderTexture outputMap = new RenderTexture(2000, 2000, 32);
-        //RenderTexture.active = outputMap;
-        //Texture2D texture = new Texture2D(outputMap.width, outputMap.height, TextureFormat.ARGB32, false, false);
-        //texture.ReadPixels(new Rect(0, 0, outputMap.width, outputMap.height), 0, 0);
-        //texture.Apply();
-
         RenderTexture mRt = new RenderTexture(snapTexture.width, snapTexture.height, snapTexture.depth, RenderTextureFormat.ARGB32, RenderTextureReadWrite.sRGB);
         mRt.antiAliasing = snapTexture.antiAliasing;
 
@@ -73,13 +69,27 @@ public class IslandImager : MonoBehaviour
             }
         }
         byte[] bytes = tex.EncodeToPNG();
+        Destroy(tex);
         if (!Directory.Exists(Application.persistentDataPath + "/IslandImages"))
         {
             //if it doesn't, create it
             Directory.CreateDirectory(Application.persistentDataPath + "/IslandImages");
         }
-        File.WriteAllBytes(Application.persistentDataPath + "/IslandImages/" + keyI.ToString() + ".png", bytes);
-        Destroy(tex);
+        string path = Application.persistentDataPath + "/IslandImages/";
+        var task = Task.Run(async () => await TakePictureAsync(islandPos, keyS, bytes, path));
+        task.Wait();
         island.layer = 11;
+
+    }
+    public async Task TakePictureAsync(Vector2 islandPos, string keyS, byte[] bytes, string path)
+    {
+        //islandPos = Vector2.zero;
+        //imageCamera.Render();
+        //RenderTexture outputMap = new RenderTexture(2000, 2000, 32);
+        //RenderTexture.active = outputMap;
+        //Texture2D texture = new Texture2D(outputMap.width, outputMap.height, TextureFormat.ARGB32, false, false);
+        //texture.ReadPixels(new Rect(0, 0, outputMap.width, outputMap.height), 0, 0);
+        //texture.Apply();
+        await File.WriteAllBytesAsync(path + keyS + ".png", bytes);
     }
 }

@@ -25,6 +25,7 @@ public class IslandGenerator : MonoBehaviour
     [SerializeField] FortGenerator fortGenerator;
     [SerializeField] Material clearIslandOuterColliderMaterial;
     [SerializeField] IslandImager islandImager;
+    private SaveData saveData;
     void Start()
     {
         //await Task.Run(() =>
@@ -32,17 +33,22 @@ public class IslandGenerator : MonoBehaviour
         //    await Generate(transform.position);
         //});
     }
-    public void StartGenerate(int key)
+    public void StartGenerate(string keyS)
     {
+        saveData = SaveData.Instance;
         WorldXWidth = xWidth;
         WorldZWidth = zWidth;
         xSize = Mathf.RoundToInt((WorldXWidth / 10.0f) * vertsPerTenWidth);
         zSize = Mathf.RoundToInt((WorldZWidth / 10.0f) * vertsPerTenWidth);
         Generate(transform.position);
+        Vector2 posVT = new Vector2(transform.position.x, transform.position.z);
         islandImager = IslandImager.Instance;
-        if (key != -1)
-            StartCoroutine(islandImager.ImageOfIsland(new Vector2(transform.position.x, transform.position.z), key, gameObject));
-        fortGenerator.LoadFort(transform.position.x, transform.position.z, WorldXWidth, WorldZWidth);
+        if (!saveData.IslandExists(posVT))
+        {
+            saveData.AddIslandCoords(posVT, keyS);
+            StartCoroutine(islandImager.ImageOfIsland(posVT, keyS, gameObject));
+        }
+        fortGenerator.LoadFort(transform.position.x, transform.position.z, WorldXWidth, WorldZWidth, keyS);
     }
     //private void Update()
     //{

@@ -8,6 +8,7 @@ public class FortTurretControl : MonoBehaviour
     private Transform target;
     [SerializeField] List<TurretController> turrets;
     private FindTargetController findTargetController;
+
     float time = 0.0f;
     private bool gunsEnabled = true;
     private void Start()
@@ -87,5 +88,11 @@ public class FortTurretControl : MonoBehaviour
     public void SetTeam(int teamId)
     {
         this.teamId = teamId;
+        SaveData saveData = SaveData.Instance;
+        string fortId = saveData.GetFortKeyFromPos(transform.position);
+        if (fortId != "")
+        {
+            saveData.SetFortTeam(fortId, teamId);
+        }
     }
 }
