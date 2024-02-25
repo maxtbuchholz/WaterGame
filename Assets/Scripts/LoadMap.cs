@@ -123,13 +123,16 @@ public class LoadMap : MonoBehaviour
                 string fortKey = keyS + "_fort";
                 if (saveData.FortExists(fortKey))
                 {
-                    GameObject ft = GameObject.Instantiate(fortPrefab);
-                    ft.transform.parent = fortparent;
-                    Vector3 ftPos = saveData.GetFortPos(fortKey);
-                    ft.transform.localPosition = new Vector3((ftPos.x / waterTileWidth) * tileSize, (ftPos.z / waterTileWidth) * tileSize, -1);
-                    ft.GetComponent<RectTransform>().sizeDelta = new Vector2(tileSize * 0.2f, tileSize * 0.2f);
-                    ft.GetComponent<RawImage>().color = TeamsController.Instance.GetTeamColor(saveData.GetFortTeam(fortKey));
-                    loadedForts.Add(new Vector2(ftPos.x, ftPos.z), ft);
+                    if (saveData.GetFortTeam(fortKey) == 0)
+                    {
+                        GameObject ft = GameObject.Instantiate(fortPrefab);
+                        ft.transform.parent = fortparent;
+                        Vector3 ftPos = saveData.GetFortPos(fortKey);
+                        ft.transform.localPosition = new Vector3((ftPos.x / waterTileWidth) * tileSize, (ftPos.z / waterTileWidth) * tileSize, -1);
+                        ft.GetComponent<RectTransform>().sizeDelta = new Vector2(tileSize * 0.2f, tileSize * 0.2f);
+                        ft.GetComponent<RawImage>().color = TeamsController.Instance.GetTeamColor(saveData.GetFortTeam(fortKey));
+                        loadedForts.Add(new Vector2(ftPos.x, ftPos.z), ft);
+                    }
                 }
             }
         }

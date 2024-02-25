@@ -53,10 +53,13 @@ public class MapTouchControl : MonoBehaviour
             {
                 touchTimes.Add(touch.fingerId, 0);
                 if (!buttonCollisionTracker.IsntTouchingButton(touch.fingerId, touch.position, ButtonCollisionTracker.touchPhase.start))
+                {
                     if (!uITouchFinderIds.Contains(touch.fingerId)) uITouchFinderIds.Add(touch.fingerId);
+                    Debug.Log("UI touch added");
+                }
             }
         }
-        int zoomPanTouchCount = touches.Length;                     //get touch count for deciding whether to zoom or pan
+        int zoomPanTouchCount = touches.Length - uITouchFinderIds.Count;                     //get touch count for deciding whether to zoom or pan
         if (zoomPanTouchCount > 0)                                         //pan around focused on the ship
         {
             float horDif = 0;
@@ -65,13 +68,16 @@ public class MapTouchControl : MonoBehaviour
             {                                           //make sure touch isnt nav touch
                 if (!uITouchFinderIds.Contains(touches[i].fingerId))
                 {
-                    horDif += touches[i].deltaPosition.x;
-                    verDif += touches[i].deltaPosition.y;
+                    if (!uITouchFinderIds.Contains(touches[i].fingerId))
+                    {
+                        horDif += touches[i].deltaPosition.x;
+                        verDif += touches[i].deltaPosition.y;
+                    }
+                    horDif /= zoomPanTouchCount;
+                    verDif /= zoomPanTouchCount;
+                    Vector2 panOfffset = new Vector2(horDif, verDif);
+                    loadMap.AddPan(panOfffset);
                 }
-                horDif /= touches.Length;
-                verDif /= touches.Length;
-                Vector2 panOfffset = new Vector2(horDif, verDif);
-                loadMap.AddPan(panOfffset);
             }
         }
         if (zoomPanTouchCount > 1)                                     //zoom in or out focused on the ship
@@ -79,22 +85,25 @@ public class MapTouchControl : MonoBehaviour
             float screenSizeing = (Screen.width + Screen.height) / 2;
             for (int i = 0; i < touches.Length; i++)
             {
-                Vector2 otherFingersPos = Vector2.zero;
-                for (int k = 0; k < touches.Length; k++)
+                if (!uITouchFinderIds.Contains(touches[i].fingerId))
                 {
-                    if(i != k)
-                        otherFingersPos += touches[k].position;
-                }
-                otherFingersPos /= (zoomPanTouchCount - 1);
-                if (!uITouchFinderIds.Contains(touches[i].fingerId))                               //if not nav bar touch
-                {
-                    float prevDst = Vector2.Distance(otherFingersPos, touches[i].position);
-                    float deltaDst = Vector2.Distance(otherFingersPos, touches[i].position - touches[i].deltaPosition) - prevDst;
-                    deltaDst /= screenSizeing;
-                    deltaDst *= 50;
-                    zoomDstMult += deltaDst;
-                    zoomDstMult = Mathf.Min(zoomDstMult, maxZoomDst);
-                    zoomDstMult = Mathf.Max(zoomDstMult, minZoomDst);
+                    Vector2 otherFingersPos = Vector2.zero;
+                    for (int k = 0; k < touches.Length; k++)
+                    {
+                        if ((i != k) && (!uITouchFinderIds.Contains(touches[k].fingerId)))
+                            otherFingersPos += touches[k].position;
+                    }
+                    otherFingersPos /= (zoomPanTouchCount - 1);
+                    if (!uITouchFinderIds.Contains(touches[i].fingerId))                               //if not nav bar touch
+                    {
+                        float prevDst = Vector2.Distance(otherFingersPos, touches[i].position);
+                        float deltaDst = Vector2.Distance(otherFingersPos, touches[i].position - touches[i].deltaPosition) - prevDst;
+                        deltaDst /= screenSizeing;
+                        deltaDst *= 50;
+                        zoomDstMult += deltaDst;
+                        zoomDstMult = Mathf.Min(zoomDstMult, maxZoomDst);
+                        zoomDstMult = Mathf.Max(zoomDstMult, minZoomDst);
+                    }
                 }
             }
         }

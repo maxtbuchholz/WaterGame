@@ -83,6 +83,7 @@
     <Compile Include="Assets/Scripts/healthandteam/TeamsController.cs" />
     <Compile Include="Assets/Scripts/Shooting/FortValues.cs" />
     <Compile Include="Assets/Scripts/Shooting/FortTurretControl.cs" />
+    <Compile Include="Assets/Scripts/Touch/ButtonTouch.cs" />
     <Compile Include="Assets/Scripts/Camera/FoamCameraFollow.cs" />
     <Compile Include="Assets/Scripts/SaveData.cs" />
     <Compile Include="Assets/Scripts/GroundLoader.cs" />
