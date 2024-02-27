@@ -64,11 +64,13 @@
     <Compile Include="Assets/Scripts/LoadMap.cs" />
     <Compile Include="Assets/Models/Menus/Map/FitCardUI.cs" />
     <Compile Include="Assets/Scripts/Canvas/MainCanvas.cs" />
+    <Compile Include="Assets/Models/Menus/Popup/Rotate.cs" />
     <Compile Include="Assets/Scripts/ShipMove/ShipMovement.cs" />
     <Compile Include="Assets/Scripts/FortGenerator.cs" />
     <Compile Include="Assets/Scripts/healthandteam/LocalTeamController.cs" />
     <Compile Include="Assets/Scripts/healthandteam/DetectHit.cs" />
     <Compile Include="Assets/Scripts/x/LoadWaterTiles.cs" />
+    <Compile Include="Assets/Scripts/PointToPlayer.cs" />
     <Compile Include="Assets/Scripts/ShipSurroundFoam.cs" />
     <Compile Include="Assets/Scripts/ButtonCollisionTracker.cs" />
     <Compile Include="Assets/Scripts/ShipMove/ShipValueControl.cs" />
@@ -88,6 +90,7 @@
     <Compile Include="Assets/Scripts/SaveData.cs" />
     <Compile Include="Assets/Scripts/GroundLoader.cs" />
     <Compile Include="Assets/Scripts/CaptureButton.cs" />
+    <Compile Include="Assets/Models/Menus/Popup/PupupBlockClick.cs" />
     <Compile Include="Assets/Scripts/Shooting/DestroyOnEffectComplete.cs" />
     <Compile Include="Assets/Scripts/FindTargetController.cs" />
     <Compile Include="Assets/Terrain/IslandGenerator.cs" />
@@ -95,6 +98,7 @@
     <Compile Include="Assets/Terrain/IslandTracker.cs" />
     <Compile Include="Assets/Scripts/Shooting/PlayerFireControl.cs" />
     <Compile Include="Assets/Scripts/Camera/FocalPointFollow.cs" />
+    <Compile Include="Assets/Scripts/PopupManager.cs" />
     <Compile Include="Assets/Scripts/WaterLoad.cs" />
     <Compile Include="Assets/Scripts/healthandteam/HealthController.cs" />
     <Compile Include="Assets/Scripts/Touch/MapTouchControl.cs" />
@@ -104,8 +108,11 @@
     <Compile Include="Assets/Terrain/GenerateTerrain.cs" />
     <Compile Include="Assets/Scripts/FaceCamera.cs" />
     <Compile Include="Assets/RenderTexture/MaskLowerLayers/MaskObject.cs" />
+    <Compile Include="Assets/Models/Menus/Popup/ResizeScreenImage.cs" />
+    <Compile Include="Assets/Scripts/MapFortTouch.cs" />
     <Compile Include="Assets/Scripts/CameraTrack.cs" />
     <Compile Include="Assets/Scripts/Touch/NavTouch.cs" />
+    <Compile Include="Assets/Models/Menus/Popup/BinaryPopupResize.cs" />
     <Compile Include="Assets/Scripts/WaterGetHeight.cs" />
     <Compile Include="Assets/Terrain/MeshGenerator.cs" />
     <Compile Include="Assets/Scripts/IslandImager.cs" />

@@ -5234,6 +5234,8 @@ MonoBehaviour:
   fortparent: {fileID: 0}
   mapTouchControl: {fileID: 1180234279}
   shipDrive: {fileID: 0}
+  mainCanvas: {fileID: 0}
+  mapCanvas: {fileID: 0}
 --- !u!1 &97424756
 GameObject:
   m_ObjectHideFlags: 0
@@ -5399,6 +5401,8 @@ MonoBehaviour:
   fortparent: {fileID: 193162518}
   mapTouchControl: {fileID: 1180234279}
   shipDrive: {fileID: 97424760}
+  mainCanvas: {fileID: 865831599}
+  mapCanvas: {fileID: 359066787}
 --- !u!1 &107651881
 GameObject:
   m_ObjectHideFlags: 0
@@ -5714,6 +5718,8 @@ MonoBehaviour:
   fortparent: {fileID: 0}
   mapTouchControl: {fileID: 1180234279}
   shipDrive: {fileID: 0}
+  mainCanvas: {fileID: 0}
+  mapCanvas: {fileID: 0}
 --- !u!1 &198872823
 GameObject:
   m_ObjectHideFlags: 0
@@ -11618,6 +11624,8 @@ GameObject:
   - component: {fileID: 1236655866}
   - component: {fileID: 1236655867}
   - component: {fileID: 1236655868}
+  - component: {fileID: 1236655869}
+  - component: {fileID: 1236655870}
   m_Layer: 0
   m_Name: Controller
   m_TagString: Untagged
@@ -11717,6 +11725,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2af12e75f5909484f917bb435d754be5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1236655869
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1236655861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23b3c08817858444c9a069211b92975b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  overlayTransform: {fileID: 2005801119}
+  binaryPopupPrefab: {fileID: 6146119682788954107, guid: e58efdac70c574eb6903ffcb634ca924, type: 3}
+  backroundUIPrefab: {fileID: 5952051566007598832, guid: 4787b93d4c8ea4360862c82233dbe8e2, type: 3}
+  loadingScreenPrefab: {fileID: 5952051566007598832, guid: 6047e97074d57406cbda4182c4eacf3d, type: 3}
+  mapCanvas: {fileID: 0}
+  mainCanvas: {fileID: 0}
+--- !u!114 &1236655870
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1236655861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59c0c36ba52514768a02ee0f0be56a0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  focalPoint: {fileID: 1264311711}
+  playerShip: {fileID: 97424760}
 --- !u!1 &1245790424
 GameObject:
   m_ObjectHideFlags: 0

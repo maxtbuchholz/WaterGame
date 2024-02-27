@@ -21,6 +21,8 @@ public class LoadMap : MonoBehaviour
     [SerializeField] Transform fortparent;
     [SerializeField] MapTouchControl mapTouchControl;
     [SerializeField] Transform shipDrive;
+    [SerializeField] MainCanvas mainCanvas;
+    [SerializeField] MapCanvas mapCanvas;
     private GameObject ship;
     float tileSize;
     float islandTileSize;
@@ -39,6 +41,7 @@ public class LoadMap : MonoBehaviour
     private Dictionary<Vector2, string> islands;
     public void ClearMap()
     {
+        if (ButtonCollisionTracker.Instance.GetTypicalButtonBlocked()) return;
         foreach (Transform child in transform)
         {
             Destroy(child.gameObject);
@@ -129,8 +132,10 @@ public class LoadMap : MonoBehaviour
                         ft.transform.parent = fortparent;
                         Vector3 ftPos = saveData.GetFortPos(fortKey);
                         ft.transform.localPosition = new Vector3((ftPos.x / waterTileWidth) * tileSize, (ftPos.z / waterTileWidth) * tileSize, -1);
-                        ft.GetComponent<RectTransform>().sizeDelta = new Vector2(tileSize * 0.2f, tileSize * 0.2f);
-                        ft.GetComponent<RawImage>().color = TeamsController.Instance.GetTeamColor(saveData.GetFortTeam(fortKey));
+                        ft.GetComponent<MapFortTouch>().SetSize(tileSize * 0.2f, tileSize * 0.2f);
+                        ft.GetComponent<MapFortTouch>().SetColor(TeamsController.Instance.GetTeamColor(saveData.GetFortTeam(fortKey)));
+                        ft.GetComponent<MapFortTouch>().SetFortKey(fortKey);
+                        ft.GetComponent<MapFortTouch>().SetCanvasValues(mapCanvas, mainCanvas);
                         loadedForts.Add(new Vector2(ftPos.x, ftPos.z), ft);
                     }
                 }
@@ -139,6 +144,7 @@ public class LoadMap : MonoBehaviour
     }
     public void ToCenter()
     {
+        if (ButtonCollisionTracker.Instance.GetTypicalButtonBlocked()) return;
         StartCoroutine(CoToCenter());
     }
     private IEnumerator CoToCenter()
@@ -213,7 +219,7 @@ public class LoadMap : MonoBehaviour
         }
         foreach (KeyValuePair<Vector2, GameObject> pair in loadedForts)
         {
-            pair.Value.GetComponent<RectTransform>().sizeDelta = new Vector2(tileSize * 0.2f, tileSize * 0.2f);
+            pair.Value.GetComponent<MapFortTouch>().SetSize(tileSize * 0.2f, tileSize * 0.2f);
             pair.Value.transform.localPosition = new Vector3((pair.Key.x / waterTileWidth) * tileSize, (pair.Key.y / waterTileWidth) * tileSize, -1);
         }
         ship.GetComponent<RectTransform>().sizeDelta = new Vector2((tileSize / 8) * shipWidthToHeight, tileSize / 8);

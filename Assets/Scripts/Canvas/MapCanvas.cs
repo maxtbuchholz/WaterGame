@@ -24,10 +24,13 @@ public class MapCanvas : MonoBehaviour
     }
     public void MoveToFrame()
     {
+        bool able = ButtonCollisionTracker.Instance.GetTypicalButtonBlocked();
+        if (able) return;
         StartCoroutine(MoveToCenter(0.2f));
     }
     public void MoveToHide()
     {
+        if (ButtonCollisionTracker.Instance.GetTypicalButtonBlocked()) return;
         StartCoroutine(MoveToShrink(0.2f));
     }
     IEnumerator MoveToCenter(float timeToCenter)

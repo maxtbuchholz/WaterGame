@@ -35,6 +35,20 @@ public class ButtonCollisionTracker : MonoBehaviour
         }
         instance.Setup();
     }
+    private int typicalButtonBlockers = 0;
+    public void AddTypicalButtonBlocker()
+    {
+        typicalButtonBlockers++;
+    }
+    public void RemoveTypicalButtonBlocker()
+    {
+        typicalButtonBlockers--;
+    }
+    public bool GetTypicalButtonBlocked()
+    {
+        if (typicalButtonBlockers > 0) return true;
+        return false;
+    }
     public enum touchPhase
     {
         start,
@@ -49,6 +63,7 @@ public class ButtonCollisionTracker : MonoBehaviour
         UIButons.TryAdd(button, level);
     }
     private Dictionary<int, Collider> fingerToButton = new();
+    private Dictionary<int, RectTransform> fingerToButtonRT = new();
     public bool IsntTouchingButton(int fingerId, Vector2 touchPos, touchPhase phase)    //returns true if the click is not touching any clickable ui items, false if it is
     {
         RemoveNullButtons();
@@ -93,18 +108,26 @@ public class ButtonCollisionTracker : MonoBehaviour
         }
         if(bestClickLayer != -1)
         {
-            if (fingerToButton.ContainsKey(fingerId))
-                fingerToButton[fingerId] = bestClickCol;
-            else fingerToButton.Add(fingerId, bestClickCol);
             if (BestHitIsUI)
             {
+                if (fingerToButtonRT.ContainsKey(fingerId))
+                    fingerToButtonRT[fingerId] = bestClickRT;
+                else fingerToButtonRT.Add(fingerId, bestClickRT);
                 if (bestClickRT.gameObject.TryGetComponent<ButtonTouch>(out ButtonTouch buttonTouch))
                 {
+                    return false;
+                }
+                if (bestClickRT.gameObject.TryGetComponent<MapFortTouch>(out MapFortTouch mapFortTouch))
+                {
+                    mapFortTouch.TouchStart();
                     return false;
                 }
             }
             else
             {
+                if (fingerToButton.ContainsKey(fingerId))
+                    fingerToButton[fingerId] = bestClickCol;
+                else fingerToButton.Add(fingerId, bestClickCol);
                 if (bestClickCol.gameObject.TryGetComponent<CaptureButton>(out CaptureButton captureButton))
                     if (!captureButton.StartPress())
                     {
@@ -135,6 +158,13 @@ public class ButtonCollisionTracker : MonoBehaviour
                 WorldButons.Remove(key);
             }
         }
+        foreach (var key in UIButons.Keys.ToArray())
+        {
+            if (key == null)
+            {
+                UIButons.Remove(key);
+            }
+        }
     }
     public void EndTouchingButton(int fingerId, touchPhase phase)    //returns true if the click is not touching any clickable ui items, false if it is
     {
@@ -147,6 +177,15 @@ public class ButtonCollisionTracker : MonoBehaviour
                     captureButton.EndPress();
             }
             fingerToButton.Remove(fingerId);
+        }
+        if (fingerToButtonRT.ContainsKey(fingerId))
+        {
+            if (fingerToButtonRT[fingerId] != null)
+            {
+                if (fingerToButtonRT[fingerId].gameObject.TryGetComponent<MapFortTouch>(out MapFortTouch mapFortTouch))
+                    mapFortTouch.TouchEnd();
+            }
+            fingerToButtonRT.Remove(fingerId);
         }
     }
     private void Setup()
