@@ -6,6 +6,9 @@ public class PointToPlayer : MonoBehaviour
 {
     [SerializeField] Transform focalPoint;
     [SerializeField] Transform playerShip;
+    [SerializeField] Camera camera;
+    [SerializeField] NavTouch navTouch;
+    [SerializeField] MainCanvas mainCanvas;
     private static PointToPlayer instance;
     public static PointToPlayer Instance
     {
@@ -36,5 +39,17 @@ public class PointToPlayer : MonoBehaviour
     public Transform GetPlayerShip()
     {
         return playerShip;
+    }
+    public Camera GetCamera()
+    {
+        return camera;
+    }
+    public MainCanvas GetMainCanvas()
+    {
+        return mainCanvas;
+    }
+    public void ResetTouch()
+    {
+        navTouch.ResetTouch();
     }
 }

@@ -79,6 +79,7 @@ public class MapFortTouch : MonoBehaviour
         GameObject tempFocalFollow = new GameObject();
         tempFocalFollow.transform.position = pos;
         PointToPlayer.Instance.GetFocalPoint().GetComponent<FocalPointFollow>().SetFollowTransform(tempFocalFollow.transform);
+        PointToPlayer.Instance.ResetTouch();
         await Task.Delay(500);
         List<Vector3> OkaySpawnPoints = new();
         foreach(Vector2 check in spawnChecks)

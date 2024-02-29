@@ -8,7 +8,12 @@ public class PopupManager : MonoBehaviour
     [SerializeField] Transform overlayTransform;
     [SerializeField] GameObject binaryPopupPrefab;
     [SerializeField] GameObject backroundUIPrefab;
+    [SerializeField] GameObject nonBlockigBackroundUIPrefab;
+    [SerializeField] GameObject upgradeShipFortPrefab;
     [SerializeField] GameObject loadingScreenPrefab;
+    [SerializeField] UpdradeShipCanvas upgradeShipCanvas;
+    [SerializeField] UpdradeFortCanvas upgradeFortCanvas;
+    [SerializeField] MainCanvas mainCanvas;
     private static PopupManager instance;
     public static PopupManager Instance
     {
@@ -110,5 +115,37 @@ public class PopupManager : MonoBehaviour
         }
         rSI.SetOpacity(0);
         Destroy(loadingScreen.gameObject);
+    }
+    public void SummonAskShipFortUpgrade(Vector2 fortScreenPos)
+    {
+        GameObject uiRect = GameObject.Instantiate(nonBlockigBackroundUIPrefab);
+        fortScreenPos.x -= uiRect.GetComponent<RectTransform>().rect.width / 2;
+        fortScreenPos.y -= uiRect.GetComponent<RectTransform>().rect.height / 2;
+        GameObject popup = GameObject.Instantiate(upgradeShipFortPrefab);
+        popup.GetComponent<UpgradeFSButtons>().SetKey(popupsKeyIncriment);
+        popupsKeyIncriment++;
+        popup.transform.parent = uiRect.transform;
+        popup.transform.localPosition = fortScreenPos;// Vector3.zero;
+        uiRect.name = "fortShipUpgradeBack";
+        uiRect.transform.parent = overlayTransform;
+        uiRect.transform.SetSiblingIndex(0);
+        if (popups.ContainsKey(popupsKeyIncriment - 1)) popups[popupsKeyIncriment - 1] = uiRect;
+        else popups.Add(popupsKeyIncriment - 1, uiRect);
+    }
+    public void EndAskShipFortUpgrade(int key)
+    {
+        GameObject pop = popups[key];
+        Destroy(pop);
+        popups.Remove(key);
+    }
+    public void SummonShipUpgradeScreen()
+    {
+        mainCanvas.DisableCanvas();
+        upgradeShipCanvas.MoveToFrame();
+    }
+    public void SummonFortUpgradeScreen()
+    {
+        mainCanvas.DisableCanvas();
+        upgradeFortCanvas.MoveToFrame();
     }
 }

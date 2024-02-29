@@ -134,6 +134,12 @@ public class ButtonCollisionTracker : MonoBehaviour
                         fingerToButton.Remove(fingerId);
                         return true;
                     }
+                if (bestClickCol.gameObject.TryGetComponent<FortTouch>(out FortTouch fortTouch))
+                    if (!fortTouch.TouchStart())
+                    {
+                        fingerToButton.Remove(fingerId);
+                        return true;
+                    }
             }
             return false;
         }
@@ -175,6 +181,8 @@ public class ButtonCollisionTracker : MonoBehaviour
             {
                 if (fingerToButton[fingerId].gameObject.TryGetComponent<CaptureButton>(out CaptureButton captureButton))
                     captureButton.EndPress();
+                if (fingerToButton[fingerId].gameObject.TryGetComponent<FortTouch>(out FortTouch fortTouch))
+                    fortTouch.TouchEnd();
             }
             fingerToButton.Remove(fingerId);
         }

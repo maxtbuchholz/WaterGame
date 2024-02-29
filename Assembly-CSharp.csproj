@@ -76,6 +76,7 @@
     <Compile Include="Assets/Scripts/ShipMove/ShipValueControl.cs" />
     <Compile Include="Assets/Scripts/Shooting/ProjectileHit.cs" />
     <Compile Include="Assets/Scripts/Canvas/MapCanvas.cs" />
+    <Compile Include="Assets/Scripts/Touch/FortTouch.cs" />
     <Compile Include="Assets/Scripts/ShipMove/ShipRotation.cs" />
     <Compile Include="Assets/Scripts/x/TileDeleter.cs" />
     <Compile Include="Assets/Scripts/Noise.cs" />
@@ -84,6 +85,7 @@
     <Compile Include="Assets/Scripts/Touch/PlayerInput.cs" />
     <Compile Include="Assets/Scripts/healthandteam/TeamsController.cs" />
     <Compile Include="Assets/Scripts/Shooting/FortValues.cs" />
+    <Compile Include="Assets/Scripts/Canvas/UpgradeFortCanvas.cs" />
     <Compile Include="Assets/Scripts/Shooting/FortTurretControl.cs" />
     <Compile Include="Assets/Scripts/Touch/ButtonTouch.cs" />
     <Compile Include="Assets/Scripts/Camera/FoamCameraFollow.cs" />
@@ -94,6 +96,7 @@
     <Compile Include="Assets/Scripts/Shooting/DestroyOnEffectComplete.cs" />
     <Compile Include="Assets/Scripts/FindTargetController.cs" />
     <Compile Include="Assets/Terrain/IslandGenerator.cs" />
+    <Compile Include="Assets/Models/Menus/Popup/UpgradeFSButtons.cs" />
     <Compile Include="Assets/Scripts/Shooting/TurretController.cs" />
     <Compile Include="Assets/Terrain/IslandTracker.cs" />
     <Compile Include="Assets/Scripts/Shooting/PlayerFireControl.cs" />
@@ -116,6 +119,7 @@
     <Compile Include="Assets/Scripts/WaterGetHeight.cs" />
     <Compile Include="Assets/Terrain/MeshGenerator.cs" />
     <Compile Include="Assets/Scripts/IslandImager.cs" />
+    <Compile Include="Assets/Scripts/Canvas/UpgradeShipCanvas.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets/TextMesh Pro/Shaders/TMPro.cginc" />

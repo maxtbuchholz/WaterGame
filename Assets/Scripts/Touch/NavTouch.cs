@@ -27,6 +27,12 @@ public class NavTouch : MonoBehaviour
     private ButtonCollisionTracker buttonCollisionTracker;
     // Start is called before the first frame update
     PlayerInput playerInput;
+    public void ResetTouch()
+    {
+        UpdateThrottlePos(new Vector2(transform.position.x, transform.position.y));
+        uITouchFinderIds.Clear();
+        throttleTouchId = -1;
+    }
     void Start()
     {
         playerInput = PlayerInput.Instance;
