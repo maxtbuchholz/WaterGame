@@ -13,7 +13,7 @@ scopes = {
 	"last_search.74AD8FDB" = "circ"
 	"OpenInspectorPreview.74AD8FDB" = "0"
 	"currentGroup.74AD8FDB" = "all"
-	"last_search.5A656512" = "ref=\"/ShipTrailCircles\""
+	"last_search.5A656512" = "ref=\"/UIs/Map_Canvas/Map/ButtonFrame/close_button\""
 	"OpenInspectorPreview.5A656512" = "0"
 	"currentGroup.5A656512" = null
 }

@@ -13,6 +13,7 @@ public class NavTouch : MonoBehaviour
     [SerializeField] PlayerFireControl playerFireControl;
     [SerializeField] Transform focalPoint;
     [SerializeField] Transform cameraTransform;
+    [SerializeField] CompasUpdate compasUpdate;
     private BoxCollider2D throttleCollider;
     private int throttleTouchId = -1;
     private float navWidth = 164;
@@ -41,7 +42,31 @@ public class NavTouch : MonoBehaviour
         widthOffset = (canvasRect.rect.width - navWidth) / 2;
         heightOffset = (canvasRect.rect.height - navHeight) / 2;
     }
-
+    public void RotateToNorth()
+    {
+        StartCoroutine(RotateToNorthCRT());
+    }
+    private IEnumerator RotateToNorthCRT()
+    {
+        float timeToNorth = 0.5f;
+        float currRotation = focalPoint.rotation.eulerAngles.y;
+        int flipped = 1;
+        if(currRotation > 180)
+        {
+            currRotation = 360 - currRotation;
+            flipped = -1;
+        }
+        float currTime = 0;
+        while(currTime < timeToNorth)
+        {
+            currTime += Time.deltaTime;
+            Vector3 incRotation = focalPoint.rotation.eulerAngles;
+            incRotation.y -= ((currRotation * Time.deltaTime) / timeToNorth) * flipped;
+            focalPoint.rotation = Quaternion.Euler(incRotation);
+            compasUpdate.UpdateCompas(incRotation.y);
+            yield return null;
+        }
+    }
     // Update is called once per frame
     void Update()
     {
@@ -131,7 +156,9 @@ public class NavTouch : MonoBehaviour
                         Vector3 prevRotation = focalPoint.rotation.eulerAngles;
                         horDif *= 220;
                         verDif *= -80;
-                        focalPoint.rotation = Quaternion.Euler(Mathf.Max(Mathf.Min((verDif + prevRotation.x) % 360, 45), 5), (horDif + prevRotation.y) % 360, 0);
+                        float rotY = (horDif + prevRotation.y) % 360;
+                        focalPoint.rotation = Quaternion.Euler(Mathf.Max(Mathf.Min((verDif + prevRotation.x) % 360, 45), 5), rotY, 0);
+                        compasUpdate.UpdateCompas(rotY);
                         //Debug.Log(focalPoint.rotation.eulerAngles);
                     }
             }

@@ -39,6 +39,11 @@ public class LoadMap : MonoBehaviour
     private float currentZoom = 8;
     private float shipWidthToHeight = 0;
     private Dictionary<Vector2, string> islands;
+    public void SetMapActive(bool mapActive)
+    {
+        this.mapActive = mapActive;
+    }
+    private bool mapActive = false;
     public void ClearMap()
     {
         if (ButtonCollisionTracker.Instance.GetTypicalButtonBlocked()) return;
@@ -189,6 +194,7 @@ public class LoadMap : MonoBehaviour
     private Vector2 addPan = Vector2.zero;
     public void AddPan(Vector2 pan)
     {
+        if (!mapActive) return;
         addPan += pan;
         //pan *= 100;
         ship.transform.localPosition = addPan;// new Vector2(((focalPosition.position.x / waterTileWidth) * tileSize), ((focalPosition.position.y / waterTileWidth) * tileSize));
@@ -202,6 +208,7 @@ public class LoadMap : MonoBehaviour
     }
     public void SetZoom(float zoom)
     {
+        if (!mapActive) return;
         addPan *= (currentZoom / zoom);
         //Debug.Log(zoom);
         currentZoom = zoom;

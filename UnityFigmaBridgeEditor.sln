@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 25.0.1706.4
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityFigmaBridgeEditor", "UnityFigmaBridgeEditor.csproj", "{26E900F3-40A6-9474-6B7E-E2C773378952}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{26E900F3-40A6-9474-6B7E-E2C773378952}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26E900F3-40A6-9474-6B7E-E2C773378952}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26E900F3-40A6-9474-6B7E-E2C773378952}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26E900F3-40A6-9474-6B7E-E2C773378952}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C7D269BB-0A02-4120-BB25-A5E98C02E179}
+	EndGlobalSection
+EndGlobal

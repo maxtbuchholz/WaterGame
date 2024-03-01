@@ -24,6 +24,8 @@ public class MapCanvas : MonoBehaviour
     }
     public void MoveToFrame()
     {
+        loadMap.ClearMap();
+        loadMap.SetMapActive(true);
         bool able = ButtonCollisionTracker.Instance.GetTypicalButtonBlocked();
         if (able) return;
         StartCoroutine(MoveToCenter(0.2f));
@@ -92,6 +94,8 @@ public class MapCanvas : MonoBehaviour
         currentPos = new Vector2(0, finalHeight);
         mapFrame.anchoredPosition = currentPos;
         buttonFrame.anchoredPosition = currentPos;
+        loadMap.ClearMap();
+        loadMap.SetMapActive(false);
     }
     IEnumerator MoveToShrink(float timeToCenter)
     {
