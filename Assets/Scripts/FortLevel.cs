@@ -33,7 +33,7 @@ public class FortLevel : MonoBehaviour
         {                                                   //new fort, handle accordingly
             hea_level = Random.Range(0, hea_level_effect.Count);
             dam_level = Random.Range(0, dam_level_effect.Count);
-            mor_level = Random.Range(0, mor_level_effect.Count);
+            mor_level = Mathf.Max(Random.Range(0, mor_level_effect.Count), 1);
             fSL = new FortSaveLevel(hea_level, dam_level, mor_level);
             saveData.SetFortLevels(key, fSL);
         }
@@ -82,7 +82,7 @@ public class FortLevel : MonoBehaviour
                 float zAdd = Mathf.Cos(currCheckAngle * Mathf.Rad2Deg);
                 Vector3 dir = new Vector3(xAdd, 0, zAdd);
                 Vector3 mortPosi = new Vector3(0, -100, 0);
-                hits = Physics.RaycastAll(centralLocation, dir, 40);
+                hits = Physics.RaycastAll(centralLocation, dir, 60);
                 foreach (RaycastHit hit in hits)
                     if (hit.collider.CompareTag("Land"))
                         mortPosi = hit.point;

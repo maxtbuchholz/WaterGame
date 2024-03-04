@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class FindTargetController : MonoBehaviour
 {
@@ -101,15 +102,33 @@ public class FindTargetController : MonoBehaviour
     {
         if(type == targetType.ship)     //if ship
         {
-            if (!teamShips.ContainsKey(teamId)) teamShips.Add(teamId, new Dictionary<GameObject, targetContition>());
-            if (teamShips[teamId].ContainsKey(ob)) teamShips[teamId][ob] = condition;
-            else teamShips[teamId].Add(ob, condition);
+            if (condition == targetContition.targetable)
+            {
+                if (!teamShips.ContainsKey(teamId)) teamShips.Add(teamId, new Dictionary<GameObject, targetContition>());
+                if (teamShips[teamId].ContainsKey(ob)) teamShips[teamId][ob] = condition;
+                else teamShips[teamId].Add(ob, condition);
+            }
+            else
+            {
+                if (teamShips.ContainsKey(teamId))
+                    if (teamShips[teamId].ContainsKey(ob))
+                        teamShips[teamId].Remove(ob);
+            }
         }
         else
         {                               //if fort
-            if (!teamForts.ContainsKey(teamId)) teamForts.Add(teamId, new Dictionary<GameObject, targetContition>());
-            if (teamForts[teamId].ContainsKey(ob)) teamForts[teamId][ob] = condition;
-            else teamForts[teamId].Add(ob, condition);
+            if (condition == targetContition.targetable)
+            {
+                if (!teamForts.ContainsKey(teamId)) teamForts.Add(teamId, new Dictionary<GameObject, targetContition>());
+                if (teamForts[teamId].ContainsKey(ob)) teamForts[teamId][ob] = condition;
+                else teamForts[teamId].Add(ob, condition);
+            }
+            else
+            {
+                if (teamForts.ContainsKey(teamId))
+                    if (teamForts[teamId].ContainsKey(ob))
+                        teamForts[teamId].Remove(ob);
+            }
         }
     }
     private Dictionary<int, Dictionary<GameObject, targetContition>> teamShips = new();

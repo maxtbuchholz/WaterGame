@@ -120,6 +120,7 @@
     <Compile Include="Assets/Scripts/MapFortTouch.cs" />
     <Compile Include="Assets/Scripts/CameraTrack.cs" />
     <Compile Include="Assets/Scripts/Touch/NavTouch.cs" />
+    <Compile Include="Assets/Scripts/HealthBarVisability.cs" />
     <Compile Include="Assets/Models/Menus/Popup/BinaryPopupResize.cs" />
     <Compile Include="Assets/Scripts/WaterGetHeight.cs" />
     <Compile Include="Assets/Terrain/MeshGenerator.cs" />

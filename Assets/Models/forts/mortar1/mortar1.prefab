@@ -180,6 +180,7 @@ GameObject:
   - component: {fileID: 9178950514979978231}
   - component: {fileID: 7597450046553996306}
   - component: {fileID: 1827028736886825643}
+  - component: {fileID: 2827576422744930984}
   m_Layer: 6
   m_Name: Turret_Cube.001
   m_TagString: Ship
@@ -276,6 +277,19 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -204053997273505742, guid: 0cc229175817049379eefc68226210aa, type: 3}
+--- !u!114 &2827576422744930984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1133291146558292589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73f97b58870934a7d839e0990796b79c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthController: {fileID: 39001564243200806}
 --- !u!1 &7208405037856888980
 GameObject:
   m_ObjectHideFlags: 0
@@ -287,6 +301,7 @@ GameObject:
   - component: {fileID: 1628654158922406231}
   - component: {fileID: 3683808228110104287}
   - component: {fileID: 2222193447707238726}
+  - component: {fileID: 5860211712725771000}
   m_Layer: 6
   m_Name: ShootPoint_Plane
   m_TagString: Ship
@@ -361,6 +376,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &5860211712725771000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7208405037856888980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73f97b58870934a7d839e0990796b79c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthController: {fileID: 39001564243200806}
 --- !u!1001 &5958125726265058988
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -432,9 +460,15 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 13240b19da5234f1dbef51c2417b03ac, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5323836950017361193}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 13240b19da5234f1dbef51c2417b03ac, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 39001564243200806}
     - targetCorrespondingSourceObject: {fileID: 8164078558771037576, guid: 13240b19da5234f1dbef51c2417b03ac, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3537421921777731030}
+    - targetCorrespondingSourceObject: {fileID: 8164078558771037576, guid: 13240b19da5234f1dbef51c2417b03ac, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3610321793751558943}
   m_SourcePrefab: {fileID: 100100000, guid: 13240b19da5234f1dbef51c2417b03ac, type: 3}
 --- !u!1 &2585947953580172068 stripped
 GameObject:
@@ -463,6 +497,24 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -2432090755550338912, guid: 13240b19da5234f1dbef51c2417b03ac, type: 3}
+--- !u!114 &3610321793751558943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2585947953580172068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73f97b58870934a7d839e0990796b79c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthController: {fileID: 39001564243200806}
+--- !u!23 &4947094193678085569 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7635826562936255635, guid: 13240b19da5234f1dbef51c2417b03ac, type: 3}
+  m_PrefabInstance: {fileID: 5958125726265058988}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6135374640846487879 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 13240b19da5234f1dbef51c2417b03ac, type: 3}
@@ -504,7 +556,7 @@ MonoBehaviour:
   fortTurretControl: {fileID: 1784754629520903027}
   playerFireControl: {fileID: 0}
   isplayer: 0
-  healthController: {fileID: 0}
+  healthController: {fileID: 39001564243200806}
   isMortar: 1
 --- !u!114 &1784754629520903027
 MonoBehaviour:
@@ -533,3 +585,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fortParts: []
+--- !u!114 &39001564243200806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6804633468105399293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a03caa3044bb4df08a1857a7072a47d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthBarPrefab: {fileID: 5708455843569552123, guid: 9bb8759a1f4d84cfbb2166347202fd0a, type: 3}
+  camera: {fileID: 0}
+  localTeamController: {fileID: 2520928821670883699}
+  isFort: 1
+  isMortar: 1
+  fortTurretControl: {fileID: 1784754629520903027}
+  fortRenderer: {fileID: 4947094193678085569}
+  fortCaptureCircle: {fileID: 6222878789040752236, guid: 92593c93386fa4b04bb9561c080ba9fe, type: 3}
+  captureButtonPrefab: {fileID: 3518033570003867866, guid: 75825f330823349469dd66b82362ce5b, type: 3}
+  fortExplosion: {fileID: 3945905181827361489, guid: d0e4f20e0b843413eb8ac53de0014408, type: 3}
+  fortCapturedParticle: {fileID: 3945905181827361489, guid: 895a3094f719c4d8691b8b0491ad65ee, type: 3}
