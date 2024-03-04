@@ -283,6 +283,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 3b0bad687ede14e4ab1b33b2f8012c7d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2995291479783590132}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 3b0bad687ede14e4ab1b33b2f8012c7d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6886398739996614399}
   m_SourcePrefab: {fileID: 100100000, guid: 3b0bad687ede14e4ab1b33b2f8012c7d, type: 3}
 --- !u!1 &2603587179921151470 stripped
 GameObject:
@@ -412,6 +415,21 @@ MonoBehaviour:
   - {fileID: 4338307047010006868}
   - {fileID: 6999416402277762683}
   topGlowMaterial: {fileID: -876546973899608171, guid: caff77c8c4eb4467c962a5a0864baed8, type: 3}
+--- !u!114 &6886398739996614399
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2603587179921151470}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b536a4b9414ab454daf97890561d9d9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fortTurretControl: {fileID: 5633547753328098535}
+  healthControl: {fileID: 37026520919803669}
+  mortarPrefab: {fileID: 6804633468105399293, guid: 195cfb4136a964fe49a2b35c85e7002c, type: 3}
 --- !u!4 &2817608638079401484 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1151388028547126963, guid: 3b0bad687ede14e4ab1b33b2f8012c7d, type: 3}

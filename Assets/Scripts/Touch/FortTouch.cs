@@ -64,8 +64,9 @@ public class FortTouch : MonoBehaviour
                 mat.SetColor("_BaseColor", col);
             }
         }
+        string key = GetComponent<FortLevel>().GetKey();
         Vector2 fortScreenPos = PointToPlayer.Instance.GetCamera().WorldToScreenPoint(transform.position);
-        PopupManager.Instance.SummonAskShipFortUpgrade(fortScreenPos);
+        PopupManager.Instance.SummonAskShipFortUpgrade(fortScreenPos, key);
         PointToPlayer.Instance.ResetTouch();
     }
 }

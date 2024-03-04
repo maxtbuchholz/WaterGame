@@ -34,7 +34,7 @@ public class UpgradeFSButtons : MonoBehaviour
     public void FortUpgradePressed()
     {
         PopupManager.Instance.EndAskShipFortUpgrade(key);
-        PopupManager.Instance.SummonFortUpgradeScreen();
+        PopupManager.Instance.SummonFortUpgradeScreen(fortKey);
     }
     public void ShipUpgradePressed()
     {
@@ -42,9 +42,11 @@ public class UpgradeFSButtons : MonoBehaviour
         PopupManager.Instance.SummonShipUpgradeScreen();
     }
     private int key;
-    public void SetKey(int key)
+    private string fortKey;
+    public void SetKey(int key, string fortKey)
     {
         this.key = key;
+        this.fortKey = fortKey;
     }
     private Rect GetWorldRect(RectTransform rectTransform)
     {

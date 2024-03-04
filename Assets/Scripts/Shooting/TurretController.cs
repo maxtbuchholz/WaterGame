@@ -45,6 +45,11 @@ public class TurretController : MonoBehaviour
                 keepSearching = false;
         }
     }
+    private float turretDamage = 10;
+    public void SetDamage(float damage)
+    {
+        turretDamage = damage;
+    }
     public Vector3 RequestShot(Vector3 targetPos, out ShootAbility shootAbility)
     {
         Vector3 vDistance = (targetPos - shootPoint.transform.position) * distanceMultiplyer;
@@ -177,6 +182,7 @@ public class TurretController : MonoBehaviour
             proj.GetComponent<ProjectileHit>().shipParts = shipValues.shipParts;
         else if (fortValues != null)
             proj.GetComponent<ProjectileHit>().shipParts = fortValues.fortParts;
+        proj.GetComponent<ProjectileHit>().SetDamage(turretDamage);
         proj.GetComponent<ProjectileHit>().SetTeam(teamId);
         proj.transform.position = shootPoint.transform.position;
         proj.GetComponent<Rigidbody>().velocity = normalDist * force;

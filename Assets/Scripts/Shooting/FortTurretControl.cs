@@ -15,6 +15,13 @@ public class FortTurretControl : MonoBehaviour
     {
         findTargetController = FindTargetController.Instance;
     }
+    public void SetDamage(float damage)
+    {
+        foreach(TurretController turret in turrets)
+        {
+            turret.SetDamage(damage);
+        }
+    }
     private void Update()
     {
         if (!gunsEnabled) return;

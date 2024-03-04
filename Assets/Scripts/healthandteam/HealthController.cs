@@ -55,6 +55,12 @@ public class HealthController : MonoBehaviour
         this.teamId = teamId;
         findTarget.ModifyTargetable(this.gameObject, teamId, isFort ? FindTargetController.targetType.fort : FindTargetController.targetType.ship, FindTargetController.targetContition.targetable);
     }
+    public void SetMaxHealth(float health)
+    {
+        currentHealth = health;
+        maxHealth = health;
+        MoveBar.localPosition = new Vector3(0, -(1 - (currentHealth / maxHealth)), 0);
+    }
     public void EffectHealth(float change, int attackerTeamId)
     {
         if (teamId == -1) return;

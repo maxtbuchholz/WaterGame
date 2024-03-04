@@ -13637,6 +13637,7 @@ GameObject:
   - component: {fileID: 1236655868}
   - component: {fileID: 1236655869}
   - component: {fileID: 1236655870}
+  - component: {fileID: 1236655871}
   m_Layer: 0
   m_Name: Controller
   m_TagString: Untagged
@@ -13774,6 +13775,18 @@ MonoBehaviour:
   camera: {fileID: 1070980776}
   navTouch: {fileID: 1060376639}
   mainCanvas: {fileID: 865831599}
+--- !u!114 &1236655871
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1236655861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee4b80e478ba847889eebbf788d5d18c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1245790424
 GameObject:
   m_ObjectHideFlags: 0
@@ -21646,7 +21659,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!136 &1872215393
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -21783,6 +21796,7 @@ MonoBehaviour:
   playerFireControl: {fileID: 0}
   isplayer: 0
   healthController: {fileID: 1872215400}
+  isMortar: 0
 --- !u!114 &1872215400
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21958,6 +21972,7 @@ MonoBehaviour:
   playerFireControl: {fileID: 1885345391}
   isplayer: 1
   healthController: {fileID: 0}
+  isMortar: 0
 --- !u!1 &1896776697
 GameObject:
   m_ObjectHideFlags: 0

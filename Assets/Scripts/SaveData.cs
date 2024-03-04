@@ -101,4 +101,30 @@ public class SaveData : MonoBehaviour
         if (fortTeam.ContainsKey(key)) return fortTeam[key];
         return -1;
     }
+    Dictionary<string, FortSaveLevel> fortLevels = new();
+    public void SetFortLevels(string key, FortSaveLevel fSL)
+    {
+        if (fortLevels.ContainsKey(key)) fortLevels[key] = fSL;
+        else fortLevels.Add(key, fSL);
+    }
+    public FortSaveLevel GetFortLevels(string key)
+    {
+        if (fortLevels.ContainsKey(key)) return fortLevels[key];
+        return null;
+    }
+    Dictionary<string, Vector3> mortarPositions = new();
+    public void SetMortarPos(string key, Vector3 pos)
+    {
+        if (mortarPositions.ContainsKey(key)) mortarPositions[key] = pos;
+        else mortarPositions.Add(key, pos);
+    }
+    public Vector3 GetMortarPos(string key)
+    {
+        if (mortarPositions.ContainsKey(key)) return mortarPositions[key];
+        return Vector3.zero;
+    }
+    public bool MortarPosExists(string key)
+    {
+        return mortarPositions.ContainsKey(key);
+    }
 }

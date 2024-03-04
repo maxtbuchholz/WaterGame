@@ -15,6 +15,7 @@ public class FortGenerator : MonoBehaviour
         saveData = SaveData.Instance;
         float furthestDstIn = -1;
         Vector3 bestFortPos = Vector3.zero;
+        Vector3 bestCentralPos = Vector3.zero;
         int fortTeam = -1;
         if (!saveData.FortExists(fortKey))                      //no fort has been loaded for this island before, load new fort
         {
@@ -30,12 +31,15 @@ public class FortGenerator : MonoBehaviour
                 if (NoLandOverCorner(corner))
                 {
                     Vector3 fortTryPos;
-                    float distIn = DistanceBeforeLandTowardsCenter(corner, out fortTryPos);
+                    Vector3 centralTryPos;
+                    float distIn = DistanceBeforeLandTowardsCenter(corner, out fortTryPos, out centralTryPos);
 
                     if ((furthestDstIn == -1) || (distIn > furthestDstIn))
                     {
                         furthestDstIn = distIn;
                         bestFortPos = fortTryPos;
+                        bestCentralPos = centralTryPos;
+                        bestCentralPos.y = 0;
                     }
                 }
             }
@@ -58,7 +62,10 @@ public class FortGenerator : MonoBehaviour
             else
                 saveData.SetFortTeam(fortKey, fort.GetComponent<LocalTeamController>().GetTeam());
             fort.transform.parent = transform;
+            LoadedObjects.Instance.AddLoadedFort(fortKey, fort);
             fort.GetComponent<HealthController>().camera = Camera.main;
+            fort.GetComponent<FortLevel>().SetCentralLocation(bestCentralPos);                //set central point has to be before init from key
+            fort.GetComponent<FortLevel>().InitFromKey(fortKey);
         }
     }
     private bool NoLandOverCorner(Vector3 corner)
@@ -69,7 +76,7 @@ public class FortGenerator : MonoBehaviour
             if (hit.collider.CompareTag("Land")) return false;
         return true;
     }
-    private float DistanceBeforeLandTowardsCenter(Vector3 outerPos, out Vector3 fortTryPos)
+    private float DistanceBeforeLandTowardsCenter(Vector3 outerPos, out Vector3 fortTryPos, out Vector3 centralTryPos)
     {
         Vector3 dirToCenter = center - outerPos;
         float maxToCenter = dirToCenter.magnitude;
@@ -88,6 +95,7 @@ public class FortGenerator : MonoBehaviour
         normDir.y = 0;
         closestLandPos += (2 * normDir);
         fortTryPos = closestLandPos;
+        centralTryPos = outerPos + (dirToCenter * (closestLandDst * 0.98f));
         return closestLandDst;
     }
 }

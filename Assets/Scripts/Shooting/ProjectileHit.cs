@@ -28,13 +28,18 @@ public class ProjectileHit : MonoBehaviour
     {
         this.teamId = teamId;
     }
+    private float damage = 10;
+    public void SetDamage(float damage)
+    {
+        this.damage = damage;
+    }
     void OnCollisionEnter(Collision collision)
     {
         if (teamId == -1) return;
         Collide(collision.gameObject.tag);
         if(collision.gameObject.TryGetComponent<DetectHit>(out DetectHit detectHit))
         {
-            detectHit.DealtDamage(-20, teamId);
+            detectHit.DealtDamage(-damage, teamId);
         }
         //Debug.Break();
     }

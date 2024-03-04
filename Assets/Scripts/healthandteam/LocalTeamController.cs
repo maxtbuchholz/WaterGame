@@ -11,12 +11,14 @@ public class LocalTeamController : MonoBehaviour
     [SerializeField] PlayerFireControl playerFireControl;
     [SerializeField] bool isplayer = false;
     [SerializeField] HealthController healthController;
+    [SerializeField] bool isMortar = false;
     private Color teamColor;
     // Start is called before the first frame update
     void Start()
     {
         if (teamId == -1)
             SetTeamRandom();
+        UpdateMortarTeam();
     }
     void SetTeamRandom()
     {
@@ -31,6 +33,7 @@ public class LocalTeamController : MonoBehaviour
     }
     void SetGameObjectColors()
     {
+        if (isMortar) Debug.Log("Changing Color");
         teamColor = TeamsController.Instance.GetTeamColor(teamId);
         foreach (GameObject ob in coloredObjects)
         {
@@ -61,6 +64,18 @@ public class LocalTeamController : MonoBehaviour
         if (fortTurretControl != null) fortTurretControl.SetTeam(teamId);
         if (playerFireControl != null) playerFireControl.SetTeamId(teamId);
         if (healthController != null) healthController.SetTeam(teamId);
+        UpdateMortarTeam();
+    }
+    private List<MortarController> mortarControllers = new();
+    public void AddChildMortar(MortarController mortarController)
+    {
+        mortarController.SetTeam(teamId);
+        mortarControllers.Add(mortarController);
+    }
+    public void UpdateMortarTeam()
+    {
+        foreach (MortarController mC in mortarControllers)
+            mC.SetTeam(teamId);
     }
     public void AddObjectToColored(GameObject go)
     {

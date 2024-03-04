@@ -116,13 +116,13 @@ public class PopupManager : MonoBehaviour
         rSI.SetOpacity(0);
         Destroy(loadingScreen.gameObject);
     }
-    public void SummonAskShipFortUpgrade(Vector2 fortScreenPos)
+    public void SummonAskShipFortUpgrade(Vector2 fortScreenPos, string fortKey)
     {
         GameObject uiRect = GameObject.Instantiate(nonBlockigBackroundUIPrefab);
         fortScreenPos.x -= uiRect.GetComponent<RectTransform>().rect.width / 2;
         fortScreenPos.y -= uiRect.GetComponent<RectTransform>().rect.height / 2;
         GameObject popup = GameObject.Instantiate(upgradeShipFortPrefab);
-        popup.GetComponent<UpgradeFSButtons>().SetKey(popupsKeyIncriment);
+        popup.GetComponent<UpgradeFSButtons>().SetKey(popupsKeyIncriment, fortKey);
         popupsKeyIncriment++;
         popup.transform.parent = uiRect.transform;
         popup.transform.localPosition = fortScreenPos;// Vector3.zero;
@@ -143,9 +143,14 @@ public class PopupManager : MonoBehaviour
         mainCanvas.DisableCanvas();
         upgradeShipCanvas.MoveToFrame();
     }
-    public void SummonFortUpgradeScreen()
+    public void SummonFortUpgradeScreen(string fortKey)
     {
         mainCanvas.DisableCanvas();
         upgradeFortCanvas.MoveToFrame();
+        FortUpgradeButtons[] fortUpgradeButtons =  upgradeFortCanvas.GetComponentsInChildren<FortUpgradeButtons>();
+        foreach(FortUpgradeButtons fUB in fortUpgradeButtons)
+        {
+            fUB.SetFortKey(fortKey);
+        }
     }
 }
