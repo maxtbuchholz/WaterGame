@@ -30,7 +30,7 @@ public class FortTurretControl : MonoBehaviour
         if(time >= 1)
         {
             time %= 1;
-            target = findTargetController.GetTarget(transform.position, teamId, FindTargetController.targetType.fort);
+            target = findTargetController.GetTarget(transform.position + new Vector3(0, 5, 0), teamId, FindTargetController.targetType.fort);
             if (target == null) return;
             List<int> ableTurretIndexes = new();
             List<Vector3> turretNormalVec = new();

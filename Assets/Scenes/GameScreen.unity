@@ -21813,12 +21813,14 @@ MonoBehaviour:
   camera: {fileID: 1070980776}
   localTeamController: {fileID: 1872215399}
   isFort: 1
+  isMortar: 0
   fortTurretControl: {fileID: 1872215398}
   fortRenderer: {fileID: 1872215394}
   fortCaptureCircle: {fileID: 0}
   captureButtonPrefab: {fileID: 0}
   fortExplosion: {fileID: 0}
   fortCapturedParticle: {fileID: 0}
+  damageSmokePrefab: {fileID: 0}
 --- !u!1001 &1885345387
 PrefabInstance:
   m_ObjectHideFlags: 0

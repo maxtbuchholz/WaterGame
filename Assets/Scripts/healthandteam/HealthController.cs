@@ -20,6 +20,7 @@ public class HealthController : MonoBehaviour
     [SerializeField] GameObject captureButtonPrefab;
     [SerializeField] GameObject fortExplosion;
     [SerializeField] GameObject fortCapturedParticle;
+    [SerializeField] GameObject damageSmokePrefab;
     private GameObject healthBar;
     private Transform MoveBar;
     private bool healthRefilingDuringCapture = false;
@@ -48,9 +49,12 @@ public class HealthController : MonoBehaviour
     private bool healthBarAppear = true;
     public void Update()
     {
-        if (camera == null) camera = Camera.main;
-        healthBar.transform.forward = camera.transform.forward;
-        healthBar.transform.localRotation = Quaternion.Euler(healthBar.transform.localRotation.eulerAngles.x, healthBar.transform.localRotation.eulerAngles.y, -90);
+        if (healthBarAppear)
+        {
+            if (camera == null) camera = Camera.main;
+            healthBar.transform.forward = camera.transform.forward;
+            healthBar.transform.localRotation = Quaternion.Euler(healthBar.transform.localRotation.eulerAngles.x, healthBar.transform.localRotation.eulerAngles.y, -90);
+        }
         timeWithoutDamage += Time.deltaTime;
         if ((healthBar != null) && (MoveBar != null) && !healthRefilingDuringCapture && isFort && !healthRefilingDuringCapture)
         {
@@ -78,8 +82,11 @@ public class HealthController : MonoBehaviour
         }
     }
     private int teamId = -1;
+    private bool teamChangedStopHealthRefilMortar = false;
     public void SetTeam(int newTeamId)
     {
+        if(isMortar && healthRefilingDuringCapture)
+            teamChangedStopHealthRefilMortar = true;
         if (findTarget == null) findTarget = FindTargetController.Instance;
         if (findTarget == null) return;
         if (teamId != -1) findTarget.ModifyTargetable(this.gameObject, teamId, isFort ? FindTargetController.targetType.fort : FindTargetController.targetType.ship, FindTargetController.targetContition.destoyed);
@@ -94,12 +101,12 @@ public class HealthController : MonoBehaviour
     }
     public void EffectHealth(float change, int attackerTeamId)
     {
-        timeWithoutDamage = 0;
-        SetHealthBarAppear(true);
         //Debug.Log("HIT!!!" + " max:c" + maxHealth + " curr: " + currentHealth + " teamID: " + teamId + " attackID: " + attackerTeamId);
         if (teamId == -1) return;
         if (teamId == attackerTeamId) return;
         if (healthRefilingDuringCapture) return;
+        timeWithoutDamage = 0;
+        SetHealthBarAppear(true);
         currentHealth = Mathf.Min(currentHealth + change, maxHealth);
         currentHealth = Mathf.Max(currentHealth, 0);
         MoveBar.localPosition = new Vector3(0, -(1 - (currentHealth / maxHealth)), 0);
@@ -144,6 +151,8 @@ public class HealthController : MonoBehaviour
     private bool baseCaptured = false;
     IEnumerator MortarRefilHealthFromZero(float timeToFill, float curMin)
     {
+        GameObject smoke = GameObject.Instantiate(damageSmokePrefab);
+        smoke.transform.position = transform.position;// + new Vector3(0, 1, 0);
         findTarget.ModifyTargetable(this.gameObject, teamId, FindTargetController.targetType.fort, FindTargetController.targetContition.invulnerable);
         fortTurretControl.SetEnabled(false);
         healthRefilingDuringCapture = true;
@@ -169,24 +178,37 @@ public class HealthController : MonoBehaviour
         {
             currTime += Time.deltaTime;
             currTime %= alphaCycleTime;
-            currentHealth = Mathf.Min(maxHealth, currentHealth + Time.deltaTime * healthPerSecond);
-            MoveBar.localPosition = new Vector3(0, -(1 - (currentHealth / maxHealth)), 0);
-            barCol.a = (((Mathf.Sin((currTime / alphaCycleTime) * Mathf.PI * 2) + 1) / 2) * 0.6f) + 0.4f; ;
-            barMat.SetColor("_BaseColor", barCol);
-            yield return null;
+            if (!teamChangedStopHealthRefilMortar)
+            {
+                currentHealth = Mathf.Min(maxHealth, currentHealth + Time.deltaTime * healthPerSecond);
+                MoveBar.localPosition = new Vector3(0, -(1 - (currentHealth / maxHealth)), 0);
+                barCol.a = (((Mathf.Sin((currTime / alphaCycleTime) * Mathf.PI * 2) + 1) / 2) * 0.6f) + 0.4f; ;
+                barMat.SetColor("_BaseColor", barCol);
+                yield return null;
+            }
+            else
+                currentHealth = maxHealth;
         }
         currentHealth = maxHealth;
-        if (forMat != null)
-            forMat.SetColor("_BaseColor", forCol);
-        barCol.a = 1;
-        barMat.SetColor("_BaseColor", barCol);
-
+        MoveBar.localPosition = new Vector3(0, -(1 - (currentHealth / maxHealth)), 0);
+        if (!teamChangedStopHealthRefilMortar)
+        {
+            if (forMat != null)
+                forMat.SetColor("_BaseColor", forCol);
+            barCol.a = 1;
+            barMat.SetColor("_BaseColor", barCol);
+        }
+        teamChangedStopHealthRefilMortar = false;
         fortTurretControl.SetEnabled(true);
         findTarget.ModifyTargetable(this.gameObject, teamId, FindTargetController.targetType.fort, FindTargetController.targetContition.targetable);
-        healthRefilingDuringCapture = false; 
+        healthRefilingDuringCapture = false;
+        Destroy(smoke);
     }
     IEnumerator FortRefilHealthOrCapture(float timeToFill, float curMin)        //starts play cycle for a player to capture a fort
     {
+        GameObject smoke = GameObject.Instantiate(damageSmokePrefab);
+        smoke.transform.position = transform.position;
+        smoke.transform.localScale *= 2;
         GameObject captureButton = GameObject.Instantiate(captureButtonPrefab);
         captureButton.GetComponent<CaptureButton>().inFrontOf = transform.position + new Vector3(0, 1.0f, 0);
         captureButton.GetComponent<CaptureButton>().healthController = this;
@@ -251,5 +273,6 @@ public class HealthController : MonoBehaviour
         Destroy(captureButton);
         Destroy(captureCircle);
         baseCaptured = false;
+        Destroy(smoke);
     }
 }

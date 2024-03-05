@@ -33,11 +33,21 @@ public class TurretController : MonoBehaviour
         float step = 1.0f;
         float currStep = 0.0f;
         float forceSqr = force * force;
+        float height = Mathf.Max(transform.position.y, 0);
         while (keepSearching)
         {
-            float angle = Mathf.Asin((gravity * currStep) / (forceSqr)) / 2;
-            if (overhead) angle = 1.5708f - angle;
-            float timeToTarget = 2 * (force / gravity) * Mathf.Sin(angle);//currStep / (Mathf.Cos(angle) * force);
+            //float angle = Mathf.Asin((gravity * currStep) / (forceSqr)) / 2;
+            if (currStep > (maxDistance * 0.95f))
+                Debug.Log("Here");
+            float main = Mathf.Acos((((gravity * Mathf.Pow(currStep, 2)) / forceSqr) - height) / -Mathf.Pow(Mathf.Pow(height, 2) + Mathf.Pow(currStep, 2), 0.5f));
+            float main2 = Mathf.Acos((((gravity * Mathf.Pow(currStep, 2)) / forceSqr) - height) / Mathf.Pow(Mathf.Pow(height, 2) + Mathf.Pow(currStep, 2), 0.5f));
+            float raidal = Mathf.Atan(currStep / height);
+            float angle = (main + raidal) / 2;
+            angle -= 1.5708f;
+            float angle2 = (main2 + raidal) / 2;
+            //angle %= 1.5708f;
+            if (overhead) angle = angle2;// 1.5708f - angle;
+            float timeToTarget = currStep / (Mathf.Cos(angle) * force);// 2 * (force / gravity) * Mathf.Sin(angle);//currStep / (Mathf.Cos(angle) * force); //currStep / Mathf.Cos(angle);// 
             cannonDistanceToTime.Add(currStep, timeToTarget);
             cannonDistanceToAngle.Add(currStep, angle);
             currStep += step;
@@ -134,9 +144,9 @@ public class TurretController : MonoBehaviour
             //Debug.DrawLine(hit.point, Vector3.zero, Color.green);
             if (hit.collider.CompareTag("Land"))
             {
-                //Debug.DrawLine(hit.point, Vector3.zero, Color.blue);
+                Debug.DrawLine(hit.point, Vector3.zero, Color.blue);
                 shootAbility = ShootAbility.blocked;
-                //Debug.Break();
+                Debug.Break();
                 return Vector3.zero;
             }
         }

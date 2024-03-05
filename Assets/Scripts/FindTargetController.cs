@@ -53,7 +53,7 @@ public class FindTargetController : MonoBehaviour
                 {
                     if (ship.Value == targetContition.targetable)
                     {
-                        Vector3 nor = ship.Key.transform.position - origin;
+                        Vector3 nor = (ship.Key.transform.position) - origin;
                         float tempDst = nor.magnitude;
                         nor = nor.normalized;
                         RaycastHit[] hits = Physics.RaycastAll(origin, nor, tempDst);
