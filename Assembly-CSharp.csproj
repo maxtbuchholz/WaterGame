@@ -72,6 +72,7 @@
     <Compile Include="Assets/Scripts/healthandteam/DetectHit.cs" />
     <Compile Include="Assets/Scripts/x/LoadWaterTiles.cs" />
     <Compile Include="Assets/Scripts/PointToPlayer.cs" />
+    <Compile Include="Assets/Scripts/PlayerMoneyController.cs" />
     <Compile Include="Assets/Scripts/ShipSurroundFoam.cs" />
     <Compile Include="Assets/Scripts/ButtonCollisionTracker.cs" />
     <Compile Include="Assets/Scripts/ShipMove/ShipValueControl.cs" />
@@ -112,6 +113,7 @@
     <Compile Include="Assets/Terrain/SetTerrainShader.cs" />
     <Compile Include="Assets/Scripts/WaterMovement.cs" />
     <Compile Include="Assets/Scripts/SimpleBob.cs" />
+    <Compile Include="Assets/Scripts/MoneyTextInit.cs" />
     <Compile Include="Assets/Terrain/GenerateTerrain.cs" />
     <Compile Include="Assets/Scripts/FaceCamera.cs" />
     <Compile Include="Assets/RenderTexture/MaskLowerLayers/MaskObject.cs" />
@@ -122,6 +124,7 @@
     <Compile Include="Assets/Scripts/Touch/NavTouch.cs" />
     <Compile Include="Assets/Scripts/HealthBarVisability.cs" />
     <Compile Include="Assets/Models/Menus/Popup/BinaryPopupResize.cs" />
+    <Compile Include="Assets/Scripts/HealthBarComponents.cs" />
     <Compile Include="Assets/Scripts/WaterGetHeight.cs" />
     <Compile Include="Assets/Terrain/MeshGenerator.cs" />
     <Compile Include="Assets/Scripts/IslandImager.cs" />

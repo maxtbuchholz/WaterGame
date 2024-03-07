@@ -168,6 +168,24 @@ public class FortLevel : MonoBehaviour
         { 2, 1 },
         { 3, 1 },
     };
+    public static Dictionary<int, float> dam_cost_to_next_level = new Dictionary<int, float>()
+    {
+        { 0, 50 },
+        { 1, 100 },
+        { 2, 200 }
+    };
+    public static Dictionary<int, float> hea_cost_to_next_level = new Dictionary<int, float>()
+    {
+        { 0, 50 },
+        { 1, 100 },
+        { 2, 200 },
+    };
+    public static Dictionary<int, float> mor_cost_to_next_level = new Dictionary<int, float>()
+    {
+        { 0, 100 },
+        { 1, 125 },
+        { 2, 150 },
+    };
 }
 public class FortSaveLevel
 {

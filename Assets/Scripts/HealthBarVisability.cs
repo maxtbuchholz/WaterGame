@@ -1,19 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityFigmaBridge.Runtime.UI;
 
 public class HealthBarVisability : MonoBehaviour
 {
     [SerializeField] List<Transform> healthBarObjects;
+    [SerializeField] GameObject moveBar;
     public void SetAppear(bool appear)
     {
         if (appear)
         {
             foreach(Transform on in healthBarObjects)
             {
-                if(on.TryGetComponent<SpriteRenderer>(out SpriteRenderer sR))
+                //if(on.TryGetComponent<SpriteRenderer>(out SpriteRenderer sR))
+                //{
+                //    sR.enabled = true;
+                //}
+                if (on.TryGetComponent<FigmaImage>(out FigmaImage fI))
                 {
-                    sR.enabled = true;
+                    fI.enabled = true;
+                }
+                if (on.TryGetComponent<Image>(out Image iM))
+                {
+                    iM.enabled = true;
                 }
             }
         }
@@ -21,11 +32,31 @@ public class HealthBarVisability : MonoBehaviour
         {
             foreach (Transform on in healthBarObjects)
             {
-                if (on.TryGetComponent<SpriteRenderer>(out SpriteRenderer sR))
+                //if (on.TryGetComponent<SpriteRenderer>(out SpriteRenderer sR))
+                //{
+                //    sR.enabled = false;
+                //}
+                if (on.TryGetComponent<FigmaImage>(out FigmaImage fI))
                 {
-                    sR.enabled = false;
+                    fI.enabled = false;
+                }
+                if (on.TryGetComponent<Image>(out Image iM))
+                {
+                    iM.enabled = false;
                 }
             }
         }
+    }
+    public Color GetBarColor()
+    {
+        return moveBar.GetComponent<Image>().color;
+    }
+    public void SetBarColor(Color color)
+    {
+        moveBar.GetComponent<Image>().color = color;
+    }
+    public GameObject GetMoveBar()
+    {
+        return moveBar;
     }
 }

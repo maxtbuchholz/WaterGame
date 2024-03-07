@@ -82,9 +82,4 @@ public class LocalTeamController : MonoBehaviour
         coloredObjects.Add(go);
         SetGameObjectColors();
     }
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

@@ -127,4 +127,13 @@ public class SaveData : MonoBehaviour
     {
         return mortarPositions.ContainsKey(key);
     }
+    private float money = 150;
+    public float GetMoney()
+    {
+        return money;
+    }
+    public void AddMoney(float change)
+    {
+        money += change;
+    }
 }
