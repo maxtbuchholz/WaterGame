@@ -93,6 +93,7 @@
     <Compile Include="Assets/Scripts/Touch/ButtonTouch.cs" />
     <Compile Include="Assets/Scripts/Camera/FoamCameraFollow.cs" />
     <Compile Include="Assets/Scripts/SaveData.cs" />
+    <Compile Include="Assets/Scripts/ReloadAnimationController.cs" />
     <Compile Include="Assets/Scripts/GroundLoader.cs" />
     <Compile Include="Assets/Scripts/CaptureButton.cs" />
     <Compile Include="Assets/Models/Menus/Popup/PupupBlockClick.cs" />
@@ -106,6 +107,7 @@
     <Compile Include="Assets/Scripts/Shooting/PlayerFireControl.cs" />
     <Compile Include="Assets/Scripts/Camera/FocalPointFollow.cs" />
     <Compile Include="Assets/Scripts/PopupManager.cs" />
+    <Compile Include="Assets/Scripts/ReloadLocal.cs" />
     <Compile Include="Assets/Scripts/WaterLoad.cs" />
     <Compile Include="Assets/Scripts/healthandteam/HealthController.cs" />
     <Compile Include="Assets/Scripts/LoadedObjects.cs" />

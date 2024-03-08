@@ -10,10 +10,13 @@ public class PlayerFireControl : MonoBehaviour
     [SerializeField] GameObject debugBall;
     // Start is called before the first frame update
     private FindTargetController findtarget;
+    private List<float> turretTimeAbleFire = new();
+    private ReloadAnimationController reloadAnimationController;
     void Start()
     {
         findtarget = FindTargetController.Instance;
         findtarget.ModifyTargetable(this.gameObject, 0, FindTargetController.targetType.ship, FindTargetController.targetContition.targetable);
+        reloadAnimationController = ReloadAnimationController.Instance;
     }
 
     // Update is called once per frame
@@ -63,6 +66,8 @@ public class PlayerFireControl : MonoBehaviour
             for (int i = 0; i < turrets.Count; i++)
             {
                 Vector3 normalVec = turrets[i].RequestShot(currentBestShot, out shootAbility);
+                if (turretTimeAbleFire.Count <= i) turretTimeAbleFire.Add(0);
+                if (turretTimeAbleFire[i] > 0) shootAbility = TurretController.ShootAbility.reloading;
                 if (shootAbility == TurretController.ShootAbility.able)
                 {
                     ableTurretIndexes.Add(i);
@@ -71,12 +76,34 @@ public class PlayerFireControl : MonoBehaviour
             }
             for (int i = 0; i < ableTurretIndexes.Count; i++)
             {
-                turrets[ableTurretIndexes[i]].ShootProjectile(turretNormalVec[i], teamId);
+                turretTimeAbleFire[ableTurretIndexes[i]] = turrets[ableTurretIndexes[i]].ShootProjectile(turretNormalVec[i], teamId);
+                StartCoroutine(ReloadTurret(ableTurretIndexes[i]));
             }
             //foreach (TurretController tC in turrets)
             //    tC.RequestShot(currentBestShot);
             debugBall.transform.position = currentBestShot;
         }
+    }
+    int prevPlayerTurretCount = 0;
+    private void Update()
+    {
+        if(turrets.Count > prevPlayerTurretCount)
+        {
+            prevPlayerTurretCount = turrets.Count;
+            reloadAnimationController.UpdateTurretAmount(turrets.Count);
+        }
+    }
+    private IEnumerator ReloadTurret(int turretIndex)
+    {
+        float origTime = turretTimeAbleFire[turretIndex];
+        while (turretTimeAbleFire[turretIndex] > 0)
+        {
+            yield return null;
+            turretTimeAbleFire[turretIndex] -= Time.deltaTime;
+            reloadAnimationController.UpdateTurretReloadPercentageDone((turretTimeAbleFire[turretIndex] / origTime) / origTime, turretIndex);
+        }
+        reloadAnimationController.UpdateTurretReloadPercentageDone(0, turretIndex);
+        turretTimeAbleFire[turretIndex] = 0;
     }
     private int teamId = -1;
     public void SetTeamId(int teamId)

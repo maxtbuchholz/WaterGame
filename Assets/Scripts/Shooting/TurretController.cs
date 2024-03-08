@@ -21,6 +21,7 @@ public class TurretController : MonoBehaviour
     [SerializeField] bool overhead = false;
     Vector3[] trajectory = new Vector3[] { };
     [SerializeField] float force = 100;
+    float reloadTime = 1.0f;
     private float maxDistance;
     Dictionary<float, float> cannonDistanceToTime = new();
     Dictionary<float, float> cannonDistanceToAngle = new();
@@ -59,6 +60,10 @@ public class TurretController : MonoBehaviour
     public void SetDamage(float damage)
     {
         turretDamage = damage;
+    }
+    public void SetReloadTime(float time)
+    {
+        reloadTime = time;
     }
     public Vector3 RequestShot(Vector3 targetPos, out ShootAbility shootAbility)
     {
@@ -107,7 +112,8 @@ public class TurretController : MonoBehaviour
     {
         able,
         toFar,
-        blocked
+        blocked,
+        reloading
     }
     public Vector3 RequestShot(Vector2 targetPos, Vector2 targetVelocity, out ShootAbility shootAbility)
     {
@@ -185,7 +191,7 @@ public class TurretController : MonoBehaviour
         shootAbility = ShootAbility.able;
         return normalDist;
     }
-    public bool ShootProjectile(Vector3 normalDist, int teamId)
+    public float ShootProjectile(Vector3 normalDist, int teamId)
     {
         GameObject proj = GameObject.Instantiate(projectile);
         if (shipValues != null)
@@ -197,7 +203,7 @@ public class TurretController : MonoBehaviour
         proj.transform.position = shootPoint.transform.position;
         proj.GetComponent<Rigidbody>().velocity = normalDist * force;
         //Debug.Break();
-        return true;
+        return reloadTime;
     }
     float GetAngle(float g, float V, float d, float h)
     {
