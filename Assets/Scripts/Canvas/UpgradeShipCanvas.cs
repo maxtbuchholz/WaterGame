@@ -6,6 +6,7 @@ public class UpdradeShipCanvas : MonoBehaviour
 {
     [SerializeField] RectTransform shipFrame;
     [SerializeField] RectTransform buttonFrame;
+    [SerializeField] ShipUpgradeButtons shipUpgradeButtons;
     int screenHeight;
     int screenWidth;
     Vector2 currentPos;
@@ -24,6 +25,7 @@ public class UpdradeShipCanvas : MonoBehaviour
     public void MoveToFrame()
     {
         StartCoroutine(MoveToCenter(0.2f));
+        shipUpgradeButtons.SetShipKey();
     }
     public void MoveToHide()
     {

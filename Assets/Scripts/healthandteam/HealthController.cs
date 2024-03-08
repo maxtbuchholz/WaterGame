@@ -22,6 +22,7 @@ public class HealthController : MonoBehaviour
     [SerializeField] GameObject fortCapturedParticle;
     [SerializeField] GameObject damageSmokePrefab;
     private HealthBarVisability healthBarVisability;
+    [SerializeField]public bool isPlayer = false;
     private GameObject healthBar;
     private Transform MoveBar;
     private bool healthRefilingDuringCapture = false;
@@ -45,26 +46,29 @@ public class HealthController : MonoBehaviour
     private bool healthBarAppear = true;
     public void Update()
     {
-        if (healthBarAppear)
+        if (!isPlayer)
         {
-            if (camera == null) camera = Camera.main;
-            healthBar.transform.forward = camera.transform.forward;
-            healthBar.transform.localRotation = Quaternion.Euler(healthBar.transform.localRotation.eulerAngles.x, healthBar.transform.localRotation.eulerAngles.y, -90);
-        }
-        timeWithoutDamage += Time.deltaTime;
-        if ((healthBar != null) && (MoveBar != null) && !healthRefilingDuringCapture && isFort && !healthRefilingDuringCapture)
-        {
-            if(timeWithoutDamage > startHealTime)
+            if (healthBarAppear)
             {
-                if(currentHealth < maxHealth)       //health bar still appear
+                if (camera == null) camera = Camera.main;
+                healthBar.transform.forward = camera.transform.forward;
+                healthBar.transform.localRotation = Quaternion.Euler(healthBar.transform.localRotation.eulerAngles.x, healthBar.transform.localRotation.eulerAngles.y, -90);
+            }
+            timeWithoutDamage += Time.deltaTime;
+            if ((healthBar != null) && (MoveBar != null) && !healthRefilingDuringCapture && isFort && !healthRefilingDuringCapture)
+            {
+                if (timeWithoutDamage > startHealTime)
                 {
-                    currentHealth += (healAmountPerSec * Time.deltaTime);
-                    currentHealth = Mathf.Min(currentHealth, maxHealth);
-                    SetHealthSize(currentHealth / maxHealth);
-                }
-                else
-                {                                 //health bar eventually dissapear
-                    SetHealthBarAppear(false);
+                    if (currentHealth < maxHealth)       //health bar still appear
+                    {
+                        currentHealth += (healAmountPerSec * Time.deltaTime);
+                        currentHealth = Mathf.Min(currentHealth, maxHealth);
+                        SetHealthSize(currentHealth / maxHealth);
+                    }
+                    else
+                    {                                 //health bar eventually dissapear
+                        SetHealthBarAppear(false);
+                    }
                 }
             }
         }
@@ -97,7 +101,8 @@ public class HealthController : MonoBehaviour
     {
         currentHealth = health;
         maxHealth = health;
-        SetHealthSize(currentHealth / maxHealth);
+        if(!isPlayer)
+            SetHealthSize(currentHealth / maxHealth);
     }
     private void SetHealthSize(float perc)
     {

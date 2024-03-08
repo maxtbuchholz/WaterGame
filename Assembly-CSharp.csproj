@@ -81,6 +81,7 @@
     <Compile Include="Assets/Scripts/Touch/FortTouch.cs" />
     <Compile Include="Assets/Scripts/ShipMove/ShipRotation.cs" />
     <Compile Include="Assets/Scripts/x/TileDeleter.cs" />
+    <Compile Include="Assets/Models/Menus/Popup/ShipUpgradeButtons.cs" />
     <Compile Include="Assets/Scripts/Noise.cs" />
     <Compile Include="Assets/Scripts/FPSText.cs" />
     <Compile Include="Assets/Scripts/FrontTrail.cs" />
@@ -90,6 +91,7 @@
     <Compile Include="Assets/Scripts/Canvas/UpgradeFortCanvas.cs" />
     <Compile Include="Assets/Scripts/MortarController.cs" />
     <Compile Include="Assets/Scripts/Shooting/FortTurretControl.cs" />
+    <Compile Include="Assets/Scripts/ShipLevel.cs" />
     <Compile Include="Assets/Scripts/Touch/ButtonTouch.cs" />
     <Compile Include="Assets/Scripts/Camera/FoamCameraFollow.cs" />
     <Compile Include="Assets/Scripts/SaveData.cs" />

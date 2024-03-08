@@ -22,11 +22,12 @@ public class ShipMovement : MonoBehaviour
 
     private float acceleration = 1.5f;
     private float decceleration = 1.5f;
-    private float maxSpeed = 2.0f;
+    private float maxSpeed = 2.0f;                  //set by level
     private float maxReverseSpeed = 1.0f;
     private float currAccel = 0.0f;
     private float currRotAngle = 0.0f;
     private Vector3 currVelocity = Vector3.zero;
+    public bool isPlayer = false;
 
     void Start()
     {
@@ -36,12 +37,20 @@ public class ShipMovement : MonoBehaviour
         amountFrontParticles = frontParticle.emissionRate;
         //Debug.Log(amountFrontParticles);
     }
+    public void SetMaxSpeed(float speed)
+    {
+        maxSpeed = speed;
+        maxReverseSpeed = speed / 2;
+    }
 
     void Update()
     {
-        horizontal = PlayerInput.Instance.GetHorizontal();
-        //Debug.Log(horizontal);
-        vertical = PlayerInput.Instance.GetVertical();
+        if (isPlayer)
+        {
+            horizontal = PlayerInput.Instance.GetHorizontal();
+            //Debug.Log(horizontal);
+            vertical = PlayerInput.Instance.GetVertical();
+        }
     }
     void OnCollisionEnter(Collision collision)
     {

@@ -127,7 +127,7 @@ public class SaveData : MonoBehaviour
     {
         return mortarPositions.ContainsKey(key);
     }
-    private float money = 150;
+    private float money = 1500;
     public float GetMoney()
     {
         return money;
@@ -135,5 +135,31 @@ public class SaveData : MonoBehaviour
     public void AddMoney(float change)
     {
         money += change;
+    }
+    private int currShipId = 0;
+    public int GetCurrentShipId()
+    {
+        return currShipId;
+    }
+    public void SetCurrentShipId(int sId)
+    {
+        currShipId = sId;
+    }
+    Dictionary<string, int> shipLevels = new();
+    public int GetShipLevelValue(int shipId, string value)
+    {
+        value = shipId + value;
+        if (shipLevels.ContainsKey(value))
+            return shipLevels[value];
+        shipLevels.Add(value, 0);
+        return shipLevels[value];
+    }
+    public void SetShipLevelValue(int shipId, string value, int level)
+    {
+        value = shipId + value;
+        if (shipLevels.ContainsKey(value))
+            shipLevels[value] = level;
+        else
+            shipLevels.Add(value, level);
     }
 }
