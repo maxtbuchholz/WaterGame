@@ -458,7 +458,11 @@ MonoBehaviour:
   m_TransitionEffect: {fileID: 2052089212}
   m_CurrentScreenInstance: {fileID: 0}
   m_PrototypeFlowInitialScreenId: 59:666
-  m_Screens: []
+  m_Screens:
+  - FigmaNodeId: 180:562
+    FigmaScreenPrefab: {fileID: 5506402541039813914, guid: 3e0dd592ce8164cd58fb8b0f133378fb, type: 3}
+    FigmaScreenName: Frame 1
+    ParentSectionNodeId: 
   m_Sections: []
 --- !u!114 &1757843036
 MonoBehaviour:

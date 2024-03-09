@@ -38,7 +38,8 @@ public class FortTurretControl : MonoBehaviour
             Rigidbody rb = null;
             //bool forceStraight = false;
             //if ((target.position - transform.position).magnitude < 10) forceStraight = true;
-            Vector3 targetPos = new Vector3(target.position.x + Random.Range(-1.0f, 1.0f), 0, target.position.z + Random.Range(-1.0f, 1.0f));
+            float distanceMissAdd = Vector3.Distance(transform.position, target.position) / 10;
+            Vector3 targetPos = new Vector3(target.position.x + Random.Range(-1.0f - distanceMissAdd, 1.0f + distanceMissAdd), 0, target.position.z + Random.Range(-1.0f - distanceMissAdd, 1.0f + distanceMissAdd));
             if(target.TryGetComponent<ShipValueControl>(out ShipValueControl sVC))
             {
                 rb = sVC.ship_drive.GetComponent<Rigidbody>();
