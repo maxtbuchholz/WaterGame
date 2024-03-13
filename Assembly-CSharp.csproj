@@ -65,6 +65,7 @@
     <Compile Include="Assets/Scripts/CompasUpdate.cs" />
     <Compile Include="Assets/Models/Menus/Map/FitCardUI.cs" />
     <Compile Include="Assets/Scripts/Canvas/MainCanvas.cs" />
+    <Compile Include="Assets/Scripts/TurretPointer.cs" />
     <Compile Include="Assets/Models/Menus/Popup/Rotate.cs" />
     <Compile Include="Assets/Scripts/ShipMove/ShipMovement.cs" />
     <Compile Include="Assets/Scripts/FortGenerator.cs" />
@@ -79,6 +80,7 @@
     <Compile Include="Assets/Scripts/Shooting/ProjectileHit.cs" />
     <Compile Include="Assets/Scripts/Canvas/MapCanvas.cs" />
     <Compile Include="Assets/Scripts/Touch/FortTouch.cs" />
+    <Compile Include="Assets/Scripts/ShipTypesController.cs" />
     <Compile Include="Assets/Scripts/ShipMove/ShipRotation.cs" />
     <Compile Include="Assets/Scripts/x/TileDeleter.cs" />
     <Compile Include="Assets/Models/Menus/Popup/ShipUpgradeButtons.cs" />
@@ -87,16 +89,19 @@
     <Compile Include="Assets/Scripts/FrontTrail.cs" />
     <Compile Include="Assets/Scripts/Touch/PlayerInput.cs" />
     <Compile Include="Assets/Scripts/healthandteam/TeamsController.cs" />
+    <Compile Include="Assets/Scripts/DetailsPointer.cs" />
     <Compile Include="Assets/Scripts/Shooting/FortValues.cs" />
     <Compile Include="Assets/Scripts/Canvas/UpgradeFortCanvas.cs" />
     <Compile Include="Assets/Scripts/MortarController.cs" />
     <Compile Include="Assets/Scripts/Shooting/FortTurretControl.cs" />
     <Compile Include="Assets/Scripts/ShipLevel.cs" />
     <Compile Include="Assets/Scripts/Touch/ButtonTouch.cs" />
+    <Compile Include="Assets/Scripts/EffectsPointer.cs" />
     <Compile Include="Assets/Scripts/Camera/FoamCameraFollow.cs" />
     <Compile Include="Assets/Scripts/SaveData.cs" />
     <Compile Include="Assets/Scripts/ReloadAnimationController.cs" />
     <Compile Include="Assets/Scripts/GroundLoader.cs" />
+    <Compile Include="Assets/Scripts/ExchangeShipButtons.cs" />
     <Compile Include="Assets/Scripts/CaptureButton.cs" />
     <Compile Include="Assets/Models/Menus/Popup/PupupBlockClick.cs" />
     <Compile Include="Assets/Scripts/Shooting/DestroyOnEffectComplete.cs" />
@@ -127,6 +132,7 @@
     <Compile Include="Assets/Scripts/CameraTrack.cs" />
     <Compile Include="Assets/Scripts/Touch/NavTouch.cs" />
     <Compile Include="Assets/Scripts/HealthBarVisability.cs" />
+    <Compile Include="Assets/Scripts/ShipPartPointer.cs" />
     <Compile Include="Assets/Models/Menus/Popup/BinaryPopupResize.cs" />
     <Compile Include="Assets/Scripts/HealthBarComponents.cs" />
     <Compile Include="Assets/Scripts/WaterGetHeight.cs" />

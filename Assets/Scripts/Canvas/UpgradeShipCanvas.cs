@@ -25,8 +25,8 @@ public class UpdradeShipCanvas : MonoBehaviour
         shipFrame.sizeDelta = new Vector2(100, screenHeight * 0.8f);
         buttonFrame.anchoredPosition = currentPos;
         buttonFrame.sizeDelta = new Vector2(100, screenHeight * 0.8f);
-        exchangeFrame.anchoredPosition = currentPos;
-        exchangeFrame.sizeDelta = new Vector2(100, screenHeight * 0.8f);
+        //exchangeFrame.anchoredPosition = currentPos;
+        //exchangeFrame.sizeDelta = new Vector2(100, screenHeight * 0.8f);
     }
     public void ToExchangeClicked()
     {
@@ -114,12 +114,12 @@ public class UpdradeShipCanvas : MonoBehaviour
             currentPos = new Vector2(0, setHeight);
             shipFrame.anchoredPosition = new Vector2(shipFrame.anchoredPosition.x, currentPos.y);
             buttonFrame.anchoredPosition = new Vector2(buttonFrame.anchoredPosition.x, currentPos.y);
-            exchangeFrame.anchoredPosition = new Vector2(exchangeFrame.anchoredPosition.x, currentPos.y);
+            //exchangeFrame.anchoredPosition = new Vector2(exchangeFrame.anchoredPosition.x, currentPos.y);
             yield return null;
         }
         currentPos = Vector2.zero;
         shipFrame.anchoredPosition = new Vector2(shipFrame.anchoredPosition.x, currentPos.y);
-        exchangeFrame.anchoredPosition = new Vector2(exchangeFrame.anchoredPosition.x, currentPos.y);
+        //exchangeFrame.anchoredPosition = new Vector2(exchangeFrame.anchoredPosition.x, currentPos.y);
         buttonFrame.anchoredPosition = new Vector2(buttonFrame.anchoredPosition.x, currentPos.y);
         StartCoroutine(MoveToExpand(0.2f));
     }
@@ -136,12 +136,12 @@ public class UpdradeShipCanvas : MonoBehaviour
             float setSize = initialSize + (widthDiff * (currentTime / timeToCenter));
             shipFrame.sizeDelta = new Vector2(setSize, shipFrame.rect.height);
             buttonFrame.sizeDelta = new Vector2(setSize, shipFrame.rect.height);
-            exchangeFrame.sizeDelta = new Vector2(setSize, shipFrame.rect.height);
+            //exchangeFrame.sizeDelta = new Vector2(setSize, shipFrame.rect.height);
             yield return null;
         }
         shipFrame.sizeDelta = new Vector2(finalWidth, shipFrame.rect.height);
         buttonFrame.sizeDelta = new Vector2(finalWidth, shipFrame.rect.height);
-        exchangeFrame.sizeDelta = new Vector2(finalWidth, shipFrame.rect.height);
+        //exchangeFrame.sizeDelta = new Vector2(finalWidth, shipFrame.rect.height);
     }
     IEnumerator MoveToBottom(float timeToCenter)
     {
@@ -157,13 +157,13 @@ public class UpdradeShipCanvas : MonoBehaviour
             currentPos = new Vector2(0, setHeight);
             shipFrame.anchoredPosition = currentPos;
             buttonFrame.anchoredPosition = currentPos;
-            exchangeFrame.anchoredPosition = currentPos;
+            //exchangeFrame.anchoredPosition = currentPos;
             yield return null;
         }
         currentPos = new Vector2(0, finalHeight);
         shipFrame.anchoredPosition = currentPos;
         buttonFrame.anchoredPosition = currentPos;
-        exchangeFrame.anchoredPosition = currentPos;
+        //exchangeFrame.anchoredPosition = currentPos;
     }
     IEnumerator MoveToShrink(float timeToCenter)
     {
@@ -178,12 +178,12 @@ public class UpdradeShipCanvas : MonoBehaviour
             float setSize = initialSize + (widthDiff * (currentTime / timeToCenter));
             shipFrame.sizeDelta = new Vector2(setSize, shipFrame.rect.height);
             buttonFrame.sizeDelta = new Vector2(setSize, shipFrame.rect.height);
-            exchangeFrame.sizeDelta = new Vector2(setSize, shipFrame.rect.height);
+            //exchangeFrame.sizeDelta = new Vector2(setSize, shipFrame.rect.height);
             yield return null;
         }
         shipFrame.sizeDelta = new Vector2(100, shipFrame.rect.height);
         buttonFrame.sizeDelta = new Vector2(100, shipFrame.rect.height);
-        exchangeFrame.sizeDelta = new Vector2(100, shipFrame.rect.height);
+        //exchangeFrame.sizeDelta = new Vector2(100, shipFrame.rect.height);
         StartCoroutine(MoveToBottom(0.2f));
     }
 }

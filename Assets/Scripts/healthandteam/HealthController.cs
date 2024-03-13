@@ -33,12 +33,15 @@ public class HealthController : MonoBehaviour
         teamsController = TeamsController.Instance;
         findTarget = FindTargetController.Instance;
         currentHealth = maxHealth;
-        healthBar = GameObject.Instantiate(healthBarPrefab);
-        healthBar.transform.parent = transform;
-        healthBar.transform.localPosition = new Vector3(0, 3, 0);
-        healthBarVisability = healthBar.GetComponent<HealthBarVisability>();
-        healthBarVisability.SetBarColor(teamsController.GetTeamColor(teamId));
-        MoveBar = healthBarVisability.GetMoveBar().transform;
+        if (!isPlayer)
+        {
+            healthBar = GameObject.Instantiate(healthBarPrefab);
+            healthBar.transform.parent = transform;
+            healthBar.transform.localPosition = new Vector3(0, 3, 0);
+            healthBarVisability = healthBar.GetComponent<HealthBarVisability>();
+            healthBarVisability.SetBarColor(teamsController.GetTeamColor(teamId));
+            MoveBar = healthBarVisability.GetMoveBar().transform;
+        }
     }
     private float timeWithoutDamage = 10;
     private float startHealTime = 10;

@@ -5,7 +5,7 @@ using static UnityEngine.GraphicsBuffer;
 
 public class PlayerFireControl : MonoBehaviour
 {
-    [SerializeField] List<TurretController> turrets;
+    [SerializeField] public List<TurretController> turrets;
     [SerializeField] Camera camera;
     [SerializeField] GameObject debugBall;
     // Start is called before the first frame update
@@ -87,7 +87,7 @@ public class PlayerFireControl : MonoBehaviour
     int prevPlayerTurretCount = 0;
     private void Update()
     {
-        if(turrets.Count > prevPlayerTurretCount)
+        if(turrets.Count != prevPlayerTurretCount)
         {
             prevPlayerTurretCount = turrets.Count;
             reloadAnimationController.UpdateTurretAmount(turrets.Count);
@@ -108,6 +108,7 @@ public class PlayerFireControl : MonoBehaviour
     private int teamId = -1;
     public void SetTeamId(int teamId)
     {
+        //Debug.Log(teamId);
         this.teamId = teamId;
     }
 }

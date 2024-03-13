@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DetectHit : MonoBehaviour
 {
-    [SerializeField] HealthController healthController;
+    [SerializeField] public HealthController healthController;
     public void DealtDamage(float damage, int teamID)
     {
         healthController.EffectHealth(damage, teamID);

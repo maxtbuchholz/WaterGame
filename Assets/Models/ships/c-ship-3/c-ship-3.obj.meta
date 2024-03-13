@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 3b655bfd1cecd45b193bab6ac54a75e6
+guid: 1b2676851ae7c4337a1aa16ae22c75ae
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -7,22 +7,17 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Ship_color
-    second: {fileID: 2100000, guid: 1ce49867f727c40daa718acbedea31ff, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: ahip
-    second: {fileID: 2100000, guid: dfd5b7152fc1b46ecb726bf6b6d976f1, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: antenas
+      name: antenna
     second: {fileID: 2100000, guid: 740a640e620cb48f3984ac826664fec8, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: floor_color
+      name: black
+    second: {fileID: 2100000, guid: 4fbf573a4cdae4f68890299ccf79172d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: floor
     second: {fileID: 2100000, guid: 15daf0876139f42ada47ceb0538aaf7a, type: 2}
   - first:
       type: UnityEngine:Material
@@ -32,17 +27,22 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: lifeboat
+      name: lifeboats
     second: {fileID: 2100000, guid: 6a9d2d2106ec047d9915e02a8790ae57, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: smoke
-    second: {fileID: 2100000, guid: 4fbf573a4cdae4f68890299ccf79172d, type: 2}
+      name: trim
+    second: {fileID: 2100000, guid: 1ce49867f727c40daa718acbedea31ff, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: window
+      name: upper
+    second: {fileID: 2100000, guid: dfd5b7152fc1b46ecb726bf6b6d976f1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: windows
     second: {fileID: 2100000, guid: dd9a6e44419154ed5ab579186e521eff, type: 2}
   materials:
     materialImportMode: 2

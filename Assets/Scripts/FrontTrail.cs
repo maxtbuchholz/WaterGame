@@ -11,7 +11,7 @@ public class FrontTrail : MonoBehaviour
     [SerializeField] Transform wakeTrans;
     private TrailRenderer wake;
     [SerializeField] Transform wakeTransLeft;
-    [SerializeField] ShipMovement shipMovement;
+    [SerializeField] public ShipMovement shipMovement;
     private TrailRenderer wakeLeft;
     [SerializeField] ShipSurroundFoam surroundFoam;
     private void Start()

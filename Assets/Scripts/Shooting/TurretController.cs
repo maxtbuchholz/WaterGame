@@ -7,8 +7,8 @@ using static UnityEngine.GraphicsBuffer;
 
 public class TurretController : MonoBehaviour
 {
-    [SerializeField] ShipValueControl shipValues;
-    [SerializeField] FortValues fortValues;
+    [SerializeField] public ShipValueControl shipValues;
+    [SerializeField] public FortValues fortValues;
     [SerializeField] GameObject projectile;
     [SerializeField] GameObject turret;
     [SerializeField] GameObject barrel;
@@ -38,8 +38,8 @@ public class TurretController : MonoBehaviour
         while (keepSearching)
         {
             //float angle = Mathf.Asin((gravity * currStep) / (forceSqr)) / 2;
-            if (currStep > (maxDistance * 0.95f))
-                Debug.Log("Here");
+            //if (currStep > (maxDistance * 0.95f))
+            //    Debug.Log("Here");
             float main = Mathf.Acos((((gravity * Mathf.Pow(currStep, 2)) / forceSqr) - height) / -Mathf.Pow(Mathf.Pow(height, 2) + Mathf.Pow(currStep, 2), 0.5f));
             float main2 = Mathf.Acos((((gravity * Mathf.Pow(currStep, 2)) / forceSqr) - height) / Mathf.Pow(Mathf.Pow(height, 2) + Mathf.Pow(currStep, 2), 0.5f));
             float raidal = Mathf.Atan(currStep / height);
@@ -198,6 +198,7 @@ public class TurretController : MonoBehaviour
             proj.GetComponent<ProjectileHit>().shipParts = shipValues.shipParts;
         else if (fortValues != null)
             proj.GetComponent<ProjectileHit>().shipParts = fortValues.fortParts;
+        //Debug.Log("Parts: " + proj.GetComponent<ProjectileHit>().shipParts.Count);
         proj.GetComponent<ProjectileHit>().SetDamage(turretDamage);
         proj.GetComponent<ProjectileHit>().SetTeam(teamId);
         proj.transform.position = shootPoint.transform.position;

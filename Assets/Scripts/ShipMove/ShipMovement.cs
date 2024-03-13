@@ -8,9 +8,9 @@ public class ShipMovement : MonoBehaviour
     Rigidbody body;
     [SerializeField] ShipRotation shipRotation;
     [SerializeField] GameObject shipBody;
-    [SerializeField] List<ParticleSystem> backParticles;
-    [SerializeField] ParticleSystem frontParticle;
-    [SerializeField] List<VisualEffect> funnelParticles;
+    [SerializeField] public List<ParticleSystem> backParticles;
+    [SerializeField] public ParticleSystem frontParticle;
+    [SerializeField] public List<VisualEffect> funnelParticles;
     private float amountFunnelParticles;
     private float amountBackParticles;
     private float amountFrontParticles;
@@ -29,8 +29,9 @@ public class ShipMovement : MonoBehaviour
     private Vector3 currVelocity = Vector3.zero;
     public bool isPlayer = false;
 
-    void Start()
+    public void Start()
     {
+        if (frontParticle == null) return;
         body = GetComponent<Rigidbody>();
         amountFunnelParticles = funnelParticles[0].GetFloat("SpawnRate");
         amountBackParticles = backParticles[0].emissionRate;

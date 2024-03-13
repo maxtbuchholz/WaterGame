@@ -33,7 +33,7 @@ public class LocalTeamController : MonoBehaviour
     }
     void SetGameObjectColors()
     {
-        if (isMortar) Debug.Log("Changing Color");
+        //if (isMortar) Debug.Log("Changing Color");
         teamColor = TeamsController.Instance.GetTeamColor(teamId);
         foreach (GameObject ob in coloredObjects)
         {
