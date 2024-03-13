@@ -11,6 +11,7 @@ public class UpdradeShipCanvas : MonoBehaviour
     [SerializeField] GameObject shipExchangeCanvas;
     [SerializeField] List<GameObject> upgradeObjects;
     [SerializeField] List<GameObject> excahangeObjects;
+    [SerializeField] ExchangeShipButtons exchangeShipButtns;
     int screenHeight;
     int screenWidth;
     Vector2 currentPos;
@@ -31,6 +32,7 @@ public class UpdradeShipCanvas : MonoBehaviour
     public void ToExchangeClicked()
     {
         StartCoroutine(ToUpgradeSlide(false));
+        exchangeShipButtns.InitButtons();
     }
     public void BackFromExchangeClicked()
     {

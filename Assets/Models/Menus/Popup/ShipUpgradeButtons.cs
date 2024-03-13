@@ -30,7 +30,6 @@ public class ShipUpgradeButtons : MonoBehaviour
         saveData = SaveData.Instance;
         shipKey = saveData.GetCurrentShipId();
         UpdateLevelButtons();
-        Debug.Log("Updating ship buttons");
     }
     private int cHL, cDL, cSL;
     public void UpdateLevelButtons()

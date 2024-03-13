@@ -162,4 +162,16 @@ public class SaveData : MonoBehaviour
         else
             shipLevels.Add(value, level);
     }
+    private Dictionary<int, bool> unlockedShips = new();
+    public void SetShipUnlocked(int shipId, bool unlocked)
+    {
+        if (unlockedShips.ContainsKey(shipId)) unlockedShips[shipId] = unlocked;
+        else unlockedShips.Add(shipId, unlocked);
+    }
+    public bool GetShipUnlocked(int shipId)
+    {
+        if (unlockedShips.ContainsKey(shipId)) return unlockedShips[shipId];
+        else { unlockedShips[shipId] = false; return false; }
+    }
+    public static string moneySymbol = "$";
 }
