@@ -33,31 +33,52 @@ public class IslandTracker : MonoBehaviour
         Vector3 currentPos = transform.position;
         Vector2 currentPos2 = transform.position;
         List<Vector2> islandPosToDestroy = new();
+        List<GameObject> deletableIslandsGO = new();
         foreach (KeyValuePair<Vector2, GameObject> v2GO in loadedIslands)           //remove islands that should no longer be loaded
         {
             if(Vector3.Distance(currentPos, v2GO.Key) > islandLoadDistance)
             {
-                Destroy(v2GO.Value);
+                deletableIslandsGO.Add(v2GO.Value);
                 islandPosToDestroy.Add(v2GO.Key);
             }
         }
-        foreach(Vector2 v2 in islandPosToDestroy)                                   //actualy remove the islands that should be destroyed
+        StartCoroutine(DeleteIslands(deletableIslandsGO));
+        foreach (Vector2 v2 in islandPosToDestroy)                                   //actualy remove the islands that should be destroyed
         {
             loadedIslands.Remove(v2);
         }
-        Dictionary<Vector2, string> existingIslands = saveData.GetIslandCoords();
-        foreach(KeyValuePair<Vector2, string> pos in existingIslands)                                     //load 'cached' islands that should be now loaded as they are now in range
-        {
-            if (!loadedIslands.ContainsKey(pos.Key))
-            {
-                if (Vector2.Distance(pos.Key, currentPos2) <= islandLoadDistance)
-                {
+        //Dictionary<Vector2, string> existingIslands = saveData.GetIslandCoords();
+        //foreach(KeyValuePair<Vector2, string> pos in existingIslands)                                     //load 'cached' islands that should be now loaded as they are now in range
+        //{
+        //    if (!loadedIslands.ContainsKey(pos.Key))
+        //    {
+        //        if (Vector2.Distance(pos.Key, currentPos2) <= islandLoadDistance)
+        //        {
 
-                    GameObject island = GameObject.Instantiate(islandPrefab, new Vector3(pos.Key.x, 0, pos.Key.y), Quaternion.identity);
-                    island.GetComponent<IslandGenerator>().StartGenerate(pos.Value);
-                    loadedIslands.Add(pos.Key, island);
-                }
+        //            GameObject island = GameObject.Instantiate(islandPrefab, new Vector3(pos.Key.x, 0, pos.Key.y), Quaternion.identity);
+        //            island.GetComponent<IslandGenerator>().StartGenerate(pos.Value);
+        //            loadedIslands.Add(pos.Key, island);
+        //        }
+        //    }
+        //}
+    }
+    private IEnumerator DeleteIslands(List<GameObject> islands)
+    {
+        foreach(GameObject isl in islands)
+        {
+            //isl.transform.position += new Vector3(0, 100, 0);
+            Destroy(isl);
+            yield return null;
+        }
+        bool notDestroyed = true;
+        while (notDestroyed)
+        {
+            notDestroyed = false;
+            foreach (GameObject isl in islands)
+            {
+                notDestroyed |= (isl != null);
             }
+            yield return null;
         }
     }
     public void ReSpawnIsland(Vector2 pos)

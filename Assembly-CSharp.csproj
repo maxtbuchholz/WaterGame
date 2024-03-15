@@ -65,6 +65,7 @@
     <Compile Include="Assets/Scripts/CompasUpdate.cs" />
     <Compile Include="Assets/Models/Menus/Map/FitCardUI.cs" />
     <Compile Include="Assets/Scripts/Canvas/MainCanvas.cs" />
+    <Compile Include="Assets/Models/Menus/Popup/ResizeBox.cs" />
     <Compile Include="Assets/Scripts/TurretPointer.cs" />
     <Compile Include="Assets/Models/Menus/Popup/Rotate.cs" />
     <Compile Include="Assets/Scripts/ShipMove/ShipMovement.cs" />
@@ -83,6 +84,7 @@
     <Compile Include="Assets/Scripts/ShipTypesController.cs" />
     <Compile Include="Assets/Scripts/ShipMove/ShipRotation.cs" />
     <Compile Include="Assets/Scripts/x/TileDeleter.cs" />
+    <Compile Include="Assets/Scripts/SettingsColorButtons.cs" />
     <Compile Include="Assets/Models/Menus/Popup/ShipUpgradeButtons.cs" />
     <Compile Include="Assets/Scripts/Noise.cs" />
     <Compile Include="Assets/Scripts/FPSText.cs" />
@@ -107,6 +109,7 @@
     <Compile Include="Assets/Scripts/Shooting/DestroyOnEffectComplete.cs" />
     <Compile Include="Assets/Scripts/FindTargetController.cs" />
     <Compile Include="Assets/Terrain/IslandGenerator.cs" />
+    <Compile Include="Assets/Scripts/PlayerPrefsController.cs" />
     <Compile Include="Assets/Models/Menus/Popup/UpgradeFSButtons.cs" />
     <Compile Include="Assets/Scripts/Shooting/TurretController.cs" />
     <Compile Include="Assets/Terrain/IslandTracker.cs" />
@@ -126,6 +129,7 @@
     <Compile Include="Assets/Terrain/GenerateTerrain.cs" />
     <Compile Include="Assets/Scripts/FaceCamera.cs" />
     <Compile Include="Assets/RenderTexture/MaskLowerLayers/MaskObject.cs" />
+    <Compile Include="Assets/Scripts/Canvas/SettingsCanvas.cs" />
     <Compile Include="Assets/Scripts/FortLevel.cs" />
     <Compile Include="Assets/Models/Menus/Popup/ResizeScreenImage.cs" />
     <Compile Include="Assets/Scripts/MapFortTouch.cs" />

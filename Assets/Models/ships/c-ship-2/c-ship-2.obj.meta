@@ -32,6 +32,11 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: hull.010
+    second: {fileID: 2100000, guid: dfd5b7152fc1b46ecb726bf6b6d976f1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: lifeboat
     second: {fileID: 2100000, guid: 6a9d2d2106ec047d9915e02a8790ae57, type: 2}
   - first:

@@ -167,7 +167,7 @@ MonoBehaviour:
   distanceAdd: 0
   radAngleAdd: 0
   overhead: 1
-  force: 30
+  force: 25
 --- !u!1 &1133291146558292589
 GameObject:
   m_ObjectHideFlags: 0

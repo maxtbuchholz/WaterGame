@@ -1,5 +1,6 @@
  using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ShipValueControl : MonoBehaviour
@@ -50,6 +51,10 @@ public class ShipValueControl : MonoBehaviour
             {
                 //child.transform.parent = tempDestroy.transform;
                 tempDestroy.Add(child.gameObject);
+            }
+            else
+            {
+                GetComponent<LocalTeamController>().AddObjectToColored(child.gameObject);
             }
         }
         foreach (Transform child in ship_drive)
@@ -128,6 +133,7 @@ public class ShipValueControl : MonoBehaviour
             detecthit.healthController = healthController;
         }
         UpdateShipValues();
+        GetComponent<LocalTeamController>().SetGameObjectColors();
     }
     public void UpdateShipValues()
     {

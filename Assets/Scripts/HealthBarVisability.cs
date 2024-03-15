@@ -53,7 +53,8 @@ public class HealthBarVisability : MonoBehaviour
     }
     public void SetBarColor(Color color)
     {
-        moveBar.GetComponent<Image>().color = color;
+        Color oldColor = moveBar.GetComponent<Image>().color;
+        moveBar.GetComponent<Image>().color = new Color(oldColor.r, oldColor.g, oldColor.b, color.a);
     }
     public GameObject GetMoveBar()
     {

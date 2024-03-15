@@ -28,6 +28,7 @@ public class NavTouch : MonoBehaviour
     private ButtonCollisionTracker buttonCollisionTracker;
     // Start is called before the first frame update
     PlayerInput playerInput;
+    private PlayerPrefsController playerPrefsController;
     public void ResetTouch()
     {
         UpdateThrottlePos(new Vector2(transform.position.x, transform.position.y));
@@ -36,6 +37,7 @@ public class NavTouch : MonoBehaviour
     }
     void Start()
     {
+        playerPrefsController = PlayerPrefsController.Instance;
         playerInput = PlayerInput.Instance;
         buttonCollisionTracker = ButtonCollisionTracker.Instance;
         throttleCollider = centralThrottle.GetComponent<BoxCollider2D>();
@@ -154,8 +156,10 @@ public class NavTouch : MonoBehaviour
                         float horDif = touches[i].deltaPosition.x / Screen.width;
                         float verDif = touches[i].deltaPosition.y / Screen.height;
                         Vector3 prevRotation = focalPoint.rotation.eulerAngles;
-                        horDif *= 220;
-                        verDif *= -80;
+                        float xMultiplyer = Mathf.Lerp(100, 340, playerPrefsController.GetXPanSens());
+                        horDif *= xMultiplyer;
+                        float yMultiplyer = Mathf.Lerp(-20, -140, playerPrefsController.GetYPanSens());
+                        verDif *= yMultiplyer;
                         float rotY = (horDif + prevRotation.y) % 360;
                         focalPoint.rotation = Quaternion.Euler(Mathf.Max(Mathf.Min((verDif + prevRotation.x) % 360, 45), 5), rotY, 0);
                         compasUpdate.UpdateCompas(rotY);
@@ -183,7 +187,8 @@ public class NavTouch : MonoBehaviour
                         float prevDst = Vector2.Distance(otherFingersPos, touches[i].position);
                         float deltaDst = Vector2.Distance(otherFingersPos, touches[i].position - touches[i].deltaPosition) - prevDst;
                         deltaDst /= screenSizeing;
-                        deltaDst *= 2;
+                        float multiplyer = Mathf.Lerp(0.3f, 3.7f, playerPrefsController.GetZoomSens());
+                        deltaDst *= multiplyer;
                         zoomDstMult += deltaDst;
                         zoomDstMult = Mathf.Min(zoomDstMult, 1.0f);
                         zoomDstMult = Mathf.Max(zoomDstMult, 0.0f);

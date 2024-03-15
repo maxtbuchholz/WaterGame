@@ -12,7 +12,22 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: Ship_color.012
+    second: {fileID: 2100000, guid: 614a33153505b4937babdae59c3af599, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ahip.010
+    second: {fileID: 2100000, guid: 614a33153505b4937babdae59c3af599, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: antenas
+    second: {fileID: 2100000, guid: dfd5b7152fc1b46ecb726bf6b6d976f1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: antenas.010
     second: {fileID: 2100000, guid: dfd5b7152fc1b46ecb726bf6b6d976f1, type: 2}
   - first:
       type: UnityEngine:Material
@@ -22,7 +37,17 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: floor_color.012
+    second: {fileID: 2100000, guid: 15daf0876139f42ada47ceb0538aaf7a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: lifeboat
+    second: {fileID: 2100000, guid: 6a9d2d2106ec047d9915e02a8790ae57, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lifeboat.010
     second: {fileID: 2100000, guid: 6a9d2d2106ec047d9915e02a8790ae57, type: 2}
   - first:
       type: UnityEngine:Material
@@ -37,7 +62,17 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: smoke.014
+    second: {fileID: 2100000, guid: 4fbf573a4cdae4f68890299ccf79172d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: window
+    second: {fileID: 2100000, guid: dd9a6e44419154ed5ab579186e521eff, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: window.012
     second: {fileID: 2100000, guid: dd9a6e44419154ed5ab579186e521eff, type: 2}
   materials:
     materialImportMode: 2

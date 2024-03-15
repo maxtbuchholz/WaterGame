@@ -39,8 +39,9 @@ public class HealthController : MonoBehaviour
             healthBar.transform.parent = transform;
             healthBar.transform.localPosition = new Vector3(0, 3, 0);
             healthBarVisability = healthBar.GetComponent<HealthBarVisability>();
-            healthBarVisability.SetBarColor(teamsController.GetTeamColor(teamId));
+            healthBarVisability.SetBarColor(teamsController.GetTeamColor(teamId, localTeamController));
             MoveBar = healthBarVisability.GetMoveBar().transform;
+            localTeamController.AddObjectToColored(MoveBar.gameObject);
         }
     }
     private float timeWithoutDamage = 10;
@@ -97,18 +98,19 @@ public class HealthController : MonoBehaviour
         findTarget.ModifyTargetable(this.gameObject, teamId, isFort ? FindTargetController.targetType.fort : FindTargetController.targetType.ship, FindTargetController.targetContition.targetable);
         if (didStart)
         {
-            healthBarVisability.SetBarColor(teamsController.GetTeamColor(teamId));
+            healthBarVisability.SetBarColor(teamsController.GetTeamColor(teamId, localTeamController));
         }
     }
     public void SetMaxHealth(float health)
     {
         currentHealth = health;
         maxHealth = health;
-        if(!isPlayer)
-            SetHealthSize(currentHealth / maxHealth);
+        SetHealthSize(currentHealth / maxHealth);
     }
     private void SetHealthSize(float perc)
     {
+        if (isPlayer) return;
+        if (MoveBar == null) return;
         Rect rect = MoveBar.GetComponent<RectTransform>().rect;
         MoveBar.GetComponent<RectTransform>().sizeDelta = new Vector2(rect.width, perc);
         //MoveBar.GetComponent<RectTransform>().rect
@@ -137,7 +139,7 @@ public class HealthController : MonoBehaviour
                 {
                     FortCaptuerdByAI(attackerTeamId);
                     GameObject fC = GameObject.Instantiate(fortCapturedParticle, transform.position + new Vector3(0, 0.5f, 0), Quaternion.identity);
-                    fC.GetComponent<VisualEffect>().SetVector4("_TeamColor", teamsController.GetTeamColor(attackerTeamId));
+                    fC.GetComponent<VisualEffect>().SetVector4("_TeamColor", teamsController.GetTeamColor(attackerTeamId, localTeamController));
                 }
             }
             else if (isMortar)      //different
@@ -159,7 +161,7 @@ public class HealthController : MonoBehaviour
         currentHealth = maxHealth;
         SetHealthSize(currentHealth / maxHealth);
         this.teamId = attackerTeamId;
-        healthBarVisability.SetBarColor(teamsController.GetTeamColor(teamId));
+        healthBarVisability.SetBarColor(teamsController.GetTeamColor(teamId, localTeamController));
 
     }
     public void PlayerCaptureBase()
@@ -276,12 +278,12 @@ public class HealthController : MonoBehaviour
             localTeamController.ForceChangeTeam(0);
             currentHealth = maxHealth;
             SetHealthSize(currentHealth / maxHealth);
-            Color color = TeamsController.Instance.GetTeamColor(0);
+            Color color = TeamsController.Instance.GetTeamColor(0, localTeamController);
             forMat.SetColor("_BaseColor", color);
             healthBarVisability.SetBarColor(color);
             barCol.a = 1;
             GameObject fC = GameObject.Instantiate(fortCapturedParticle, transform.position + new Vector3(0, 1, 0), Quaternion.identity);
-            fC.GetComponent<VisualEffect>().SetVector4("_TeamColor", teamsController.GetTeamColor(0));
+            fC.GetComponent<VisualEffect>().SetVector4("_TeamColor", teamsController.GetTeamColor(0, localTeamController));
         }
         healthRefilingDuringCapture = false;
         fortTurretControl.SetEnabled(true);

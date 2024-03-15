@@ -74,15 +74,42 @@ public class PlayerFireControl : MonoBehaviour
                     turretNormalVec.Add(normalVec);
                 }
             }
-            for (int i = 0; i < ableTurretIndexes.Count; i++)
-            {
-                turretTimeAbleFire[ableTurretIndexes[i]] = turrets[ableTurretIndexes[i]].ShootProjectile(turretNormalVec[i], teamId);
-                StartCoroutine(ReloadTurret(ableTurretIndexes[i]));
-            }
+            StartCoroutine(FireTurrets(ableTurretIndexes, turretNormalVec));
+            //for (int i = 0; i < ableTurretIndexes.Count; i++)
+            //{
+            //    turretTimeAbleFire[ableTurretIndexes[i]] = turrets[ableTurretIndexes[i]].ShootProjectile(turretNormalVec[i], teamId);
+            //    StartCoroutine(ReloadTurret(ableTurretIndexes[i]));
+            //}
             //foreach (TurretController tC in turrets)
             //    tC.RequestShot(currentBestShot);
-            debugBall.transform.position = currentBestShot;
+            //debugBall.transform.position = currentBestShot;
         }
+    }
+    private IEnumerator FireTurrets(List<int> turretIndexs, List<Vector3> Vectors)
+    {
+        float fireMaxDiff = 0.01f;
+        int[] fireOrder = new int[turretIndexs.Count];
+        for (int i = 0; i < turretIndexs.Count; i++)
+            fireOrder[i] = i;
+        fireOrder = Shuffle(fireOrder);
+        for(int i = 0; i < fireOrder.Length; i++)
+        {
+            turretTimeAbleFire[turretIndexs[fireOrder[i]]] = turrets[turretIndexs[fireOrder[i]]].ShootProjectile(Vectors[fireOrder[i]] + new Vector3(Random.Range(-fireMaxDiff, fireMaxDiff), Random.Range(-fireMaxDiff, fireMaxDiff), Random.Range(-fireMaxDiff, fireMaxDiff)), teamId);
+            StartCoroutine(ReloadTurret(turretIndexs[fireOrder[i]]));
+            yield return new WaitForSeconds(Random.Range(0.0f, 0.075f));
+        }
+    }
+    int[] Shuffle(int[] texts)
+    {
+        // Knuth shuffle algorithm :: courtesy of Wikipedia :)
+        for (int t = 0; t < texts.Length; t++)
+        {
+            int tmp = texts[t];
+            int r = Random.Range(t, texts.Length);
+            texts[t] = texts[r];
+            texts[r] = tmp;
+        }
+        return texts;
     }
     int prevPlayerTurretCount = 0;
     private void Update()

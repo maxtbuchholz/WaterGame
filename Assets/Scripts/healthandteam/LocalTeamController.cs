@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LocalTeamController : MonoBehaviour
 {
@@ -19,11 +20,12 @@ public class LocalTeamController : MonoBehaviour
         if (teamId == -1)
             SetTeamRandom();
         UpdateMortarTeam();
+        TeamsController.Instance.AddLocalTeam(this);
     }
     void SetTeamRandom()
     {
         if (!isplayer)
-            teamId = Random.Range(1, 7);
+            teamId = Random.Range(1, 6);
         else
             teamId = 0;
         SetGameObjectColors();
@@ -31,22 +33,36 @@ public class LocalTeamController : MonoBehaviour
         if (playerFireControl != null) playerFireControl.SetTeamId(teamId);
         if (healthController != null) healthController.SetTeam(teamId);
     }
-    void SetGameObjectColors()
+    public void SetGameObjectColors()
     {
         //if (isMortar) Debug.Log("Changing Color");
-        teamColor = TeamsController.Instance.GetTeamColor(teamId);
+        teamColor = TeamsController.Instance.GetTeamColor(teamId, this);
         foreach (GameObject ob in coloredObjects)
         {
-            List<Material> obMat = ob.GetComponent<Renderer>().materials.ToList();
-            foreach(Material mat in obMat)
+            if (ob != null)
             {
-                if(mat.name == "fortbrick (Instance)")
+                List<Material> obMat = ob.GetComponent<Renderer>().materials.ToList();
+                foreach (Material mat in obMat)
                 {
-                    mat.SetColor("_BaseColor", teamColor);
+                    if (mat.name == "fortbrick (Instance)")
+                    {
+                        mat.SetColor("_BaseColor", teamColor);
+                    }
+                    else if (mat.name == "TeamColor (Instance)")
+                    {
+                        mat.SetColor("_BaseColor", teamColor);
+                    }
+                    else if (mat.name == "ship_color (Instance)")
+                    {
+                        mat.SetColor("_BaseColor", teamColor);
+                    }
                 }
-                else if (mat.name == "TeamColor (Instance)")
+                if (ob.name == "MoveBar")
                 {
-                    mat.SetColor("_BaseColor", teamColor);
+                    if (ob.TryGetComponent<Image>(out Image iM))
+                    {
+                        iM.color = teamColor;
+                    }
                 }
             }
         }
@@ -79,7 +95,10 @@ public class LocalTeamController : MonoBehaviour
     }
     public void AddObjectToColored(GameObject go)
     {
-        coloredObjects.Add(go);
-        SetGameObjectColors();
+        if (!coloredObjects.Contains(go))
+        {
+            coloredObjects.Add(go);
+            SetGameObjectColors();
+        }
     }
 }
