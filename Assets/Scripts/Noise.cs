@@ -33,6 +33,34 @@ public static class Noise
         //if ((y > 0) && (y < 2.5)) y = 2;
         return y;
     }
+    public static float GroundHeightRocky(float x, float z, float lacunarity, float persistance, int octaves)
+    {
+        x += seedOffset.x;
+        z += seedOffset.y;
+        //float y = Mathf.PerlinNoise((x * 0.03f), (z * 0.03f)) * 30f;
+        //y += Mathf.PerlinNoise((x * 0.005f), (z * 0.005f)) * 30f;
+        //y += Mathf.PerlinNoise((x * 0.0005f), (z * 0.0005f)) * 60f;
+        //y += Mathf.PerlinNoise((x * 0.09f), (z * 0.09f)) * 10f;
+        //y += Mathf.PerlinNoise((x * 0.020f), (z * 0.020f)) * 10f;
+        //y -= 15;
+        //if (y < -10) y *= 2;
+        float totalHeight = 0;
+        float orginalFrequency = 0.03f;
+        float originalAmplitude = 20;
+        float y = 0;
+        for (int o = 0; o < octaves; o++)
+        {
+            float frequency = Mathf.Pow(lacunarity, o);
+            float amplitude = Mathf.Pow(persistance, o) * originalAmplitude;
+            y += Mathf.PerlinNoise((x * orginalFrequency * frequency), (z * orginalFrequency * frequency)) * amplitude;
+            totalHeight += amplitude;
+        }
+        y = y - (totalHeight / 2);
+        y -= 10;
+        // if (y < 0) y -= 0.5f;
+        //if ((y > 0) && (y < 2.5)) y = 2;
+        return y;
+    }
     public static float IslandEdgeFilter(float origHeight, int x, int z, int iSizeX, int iSizeZ)
     {
         int xM = iSizeX - x;

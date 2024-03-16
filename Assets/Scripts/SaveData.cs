@@ -173,5 +173,16 @@ public class SaveData : MonoBehaviour
         if (unlockedShips.ContainsKey(shipId)) return unlockedShips[shipId];
         else { unlockedShips[shipId] = false; return false; }
     }
-    public static string moneySymbol = "$";
+    public static string moneySymbol = "⚙";
+    private Dictionary<string, float[]> islandData = new();
+    public float[] GetIslandData(string key)
+    {
+        if (islandData.ContainsKey(key)) return islandData[key];
+        return new float[] { };
+    }
+    public void SetIslandData(string key, float[] data)
+    {
+        if (islandData.ContainsKey(key)) islandData[key] = data;
+        else islandData.Add(key, data);
+    }
 }

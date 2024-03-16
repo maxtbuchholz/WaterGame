@@ -572,6 +572,9 @@
         },
         {
             "m_Id": "fbfbb63b2ad54e3e841a69346d35f50e"
+        },
+        {
+            "m_Id": "e0407b6cff2b4443872b087f6d011e7c"
         }
     ],
     "m_GroupDatas": [
@@ -2290,6 +2293,20 @@
         {
             "m_OutputSlot": {
                 "m_Node": {
+                    "m_Id": "b14144cdcdad429887849cf0ca6fc08e"
+                },
+                "m_SlotId": 2
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "e0407b6cff2b4443872b087f6d011e7c"
+                },
+                "m_SlotId": 30528354
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
                     "m_Id": "b14f7aa9eaf64b19b83a91655037021f"
                 },
                 "m_SlotId": 0
@@ -3128,6 +3145,21 @@
         "z": 0.0,
         "w": 0.0
     }
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
+    "m_ObjectId": "00c67f53ac074519803add9b5c1011b4",
+    "m_Id": 1942207363,
+    "m_DisplayName": "Alpha",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "_Alpha",
+    "m_StageCapability": 3,
+    "m_Value": 1.0,
+    "m_DefaultValue": 0.0,
+    "m_Labels": []
 }
 
 {
@@ -15915,6 +15947,29 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector3MaterialSlot",
+    "m_ObjectId": "ae55b75a68d94a11af13d8442b9abde1",
+    "m_Id": 0,
+    "m_DisplayName": "Color",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Color",
+    "m_StageCapability": 3,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.DynamicValueMaterialSlot",
     "m_ObjectId": "af395942fc2c4f809e3a94bedd11ebdd",
     "m_Id": 1,
@@ -16700,8 +16755,8 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": 3724.499755859375,
-            "y": -186.99998474121095,
+            "x": 3408.499755859375,
+            "y": -255.0,
             "width": 208.0,
             "height": 125.0
         }
@@ -17001,6 +17056,31 @@
     "m_SlotType": 1,
     "m_Hidden": false,
     "m_ShaderOutputName": "Out",
+    "m_StageCapability": 3,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
+    "m_ObjectId": "bd2b336a83224bef949d44dd456126fb",
+    "m_Id": 30528354,
+    "m_DisplayName": "Color",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "_Color",
     "m_StageCapability": 3,
     "m_Value": {
         "x": 0.0,
@@ -19930,6 +20010,59 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.SubGraphNode",
+    "m_ObjectId": "e0407b6cff2b4443872b087f6d011e7c",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "DistanceFade",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": 3690.5,
+            "y": -211.49998474121095,
+            "width": 208.0,
+            "height": 303.0
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "bd2b336a83224bef949d44dd456126fb"
+        },
+        {
+            "m_Id": "00c67f53ac074519803add9b5c1011b4"
+        },
+        {
+            "m_Id": "ae55b75a68d94a11af13d8442b9abde1"
+        },
+        {
+            "m_Id": "fee49d7d56e64133a65d02fd8f7764a3"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": true,
+    "m_DismissedVersion": 0,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_SerializedSubGraph": "{\n    \"subGraph\": {\n        \"fileID\": -5475051401550479605,\n        \"guid\": \"9f8339bc2dee64d678eb2267b2898aaa\",\n        \"type\": 3\n    }\n}",
+    "m_PropertyGuids": [
+        "011ddb84-f49d-4553-90ff-b5d1eb032a94",
+        "091bce80-3c4d-4701-bd82-da6bf3cb0356"
+    ],
+    "m_PropertyIds": [
+        30528354,
+        1942207363
+    ],
+    "m_Dropdowns": [],
+    "m_DropdownSelectedEntries": []
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.MultiplyNode",
     "m_ObjectId": "e0b35f091f124dc5b9864dda362ed1f3",
     "m_Group": {
@@ -22234,6 +22367,21 @@
     "m_SlotType": 1,
     "m_Hidden": false,
     "m_ShaderOutputName": "Cosine Time",
+    "m_StageCapability": 3,
+    "m_Value": 0.0,
+    "m_DefaultValue": 0.0,
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
+    "m_ObjectId": "fee49d7d56e64133a65d02fd8f7764a3",
+    "m_Id": 1,
+    "m_DisplayName": "Alpha",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Alpha",
     "m_StageCapability": 3,
     "m_Value": 0.0,
     "m_DefaultValue": 0.0,

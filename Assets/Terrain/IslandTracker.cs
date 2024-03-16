@@ -6,6 +6,7 @@ using UnityEngine;
 public class IslandTracker : MonoBehaviour
 {
     [SerializeField] GameObject islandPrefab;
+    [SerializeField] GameObject rockyIslandPrefab;
     // Start is called before the first frame update
     //List<Vector2> existingIslands = new();
     Dictionary<Vector2, GameObject> loadedIslands = new();
@@ -85,13 +86,26 @@ public class IslandTracker : MonoBehaviour
     {
         if (loadedIslands.ContainsKey(pos)) return;
         string keyS = saveData.GetIslandKeyFromCoord(pos);
-        GameObject island = GameObject.Instantiate(islandPrefab, new Vector3(pos.x, 0, pos.y), Quaternion.identity);
-        island.GetComponent<IslandGenerator>().StartGenerate(keyS);
-        loadedIslands.Add(pos, island);
+        float[] data = saveData.GetIslandData(keyS);
+        if (data.Length > 0)
+        {
+            if (data[0] == 0)                                           //typical green island
+            {
+                GameObject island = GameObject.Instantiate(islandPrefab, new Vector3(pos.x, 0, pos.y), Quaternion.identity);
+                island.GetComponent<IslandGenerator>().StartGenerate(keyS);
+                loadedIslands.Add(pos, island);
+            }
+            else if (data[0] == 1)                                           //typical green island
+            {
+                GameObject island = GameObject.Instantiate(rockyIslandPrefab, new Vector3(pos.x, 0, pos.y), Quaternion.identity);
+                island.GetComponent<IslandGenerator>().StartGenerateRocky(keyS, data);
+                loadedIslands.Add(pos, island);
+            }
+        }
     }
     public void TrySpawnIsland(Vector2 pos, bool allwaysSpawn)
     {
-        if ((Random.Range(0.0f, 1.0f) > 0.5f) || allwaysSpawn)
+        if ((Random.Range(0.0f, 1.0f) > 0.3f) || allwaysSpawn)
         {
             bool farEnoughOut = true;
             Dictionary<Vector2, string> seaCoords = saveData.GetIslandCoords();
@@ -99,10 +113,24 @@ public class IslandTracker : MonoBehaviour
                 farEnoughOut &= (Vector2.Distance(pos, checkPos.Key) >= minIslandDistacnce);
             if (farEnoughOut)
             {
-                GameObject island = GameObject.Instantiate(islandPrefab, new Vector3(pos.x, 0, pos.y), Quaternion.identity);
-                int keyI = saveData.GetNewIslandKey(pos);
-                island.GetComponent<IslandGenerator>().StartGenerate(keyI.ToString());
-                loadedIslands.Add(pos, island);
+                float r = Random.Range(0.0f, 1.0f);
+                if (allwaysSpawn) r = 0;
+                if (r < 0.6f)                                              //typical green island
+                {
+                    GameObject island = GameObject.Instantiate(islandPrefab, new Vector3(pos.x, 0, pos.y), Quaternion.identity);
+                    int keyI = saveData.GetNewIslandKey(pos);
+                    island.GetComponent<IslandGenerator>().StartGenerate(keyI.ToString());
+                    loadedIslands.Add(pos, island);
+                    saveData.SetIslandData(keyI.ToString(), new float[] { 0 });
+                }
+                else if(r <= 1.0f)                                       //small rocky island
+                {
+                    GameObject island = GameObject.Instantiate(rockyIslandPrefab, new Vector3(pos.x, 0, pos.y), Quaternion.identity);
+                    int keyI = saveData.GetNewIslandKey(pos);
+                    float[] data = island.GetComponent<IslandGenerator>().StartGenerateRocky(keyI.ToString(), new float[] { });
+                    loadedIslands.Add(pos, island);
+                    saveData.SetIslandData(keyI.ToString(), data);
+                }
             }
         }
     }

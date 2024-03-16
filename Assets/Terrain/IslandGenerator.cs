@@ -33,6 +33,54 @@ public class IslandGenerator : MonoBehaviour
         //    await Generate(transform.position);
         //});
     }
+    //private float prevLacunarity = 2;
+    //private float prevPersistance = 0.5f;
+    //private int prevOctaves = 6;
+    //private void Update()                   //for debug
+    //{
+    //    if((lacunarity != prevLacunarity) || (persistance != prevPersistance) || (octaves != prevOctaves))
+    //    {
+    //        prevLacunarity = lacunarity;
+    //        prevPersistance = persistance;
+    //        prevOctaves = octaves;
+    //        StartGenerateRocky(keySP, dataP);
+    //    }
+    //}
+    private string keySP;
+    private float[] dataP;
+    public float[] StartGenerateRocky(string keyS, float[] data)
+    {
+        keySP = keyS;
+        dataP = data;
+        float xMove;
+        float zMove;
+        if (data.Length > 1)
+        {
+            xMove = data[1];
+            zMove = data[2];
+        }
+        else
+        {
+            xMove = Random.Range(-50f, 50f);
+            zMove = Random.Range(-50f, 50f);
+        }
+        saveData = SaveData.Instance;
+        WorldXWidth = xWidth;
+        WorldZWidth = zWidth;
+        xSize = Mathf.RoundToInt((WorldXWidth / 10.0f) * vertsPerTenWidth);
+        zSize = Mathf.RoundToInt((WorldZWidth / 10.0f) * vertsPerTenWidth);
+        GenerateRocky(transform.position);
+        Vector2 posVT = new Vector2(transform.position.x, transform.position.z);
+        islandImager = IslandImager.Instance;
+        if (!saveData.IslandExists(posVT))
+        {
+            saveData.AddIslandCoords(posVT, keyS);
+            StartCoroutine(islandImager.ImageOfIsland(posVT, keyS, gameObject));
+        }
+        //fortGenerator.LoadFort(transform.position.x, transform.position.z, WorldXWidth, WorldZWidth, keyS);
+
+        return new float[] { 1, xMove, zMove };
+    }
     public void StartGenerate(string keyS)
     {
         saveData = SaveData.Instance;
@@ -99,6 +147,26 @@ public class IslandGenerator : MonoBehaviour
         //Vector3 botLeft = new Vector3(currPos.x - (WorldXWidth / 2), 100, currPos.z - (WorldZWidth / 2));
         //Vector3 topRight = new Vector3(currPos.x + (WorldXWidth / 2), 100, currPos.z + (WorldZWidth / 2)); //new Vector3((((float)xWidth / (float)xSize) * WorldXWidth) - (WorldXWidth / 2) + transform.position.x, 100, (((float)zWidth / (float)zSize) * WorldZWidth) - (WorldZWidth / 2) + transform.position.z);
                                                                                                              //SetUpIslandColliders(await Task.Run(() => CreateIslandCollider(botLeft, topRight)));
+        generationStep = 1;
+        //SetUpIslandColliders(CreateIslandCollider(botLeft, topRight, vertAndTri.foundColliderEdgePlaces));
+        return;
+    }
+    private void GenerateRocky(Vector3 currPos)
+    {
+        if (meshIsland != null) meshIsland.Clear();
+        meshIsland = new Mesh();
+        GetComponent<MeshFilter>().mesh = meshIsland;
+
+        //vaT = await Task.Run(() => CreateShape(currPos));
+        vaT = CreateShapeRocky(currPos);
+        vaT = RemoveDeadVerts(vaT);
+        UpdateMesh(vaT);
+        GetComponent<MeshCollider>().sharedMesh = meshIsland;
+        GetComponent<MeshCollider>().sharedMesh.RecalculateNormals();
+
+        //Vector3 botLeft = new Vector3(currPos.x - (WorldXWidth / 2), 100, currPos.z - (WorldZWidth / 2));
+        //Vector3 topRight = new Vector3(currPos.x + (WorldXWidth / 2), 100, currPos.z + (WorldZWidth / 2)); //new Vector3((((float)xWidth / (float)xSize) * WorldXWidth) - (WorldXWidth / 2) + transform.position.x, 100, (((float)zWidth / (float)zSize) * WorldZWidth) - (WorldZWidth / 2) + transform.position.z);
+        //SetUpIslandColliders(await Task.Run(() => CreateIslandCollider(botLeft, topRight)));
         generationStep = 1;
         //SetUpIslandColliders(CreateIslandCollider(botLeft, topRight, vertAndTri.foundColliderEdgePlaces));
         return;
@@ -247,268 +315,72 @@ public class IslandGenerator : MonoBehaviour
             }
             vert++;
         }
-        //for (int k = 0; k < foundColliderSport.Count; k++)
-        //{
-        //    for (int j = 0; j < foundColliderSport.Count; j++)
-        //    {
-        //        if (j != k)
-        //        {
-        //            if (foundNearVertex[k] == foundNearVertex[j])
-        //            {
-        //                if (!foundNeiVert[k].Contains(j))
-        //                    foundNeiVert[k].Add(j);
-        //            }
-        //        }
-        //    }
-        //}
-        //for (int k = 0; k < foundColliderSport.Count; k++)
-        //{
-        //    for (int j = 0; j < foundColliderSport.Count; j++)
-        //    {
-        //        if (j != k)
-        //        {
-        //            if (containigTiles[k] == containigTiles[j])
-        //            {
-        //                if (!foundNeiVert[k].Contains(j))
-        //                    foundNeiVert[k].Add(j);
-        //            }
-        //        }
-        //    }
-        //}
-        //Dictionary<Vector2Int, List<int>> coordsINDict = new();
-        //int xMax = 0;
-        //int xMin = 0;
-        //int zMax = 0;
-        //int zMin = 0;
-        //for(i = 0; i < containigTiles.Count; i++)
-        //{
-        //    if(i == 0)
-        //    {
-        //        xMax = containigTiles[i].x;
-        //        xMin = containigTiles[i].x;
-        //        zMax = containigTiles[i].y;
-        //        zMin = containigTiles[i].y;
-        //    }
-        //    if (containigTiles[i].x > xMax) xMax = containigTiles[i].x;
-        //    if (containigTiles[i].x < xMin) xMin = containigTiles[i].x;
-        //    if (containigTiles[i].y > zMax) zMax = containigTiles[i].y;
-        //    if (containigTiles[i].y < zMin) zMin = containigTiles[i].y;
-        //    if (!coordsINDict.ContainsKey(containigTiles[i])) { coordsINDict.Add(containigTiles[i], new List<int>(i)); }
-        //    else coordsINDict[containigTiles[i]].Add(i);
-        //}
-        //for(int x = xMin; x <= xMax; x++)
-        //{
-        //    for (int z = zMin; z <= zMax; z++)
-        //    {
-        //        Vector2Int mid = new(x, z);
-        //        if (coordsINDict.ContainsKey(mid))
-        //        {
-        //            foreach(Vector2Int neighbor in Neighbors)
-        //            {
-        //                Vector2Int nei = mid + neighbor;
-        //                if (coordsINDict.ContainsKey(nei))
-        //                {
-        //                    float closestPairDistance = -1;
-        //                    int mFound = -1;
-        //                    int nFound = -1;
-        //                    for(int m = 0; m < coordsINDict[mid].Count; m++)
-        //                    {
-        //                        for (int n = 0; n < coordsINDict[nei].Count; n++)
-        //                        {
-        //                            float dst = Vector2.Distance(verticies[coordsINDict[mid][m]], verticies[coordsINDict[nei][n]]);
-        //                            if((closestPairDistance == -1) || (dst < closestPairDistance))
-        //                            {
-        //                                closestPairDistance = dst;
-        //                                mFound = coordsINDict[mid][m];
-        //                                nFound = coordsINDict[nei][n];
-        //                            }
-        //                        }
-        //                    }
-        //                    if(closestPairDistance != -1)
-        //                    {
-        //                        //Vector2 middle = verticies[mFound];// Vector2.Lerp(verticies[mFound], verticies[nFound], 0.5f);
-        //                        //float aX = (middle.x - (currTransform.x - (WorldXWidth / 2))) / WorldXWidth;
-        //                        //float aZ = (middle.y - (currTransform.z - (WorldZWidth / 2))) / WorldZWidth;
-        //                        //aX *= xSize;
-        //                        //aZ *= zSize;
-        //                        //int aX = (int)((((middle.x - currTransform.x) + (WorldXWidth / 2)) / (float)WorldXWidth) * (float)xSize);
-        //                        //int aZ = (int)((((middle.y - currTransform.z) + (WorldZWidth / 2)) / (float)WorldZWidth) * (float)zSize);
-        //                        //float y = Noise.GroundHeight(middle.x, middle.y, lacunarity, persistance, octaves);
-        //                        //y = Noise.ConformToIslandShape(Noise.IslandEdgeCircleFilter(y,(int)aX, (int)aZ, xSize, zSize));
-        //                        //y = SetTerrainShader.SetIslandHeightBelowStarts(y);
-        //                        //Debug.Log(y);
-        //                        //if (y > -5)
-        //                        foundNeiVert[mFound].Add(nFound);
-        //                        //Debug.DrawLine(new Vector3(0, 10, 0), new Vector3(middle.x, 10, middle.y), Color.cyan);
-        //                        //Debug.Break();
-        //                    }
-        //                }
-        //            }
-        //        }
-        //    }
-        //}
-        ////for (int k = 0; k < foundNearVertex.Count; k++)
-        ////{
-        ////    for (int j = 0; j < foundNearVertex.Count; j++)
-        ////    {
-        ////        if (foundNearVertex[j] == foundNearVertex[k] + 1 ||
-        ////                foundNearVertex[j] == foundNearVertex[k] - 1 ||
-        ////                foundNearVertex[j] == foundNearVertex[k] + xSize ||
-        ////                foundNearVertex[j] == foundNearVertex[k] - xSize)
-        ////            foundNeiVert[k].Add(j);
-        ////        if (foundNearVertex[j] == foundNearVertex[k] + xSize + 1 ||
-        ////                foundNearVertex[j] == foundNearVertex[k] - xSize - 1 ||
-        ////                foundNearVertex[j] == foundNearVertex[k] + xSize - 1 ||
-        ////                foundNearVertex[j] == foundNearVertex[k] - xSize + 1)
-        ////            foundNeiVert[k].Add(j);
+        return new VertAndTri(verticies, triangles.ToArray(), foundColliderSport, foundNeiVert, containigTiles);
+    }
+    VertAndTri CreateShapeRocky(Vector3 currTransform)
+    {
+        Vector3[] verticies = new Vector3[(xSize + 1) * (zSize + 1)];
+        //vertColors = new Color[(xSize + 1) * (zSize + 1)];
+        int i = 0;
+        for (int z = 0; z <= zSize; z++)
+        {
+            for (int x = 0; x <= xSize; x++)
+            {
+                float fX = ((float)x / (float)xSize * WorldXWidth) - (WorldXWidth / 2); //aX = (((((middle.x - currTransform.x) + (WorldXWidth / 2)) / (float)WorldXWidth) * (float)xSize);
+                float fZ = ((float)z / (float)zSize * WorldZWidth) - (WorldZWidth / 2);
+                //float y = Noise.GroundHeight(fX, fZ, lacunarity, persistance, octaves);
+                float y = Noise.GroundHeightRocky(fX + currTransform.x, fZ + currTransform.z, lacunarity, persistance, octaves);
+                y = Noise.ConformToIslandShape(Noise.IslandEdgeCircleFilter(y, x, z, xSize, zSize));
+                y = SetTerrainShader.SetIslandHeightBelowStarts(y);
+                verticies[i] = new Vector3(fX, y, fZ);
+                //vertColors[i] = Noise.GetIslandColorForHeight(y, y, y);
+                i++;
+            }
+        }
+        //int[] triangles = new int[xSize * zSize * 6];
+        List<int> triangles = new();
+        int vert = 0;
+        int tris = 0;
+        List<Vector2> foundColliderSport = new();
+        List<int> foundNearVertex = new();
+        List<List<int>> foundNeiVert = new();
+        //List<List<int>> foundNeighbors = new();
+        List<Vector2Int> containigTiles = new();
+        float removeTriBelow = -6;
+        for (int z = 0; z < zSize; z++)
+        {
+            for (int x = 0; x < xSize; x++)
+            {
+                if ((verticies[vert + 0].y > removeTriBelow) &&
+                        (verticies[vert + xSize + 1].y > removeTriBelow) &&
+                        (verticies[vert + 1].y > removeTriBelow))
+                {
+                    //triangles[tris + 0] = vert + 0;
+                    //triangles[tris + 1] = vert + xSize + 1;
+                    //triangles[tris + 2] = vert + 1;
+                    triangles.Add(vert + 0);
+                    triangles.Add(vert + xSize + 1);
+                    triangles.Add(vert + 1);
+                }
+                //FindEgdes(vert + 0, vert + xSize + 1, vert + 1);
+                if ((verticies[vert + 1].y > removeTriBelow) &&
+                        (verticies[vert + xSize + 1].y > removeTriBelow) &&
+                        (verticies[vert + xSize + 2].y > removeTriBelow))
+                {
+                    //triangles[tris + 3] = vert + 1;
+                    //triangles[tris + 4] = vert + xSize + 1;
+                    //triangles[tris + 5] = vert + xSize + 2;
+                    triangles.Add(vert + 1);
+                    triangles.Add(vert + xSize + 1);
+                    triangles.Add(vert + xSize + 2);
+                }
+                //FindEgdes(vert + 1, vert + xSize + 1, vert + xSize + 2);
 
-        ////    }
-        ////}
-        //void FindEgdes(int a, int b, int c)
-        //{
-        //    float xLow = Mathf.Min(Mathf.Min(verticies[a].x, verticies[b].x), verticies[c].x);
-        //    float xMax = Mathf.Max(Mathf.Max(verticies[a].x, verticies[b].x), verticies[c].x);
-        //    float zLow = Mathf.Min(Mathf.Min(verticies[a].z, verticies[b].z), verticies[c].z);
-        //    float zMax = Mathf.Max(Mathf.Max(verticies[a].z, verticies[b].z), verticies[c].z);
-        //    float div = 10.0f / vertsPerTenWidth;
-        //    int xMed = Mathf.RoundToInt(xLow / div);
-        //    int zMed = Mathf.RoundToInt(zLow / div);
-        //    Vector2Int med = new Vector2Int(xMed, zMed);
-        //    List<int> foundColInd = new();
-        //    Vector2 tempV2;
-        //    if (verticies[a].y == islandYCollider)                                      //check for verticies equaling the target, probably not needed
-        //    {
-        //        tempV2 = new Vector2(verticies[a].x, verticies[a].z);
-        //        if (!foundColliderSport.Contains(tempV2))
-        //        {
-        //            foundColliderSport.Add(tempV2);
-        //            foundNearVertex.Add(a);
-        //            foundColInd.Add(foundColliderSport.Count - 1);
-        //            containigTiles.Add(med);
-        //        }
-        //    }
-        //    if (verticies[b].y == islandYCollider)
-        //    {
-        //        tempV2 = new Vector2(verticies[b].x, verticies[b].z);
-        //        if (!foundColliderSport.Contains(tempV2))
-        //        {
-        //            foundColliderSport.Add(tempV2);
-        //            foundNearVertex.Add(b);
-        //            foundColInd.Add(foundColliderSport.Count - 1);
-        //            containigTiles.Add(med);
-        //        }
-        //    }
-        //    if (verticies[c].y == islandYCollider)
-        //    {
-        //        tempV2 = new Vector2(verticies[c].x, verticies[c].z);
-        //        if (!foundColliderSport.Contains(tempV2))
-        //        {
-        //            foundColliderSport.Add(tempV2);
-        //            foundNearVertex.Add(c);
-        //            foundColInd.Add(foundColliderSport.Count - 1);
-        //            containigTiles.Add(med);
-        //        }
-        //    }
-        //    if(verticies[a].y > islandYCollider)
-        //    {
-        //        if(verticies[b].y < islandYCollider)
-        //        {
-        //            float top = verticies[a].y - islandYCollider;
-        //            float bottom = islandYCollider - verticies[b].y;
-        //            Vector3 tempV3 = Vector3.Lerp(verticies[b], verticies[a], bottom / (top + bottom));
-        //            tempV2 = new Vector2(tempV3.x, tempV3.z);
-        //            if (!foundColliderSport.Contains(tempV2))
-        //            {
-        //                foundColliderSport.Add(tempV2);
-        //                foundNearVertex.Add(a);
-        //                foundColInd.Add(foundColliderSport.Count - 1);
-        //                containigTiles.Add(med);
-        //            }
-        //        }
-        //        if (verticies[c].y < islandYCollider)
-        //        {
-        //            float top = verticies[a].y - islandYCollider;
-        //            float bottom = islandYCollider - verticies[c].y;
-        //            Vector3 tempV3 = Vector3.Lerp(verticies[c], verticies[a], bottom / (top + bottom));
-        //            tempV2 = new Vector2(tempV3.x, tempV3.z);
-        //            if (!foundColliderSport.Contains(tempV2))
-        //            {
-        //                foundColliderSport.Add(tempV2);
-        //                foundNearVertex.Add(a);
-        //                foundColInd.Add(foundColliderSport.Count - 1);
-        //                containigTiles.Add(med);
-        //            }
-        //        }
-        //    }
-        //    if (verticies[b].y > islandYCollider)
-        //    {
-        //        if (verticies[c].y < islandYCollider)
-        //        {
-        //            float top = verticies[b].y - islandYCollider;
-        //            float bottom = islandYCollider - verticies[c].y;
-        //            Vector3 tempV3 = Vector3.Lerp(verticies[c], verticies[b], bottom / (top + bottom));
-        //            tempV2 = new Vector2(tempV3.x, tempV3.z);
-        //            if (!foundColliderSport.Contains(tempV2))
-        //            {
-        //                foundColliderSport.Add(tempV2);
-        //                foundNearVertex.Add(b);
-        //                foundColInd.Add(foundColliderSport.Count - 1);
-        //                containigTiles.Add(med);
-        //            }
-        //        }
-        //        if (verticies[a].y < islandYCollider)
-        //        {
-        //            float top = verticies[b].y - islandYCollider;
-        //            float bottom = islandYCollider - verticies[a].y;
-        //            Vector3 tempV3 = Vector3.Lerp(verticies[a], verticies[b], bottom / (top + bottom));
-        //            tempV2 = new Vector2(tempV3.x, tempV3.z);
-        //            if (!foundColliderSport.Contains(tempV2))
-        //            {
-        //                foundColliderSport.Add(tempV2);
-        //                foundNearVertex.Add(b);
-        //                foundColInd.Add(foundColliderSport.Count - 1);
-        //                containigTiles.Add(med);
-        //            }
-        //        }
-        //    }
-        //    if (verticies[c].y > islandYCollider)
-        //    {
-        //        if (verticies[a].y < islandYCollider)
-        //        {
-        //            float top = verticies[c].y - islandYCollider;
-        //            float bottom = islandYCollider - verticies[a].y;
-        //            Vector3 tempV3 = Vector3.Lerp(verticies[a], verticies[c], bottom / (top + bottom));
-        //            tempV2 = new Vector2(tempV3.x, tempV3.z);
-        //            if (!foundColliderSport.Contains(tempV2))
-        //            {
-        //                foundColliderSport.Add(tempV2);
-        //                foundNearVertex.Add(c);
-        //                foundColInd.Add(foundColliderSport.Count - 1);
-        //                containigTiles.Add(med);
-        //            }
-        //        }
-        //        if (verticies[b].y < islandYCollider)
-        //        {
-        //            float top = verticies[c].y - islandYCollider;
-        //            float bottom = islandYCollider - verticies[b].y;
-        //            Vector3 tempV3 = Vector3.Lerp(verticies[b], verticies[c], bottom / (top + bottom));
-        //            tempV2 = new Vector2(tempV3.x, tempV3.z);
-        //            if (!foundColliderSport.Contains(tempV2))
-        //            {
-        //                foundColliderSport.Add(tempV2);
-        //                foundNearVertex.Add(c);
-        //                foundColInd.Add(foundColliderSport.Count - 1);
-        //                containigTiles.Add(med);
-        //            }
-        //        }
-        //    }
-        //    for(int i = 0; i < foundColInd.Count; i++)
-        //    {
-        //        //foundNeiVert.Add(new List<int>());
-        //        foundNeiVert.Add(new List<int>(foundColInd));
-        //        foundNeiVert[^1].RemoveAt(i);
-        //    }
-        //}
+                vert++;
+                tris += 6;
+            }
+            vert++;
+        }
         return new VertAndTri(verticies, triangles.ToArray(), foundColliderSport, foundNeiVert, containigTiles);
     }
     //void CreateHardEdgeShape()

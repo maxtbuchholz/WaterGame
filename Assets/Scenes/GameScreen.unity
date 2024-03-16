@@ -1684,6 +1684,7 @@ MonoBehaviour:
   scroll: {fileID: 658083180}
   settingsColorButtons: {fileID: 658083181}
   resizeBox: {fileID: 658083182}
+  scrollRect: {fileID: 2146421984}
 --- !u!114 &209448339
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5203,6 +5204,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3889817411030573754, guid: f33e0d0d3c1d541f9a5cf64f730de943, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -3.2999268
+      objectReference: {fileID: 0}
     - target: {fileID: 4157719110134560112, guid: f33e0d0d3c1d541f9a5cf64f730de943, type: 3}
       propertyPath: m_Size
       value: 0.4915
@@ -5250,6 +5255,18 @@ PrefabInstance:
     - target: {fileID: 4882594762060942399, guid: f33e0d0d3c1d541f9a5cf64f730de943, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5183388376139981653, guid: f33e0d0d3c1d541f9a5cf64f730de943, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.000061035156
+      objectReference: {fileID: 0}
+    - target: {fileID: 5183388376139981653, guid: f33e0d0d3c1d541f9a5cf64f730de943, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.000061035156
+      objectReference: {fileID: 0}
+    - target: {fileID: 5354605145252677742, guid: f33e0d0d3c1d541f9a5cf64f730de943, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 60.200073
       objectReference: {fileID: 0}
     - target: {fileID: 5979842826318220867, guid: f33e0d0d3c1d541f9a5cf64f730de943, type: 3}
       propertyPath: m_AnchorMax.x
@@ -10156,6 +10173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   islandPrefab: {fileID: 9104232350504377752, guid: c5defb5b0cc094a8794df0d4281c194d, type: 3}
+  rockyIslandPrefab: {fileID: 9104232350504377752, guid: 1f7675994ab084c1db1962e2267edad9, type: 3}
 --- !u!114 &1264311716
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18804,6 +18822,17 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2115042348}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &2146421984 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5197802299706335322, guid: f33e0d0d3c1d541f9a5cf64f730de943, type: 3}
+  m_PrefabInstance: {fileID: 658083179}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1aa08ab6e0800fa44ae55d278d1423e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &50929758117701952
 MonoBehaviour:
   m_ObjectHideFlags: 0

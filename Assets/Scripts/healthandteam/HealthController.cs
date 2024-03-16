@@ -167,6 +167,7 @@ public class HealthController : MonoBehaviour
     public void PlayerCaptureBase()
     {
         baseCaptured = true;
+        PlayerMoneyController.Instance.AddMoney(100);
     }
     private bool baseCaptured = false;
     IEnumerator MortarRefilHealthFromZero(float timeToFill, float curMin)

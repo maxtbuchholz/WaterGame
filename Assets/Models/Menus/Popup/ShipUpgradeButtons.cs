@@ -44,7 +44,7 @@ public class ShipUpgradeButtons : MonoBehaviour
         {
             health_level_text.color = Color.black;
             health_button.interactable = true;
-            health_price_text.text = ShipLevel.hea_cost_to_next_level[shipKey][cHL].ToString();
+            health_price_text.text = SaveData.moneySymbol + " " + ShipLevel.hea_cost_to_next_level[shipKey][cHL].ToString();
             if (saveData.GetMoney() >= ShipLevel.hea_cost_to_next_level[shipKey][cHL])
             {
                 health_price_text.color = Color.green;
@@ -63,7 +63,7 @@ public class ShipUpgradeButtons : MonoBehaviour
         {
             damage_level_text.color = Color.black;
             damage_button.interactable = true;
-            damage_price_text.text = ShipLevel.dam_cost_to_next_level[shipKey][cDL].ToString();
+            damage_price_text.text = SaveData.moneySymbol + " " + ShipLevel.dam_cost_to_next_level[shipKey][cDL].ToString();
             if (saveData.GetMoney() >= ShipLevel.dam_cost_to_next_level[shipKey][cDL])
             {
                 damage_price_text.color = Color.green;
@@ -82,7 +82,7 @@ public class ShipUpgradeButtons : MonoBehaviour
         {
             speed_level_text.color = Color.black;
             speed_button.interactable = true;
-            speed_price_text.text = ShipLevel.spe_cost_to_next_level[shipKey][cSL].ToString();
+            speed_price_text.text = SaveData.moneySymbol + " " + ShipLevel.spe_cost_to_next_level[shipKey][cSL].ToString();
             if (saveData.GetMoney() >= ShipLevel.spe_cost_to_next_level[shipKey][cSL])
             {
                 speed_price_text.color = Color.green;

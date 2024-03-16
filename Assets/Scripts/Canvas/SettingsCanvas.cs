@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SettingsCanvas : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class SettingsCanvas : MonoBehaviour
     [SerializeField] RectTransform scroll;
     [SerializeField] SettingsColorButtons settingsColorButtons;
     [SerializeField] ResizeBox resizeBox;
+    [SerializeField] ScrollRect scrollRect;
     int screenHeight;
     int screenWidth;
     Vector2 currentPos;
@@ -28,6 +30,7 @@ public class SettingsCanvas : MonoBehaviour
     }
     public void MoveToFrame()
     {
+        scrollRect.normalizedPosition = new Vector2(0, 1);
         settingsColorButtons.InitColors();
         PlayerPrefsController.Instance.InitSliders();
         resizeBox.Resize(Screen.width * 0.8f);

@@ -116,6 +116,7 @@ public class FortLevel : MonoBehaviour
     {
         pos.y = 0.65f;
         GameObject mo = GameObject.Instantiate(mortarPrefab);
+        mo.GetComponent<HealthController>().SetMaxHealth(50);
         mo.name = key;
         mo.transform.parent = transform;
         mo.transform.position = pos;
@@ -126,6 +127,7 @@ public class FortLevel : MonoBehaviour
     {
         pos.y = 0.65f;
         GameObject mo = GameObject.Instantiate(mortarPrefab);
+        mo.GetComponent<HealthController>().SetMaxHealth(50);
         mo.name = key;
         mo.transform.parent = transform;
         mo.transform.position = pos;

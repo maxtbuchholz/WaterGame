@@ -46,7 +46,7 @@ public class FortUpgradeButtons : MonoBehaviour
         {
             health_level_text.color = Color.black;
             health_button.interactable = true;
-            health_price_text.text = FortLevel.hea_cost_to_next_level[fSL.hea_level].ToString();
+            health_price_text.text = SaveData.moneySymbol + " " + FortLevel.hea_cost_to_next_level[fSL.hea_level].ToString();
             if (saveData.GetMoney() >= FortLevel.hea_cost_to_next_level[fSL.hea_level])
             {
                 health_price_text.color = Color.green;
@@ -65,7 +65,7 @@ public class FortUpgradeButtons : MonoBehaviour
         {
             damage_level_text.color = Color.black;
             damage_button.interactable = true;
-            damage_price_text.text = FortLevel.dam_cost_to_next_level[fSL.dam_level].ToString();
+            damage_price_text.text = SaveData.moneySymbol + " " + FortLevel.dam_cost_to_next_level[fSL.dam_level].ToString();
             if (saveData.GetMoney() >= FortLevel.dam_cost_to_next_level[fSL.dam_level])
             {
                 damage_price_text.color = Color.green;
@@ -84,7 +84,7 @@ public class FortUpgradeButtons : MonoBehaviour
         {
             mortar_level_text.color = Color.black;
             mortar_button.interactable = true;
-            mortar_price_text.text = FortLevel.mor_cost_to_next_level[fSL.mor_level].ToString();
+            mortar_price_text.text = SaveData.moneySymbol + " " + FortLevel.mor_cost_to_next_level[fSL.mor_level].ToString();
             if(saveData.GetMoney() >= FortLevel.mor_cost_to_next_level[fSL.mor_level])
             {
                 mortar_price_text.color = Color.green;
