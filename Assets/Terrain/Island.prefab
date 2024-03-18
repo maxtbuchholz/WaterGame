@@ -102,12 +102,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lacunarity: 2
-  persistance: 0.5
-  octaves: 6
-  xWidth: 300
-  zWidth: 300
+  persistance: 0.56
+  octaves: 4
   fortGenerator: {fileID: 8668959853621918800}
   clearIslandOuterColliderMaterial: {fileID: 2100000, guid: 107d2505d28b341a9be2f1f47f39bacf, type: 2}
+  islandImager: {fileID: 0}
 --- !u!114 &3568114478940692836
 MonoBehaviour:
   m_ObjectHideFlags: 0

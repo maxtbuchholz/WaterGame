@@ -15,7 +15,7 @@ public class WaterLoad : MonoBehaviour
     [SerializeField] GameObject water;
     [SerializeField] IslandTracker islandTracker;
     //public TileDeleter tileDeleter;
-    private float maxLoadRadius = 1200.0f;
+    private float maxLoadRadius = 800.0f;
     private float inBetween = 100.0f;
     Dictionary<Vector2, GameObject> waterTiles = new();
 

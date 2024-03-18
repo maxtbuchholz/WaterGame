@@ -444,6 +444,13 @@ public class IslandGenerator : MonoBehaviour
         //mesh.colors = vertColors;
 
         meshIsland.RecalculateNormals();
+        Vector2[] uvs = new Vector2[vT.verticies.Length];
+
+        for (int i = 0; i < uvs.Length; i++)
+        {
+            uvs[i] = new Vector2(vT.verticies[i].x, vT.verticies[i].z);
+        }
+        meshIsland.uv = uvs;
     }
     //private void OnDrawGizmos()
     //{

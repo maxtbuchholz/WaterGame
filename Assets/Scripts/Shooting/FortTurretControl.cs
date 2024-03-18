@@ -8,12 +8,14 @@ public class FortTurretControl : MonoBehaviour
     private Transform target;
     [SerializeField] List<TurretController> turrets;
     private FindTargetController findTargetController;
+    private PointToPlayer pointToPlayer;
 
     float time = 0.0f;
     private bool gunsEnabled = true;
     private void Start()
     {
         findTargetController = FindTargetController.Instance;
+        pointToPlayer = PointToPlayer.Instance;
     }
     public void SetDamage(float damage)
     {
@@ -22,8 +24,19 @@ public class FortTurretControl : MonoBehaviour
             turret.SetDamage(damage);
         }
     }
+    float checkWithinLoadDstOfPlayerTime = 0;
+    static float checkWithinLoadDstOfPlayerBetween = 5.0f;
+    static float loadDstFromPlayer = 500;
+    bool withinDstOfPlayer = false;
     private void Update()
     {
+        checkWithinLoadDstOfPlayerTime -= Time.deltaTime;
+        if(checkWithinLoadDstOfPlayerTime <= 0)
+        {
+            withinDstOfPlayer = false || Vector3.Distance(pointToPlayer.GetPlayerShip().position, transform.position) <= loadDstFromPlayer;
+            checkWithinLoadDstOfPlayerTime = checkWithinLoadDstOfPlayerBetween + Random.Range(0, 1.0f);
+        }
+        if (!withinDstOfPlayer) return;
         if (!gunsEnabled) return;
         if (teamId == -1) return;
         time += Time.deltaTime;

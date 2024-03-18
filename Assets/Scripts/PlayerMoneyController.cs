@@ -86,12 +86,12 @@ public class PlayerMoneyController : MonoBehaviour
                 cha.text = change.ToString();
                 if (change < 0)
                 {
-                    cha.text = "-" + SaveData.moneySymbol + Mathf.Abs(change).ToString();
+                    cha.text = "-" + SaveData.moneySymbol + "  " + Mathf.Abs(change).ToString();
                     cha.color = Color.red;
                 }
                 else
                 {
-                    cha.text = "+"+ SaveData.moneySymbol +  change.ToString();
+                    cha.text = "+"+ SaveData.moneySymbol + "  " +  change.ToString();
                     cha.color = Color.green;
                 }
             }
@@ -107,7 +107,7 @@ public class PlayerMoneyController : MonoBehaviour
     {
         if ((total == null) || change == null) return;
         if (saveData == null) saveData = SaveData.Instance;
-        total.text = SaveData.moneySymbol + " " + saveData.GetMoney().ToString();
+        total.text = SaveData.moneySymbol + "  " + saveData.GetMoney().ToString();
         change.text = "";
         if (!textTotal.Contains(total))
             textTotal.Add(total);

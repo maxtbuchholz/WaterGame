@@ -1262,6 +1262,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 131071166}
     m_Modifications:
+    - target: {fileID: 1647043061391902394, guid: 89c1edbd2a5a241b0ae1a1a569edab68, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4147088725180671949, guid: 89c1edbd2a5a241b0ae1a1a569edab68, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 60c01f52eb1d34a308c461210763aba7, type: 2}
+    - target: {fileID: 4147088725180671949, guid: 89c1edbd2a5a241b0ae1a1a569edab68, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -782606446891387537, guid: 60c01f52eb1d34a308c461210763aba7, type: 2}
+    - target: {fileID: 4147088725180671949, guid: 89c1edbd2a5a241b0ae1a1a569edab68, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4726995436409175806, guid: 89c1edbd2a5a241b0ae1a1a569edab68, type: 3}
       propertyPath: m_Name
       value: MoneyContainer
@@ -7549,6 +7565,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 770391917}
     m_Modifications:
+    - target: {fileID: 1647043061391902394, guid: 89c1edbd2a5a241b0ae1a1a569edab68, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4147088725180671949, guid: 89c1edbd2a5a241b0ae1a1a569edab68, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 60c01f52eb1d34a308c461210763aba7, type: 2}
+    - target: {fileID: 4147088725180671949, guid: 89c1edbd2a5a241b0ae1a1a569edab68, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -782606446891387537, guid: 60c01f52eb1d34a308c461210763aba7, type: 2}
+    - target: {fileID: 4147088725180671949, guid: 89c1edbd2a5a241b0ae1a1a569edab68, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4726995436409175806, guid: 89c1edbd2a5a241b0ae1a1a569edab68, type: 3}
       propertyPath: m_Name
       value: MoneyContainer
@@ -12580,6 +12612,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 193894475}
     m_Modifications:
+    - target: {fileID: 1647043061391902394, guid: 89c1edbd2a5a241b0ae1a1a569edab68, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4147088725180671949, guid: 89c1edbd2a5a241b0ae1a1a569edab68, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 60c01f52eb1d34a308c461210763aba7, type: 2}
+    - target: {fileID: 4147088725180671949, guid: 89c1edbd2a5a241b0ae1a1a569edab68, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -782606446891387537, guid: 60c01f52eb1d34a308c461210763aba7, type: 2}
+    - target: {fileID: 4147088725180671949, guid: 89c1edbd2a5a241b0ae1a1a569edab68, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4726995436409175806, guid: 89c1edbd2a5a241b0ae1a1a569edab68, type: 3}
       propertyPath: m_Name
       value: MoneyContainer
@@ -18888,6 +18936,34 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 865831597}
     m_Modifications:
+    - target: {fileID: 1647043061391902394, guid: 89c1edbd2a5a241b0ae1a1a569edab68, type: 3}
+      propertyPath: m_fontSize
+      value: 36
+      objectReference: {fileID: 0}
+    - target: {fileID: 1647043061391902394, guid: 89c1edbd2a5a241b0ae1a1a569edab68, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 60c01f52eb1d34a308c461210763aba7, type: 2}
+    - target: {fileID: 1647043061391902394, guid: 89c1edbd2a5a241b0ae1a1a569edab68, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -782606446891387537, guid: 60c01f52eb1d34a308c461210763aba7, type: 2}
+    - target: {fileID: 1647043061391902394, guid: 89c1edbd2a5a241b0ae1a1a569edab68, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4147088725180671949, guid: 89c1edbd2a5a241b0ae1a1a569edab68, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 60c01f52eb1d34a308c461210763aba7, type: 2}
+    - target: {fileID: 4147088725180671949, guid: 89c1edbd2a5a241b0ae1a1a569edab68, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -782606446891387537, guid: 60c01f52eb1d34a308c461210763aba7, type: 2}
+    - target: {fileID: 4147088725180671949, guid: 89c1edbd2a5a241b0ae1a1a569edab68, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4726995436409175806, guid: 89c1edbd2a5a241b0ae1a1a569edab68, type: 3}
       propertyPath: m_Name
       value: MoneyContainer

@@ -185,6 +185,9 @@
         },
         {
             "m_Id": "df7bb38e510c4243ac02dc88b0c5c1fd"
+        },
+        {
+            "m_Id": "8a864008d5084d578def6bfd0d6f0f9e"
         }
     ],
     "m_GroupDatas": [],
@@ -311,7 +314,7 @@
             },
             "m_InputSlot": {
                 "m_Node": {
-                    "m_Id": "df7bb38e510c4243ac02dc88b0c5c1fd"
+                    "m_Id": "8a864008d5084d578def6bfd0d6f0f9e"
                 },
                 "m_SlotId": 30528354
             }
@@ -608,6 +611,20 @@
                     "m_Id": "5eded3031c0440c08c5731ab518f28c3"
                 },
                 "m_SlotId": 0
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "8a864008d5084d578def6bfd0d6f0f9e"
+                },
+                "m_SlotId": 0
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "df7bb38e510c4243ac02dc88b0c5c1fd"
+                },
+                "m_SlotId": 30528354
             }
         },
         {
@@ -1867,6 +1884,31 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
+    "m_ObjectId": "364b02d883e144bf98564f4ea93d98c1",
+    "m_Id": 30528354,
+    "m_DisplayName": "Color",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "_Color",
+    "m_StageCapability": 2,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.Vector3MaterialSlot",
     "m_ObjectId": "37b623ffb9d748f594f1bc670629b5a3",
     "m_Id": 0,
@@ -1941,7 +1983,7 @@
     "m_SlotType": 1,
     "m_Hidden": false,
     "m_ShaderOutputName": "Color",
-    "m_StageCapability": 3,
+    "m_StageCapability": 2,
     "m_Value": {
         "x": 0.0,
         "y": 0.0,
@@ -2435,7 +2477,7 @@
     "m_SlotType": 0,
     "m_Hidden": false,
     "m_ShaderOutputName": "_Color",
-    "m_StageCapability": 3,
+    "m_StageCapability": 2,
     "m_Value": {
         "x": 0.0,
         "y": 0.0,
@@ -2764,6 +2806,29 @@
         "z": 0.0,
         "w": 0.0
     }
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector3MaterialSlot",
+    "m_ObjectId": "5c243d1a44084f8192f52d15f7944940",
+    "m_Id": 0,
+    "m_DisplayName": "Color",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Color",
+    "m_StageCapability": 2,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "m_Labels": []
 }
 
 {
@@ -3979,6 +4044,51 @@
         "z": 0.0,
         "w": 0.0
     }
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.SubGraphNode",
+    "m_ObjectId": "8a864008d5084d578def6bfd0d6f0f9e",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "TextureNoise",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": -97.5,
+            "y": 761.0,
+            "width": 208.0,
+            "height": 279.0
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "364b02d883e144bf98564f4ea93d98c1"
+        },
+        {
+            "m_Id": "5c243d1a44084f8192f52d15f7944940"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": true,
+    "m_DismissedVersion": 0,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_SerializedSubGraph": "{\n    \"subGraph\": {\n        \"fileID\": -5475051401550479605,\n        \"guid\": \"2ec02fd9fa8764fa193a4ce8b07a4f5e\",\n        \"type\": 3\n    }\n}",
+    "m_PropertyGuids": [
+        "011ddb84-f49d-4553-90ff-b5d1eb032a94"
+    ],
+    "m_PropertyIds": [
+        30528354
+    ],
+    "m_Dropdowns": [],
+    "m_DropdownSelectedEntries": []
 }
 
 {
