@@ -51,9 +51,9 @@ public class FortLevel : MonoBehaviour
                     if (saveData.MortarPosExists(mortarKey))                    //mortar previously initialized, respawn at same location
                     {
                         Vector3 position = saveData.GetMortarPos(mortarKey);
-                        SpawnMortar(position, mortarKey);
-                        MortarController mC = SpawnInitMortar(position, mortarKey);
-                        if(loadedObjects.GetLoadedFort(key) != null)
+                        MortarController mC = SpawnMortar(position, mortarKey);
+                        //MortarController mC = SpawnInitMortar(position, mortarKey);
+                        if (loadedObjects.GetLoadedFort(key) != null)
                             loadedObjects.GetLoadedFort(key).GetComponent<LocalTeamController>().AddChildMortar(mC);
                     }
                     else
@@ -82,7 +82,7 @@ public class FortLevel : MonoBehaviour
                 float zAdd = Mathf.Cos(currCheckAngle * Mathf.Rad2Deg);
                 Vector3 dir = new Vector3(xAdd, 0, zAdd);
                 Vector3 mortPosi = new Vector3(0, -100, 0);
-                hits = Physics.RaycastAll(centralLocation, dir, 60);
+                hits = Physics.RaycastAll(centralLocation, dir, 40);
                 foreach (RaycastHit hit in hits)
                     if (hit.collider.CompareTag("Land"))
                         mortPosi = hit.point;

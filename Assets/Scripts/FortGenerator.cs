@@ -9,9 +9,10 @@ public class FortGenerator : MonoBehaviour
     [SerializeField] GameObject fortPrefab;
     Vector3 center = Vector3.zero;
     private SaveData saveData;
+    public string fortKey;
     public void LoadFort(float xPos, float zPos, float islandXWidth, float islandZWidth, string islandKey)
     {
-        string fortKey = islandKey + "_fort";
+        fortKey = islandKey + "_fort";
         saveData = SaveData.Instance;
         float furthestDstIn = -1;
         Vector3 bestFortPos = Vector3.zero;
@@ -57,15 +58,18 @@ public class FortGenerator : MonoBehaviour
         if (furthestDstIn != -1)
         {
             GameObject fort = GameObject.Instantiate(fortPrefab, new Vector3(bestFortPos.x, 0.1f, bestFortPos.z), Quaternion.identity);
-            if (fortTeam != -1)
-                fort.GetComponent<LocalTeamController>().ForceChangeTeam(fortTeam);
-            else
-                saveData.SetFortTeam(fortKey, fort.GetComponent<LocalTeamController>().GetTeam());
             fort.transform.parent = transform;
             LoadedObjects.Instance.AddLoadedFort(fortKey, fort);
             fort.GetComponent<HealthController>().camera = Camera.main;
             fort.GetComponent<FortLevel>().SetCentralLocation(bestCentralPos);                //set central point has to be before init from key
             fort.GetComponent<FortLevel>().InitFromKey(fortKey);
+            if (fortTeam != -1)
+                fort.GetComponent<LocalTeamController>().ForceChangeTeam(fortTeam);
+            else
+            {
+                saveData.SetFortTeam(fortKey, fort.GetComponent<LocalTeamController>().GetTeam());
+                fort.GetComponent<LocalTeamController>().ForceChangeTeam(fortTeam);
+            }
         }
     }
     private bool NoLandOverCorner(Vector3 corner)

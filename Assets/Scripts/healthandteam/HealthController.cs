@@ -162,12 +162,14 @@ public class HealthController : MonoBehaviour
         SetHealthSize(currentHealth / maxHealth);
         this.teamId = attackerTeamId;
         healthBarVisability.SetBarColor(teamsController.GetTeamColor(teamId, localTeamController));
+        SaveData.Instance.SetFortTeam(GetComponent<FortGenerator>().fortKey, attackerTeamId);
 
     }
     public void PlayerCaptureBase()
     {
         baseCaptured = true;
         PlayerMoneyController.Instance.AddMoney(100);
+        SaveData.Instance.SetFortTeam(GetComponent<FortGenerator>().fortKey, 0);
     }
     private bool baseCaptured = false;
     IEnumerator MortarRefilHealthFromZero(float timeToFill, float curMin)

@@ -5280,9 +5280,17 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -0.000061035156
       objectReference: {fileID: 0}
+    - target: {fileID: 5197802299706335322, guid: f33e0d0d3c1d541f9a5cf64f730de943, type: 3}
+      propertyPath: m_MovementType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5354605145252677742, guid: f33e0d0d3c1d541f9a5cf64f730de943, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5354605145252677742, guid: f33e0d0d3c1d541f9a5cf64f730de943, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 60.200073
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5979842826318220867, guid: f33e0d0d3c1d541f9a5cf64f730de943, type: 3}
       propertyPath: m_AnchorMax.x
@@ -7331,14 +7339,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.39215687}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.3137255}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -2575041016845489353, guid: 310fb173ecbd0490892ee13efb0deddc, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 310fb173ecbd0490892ee13efb0deddc, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -10729,7 +10737,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1350297712
 RectTransform:
   m_ObjectHideFlags: 0
@@ -18414,7 +18422,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 140, y: 140}
+  m_SizeDelta: {x: 140, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2041990478
 MonoBehaviour:
@@ -18429,7 +18437,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.39215687}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 0
@@ -18498,7 +18506,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 140, y: 140}
+  m_Size: {x: 198.1, y: 150.7}
   m_EdgeRadius: 0
 --- !u!210 &2041990481
 SortingGroup:

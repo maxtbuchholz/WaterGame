@@ -32,6 +32,7 @@ public class LocalTeamController : MonoBehaviour
         if (fortTurretControl != null) fortTurretControl.SetTeam(teamId);
         if (playerFireControl != null) playerFireControl.SetTeamId(teamId);
         if (healthController != null) healthController.SetTeam(teamId);
+        UpdateMortarTeam();
     }
     public void SetGameObjectColors()
     {

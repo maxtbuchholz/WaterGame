@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Threading.Tasks;
 using NUnit.Framework;
@@ -100,6 +101,7 @@ public class LoadMap : MonoBehaviour
         ship = GameObject.Instantiate(shipPrefab);
         ship.transform.parent = shipparent;
         Rect shipRect = ship.GetComponent<RectTransform>().rect;
+        ship.GetComponent<RawImage>().color = TeamsController.Instance.GetTeamColor(0);
         shipWidthToHeight = shipRect.width / shipRect.height;
         ship.transform.localPosition = addPan;// new Vector2(((focalPosition.position.x / waterTileWidth) * tileSize), ((focalPosition.position.y / waterTileWidth) * tileSize));
         ship.GetComponent<RectTransform>().sizeDelta = new Vector2((tileSize / 8) * shipWidthToHeight, tileSize / 8);

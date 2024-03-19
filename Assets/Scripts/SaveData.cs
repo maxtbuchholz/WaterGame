@@ -5,8 +5,6 @@ using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using Unity.Burst.CompilerServices;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
-using static UnityEngine.Rendering.DebugUI.Table;
 
 public class SaveData : MonoBehaviour
 {
@@ -235,11 +233,17 @@ public class SaveData : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
         }
     }
-    private void LoadFilesOuter()
+    public void NewGame()
+    {
+        LoadFilesOuter(true);
+    }
+    private void LoadFilesOuter(bool forceReload = false)
     {
         didInit = true;
-        bool success = LoadFilesInner();
-        if (!success)
+        bool success = false;
+        if (!forceReload)
+            success = LoadFilesInner();
+        if (!success || forceReload)
         {
             playerShipPos = new Vector3(-20, 0, -20);
             //InitFile("player_ship_pos",Serialize.V3(playerShipPos));
@@ -272,9 +276,12 @@ public class SaveData : MonoBehaviour
 
         }
         islandKeyIncriment = islandCoordsToKey.Count;
-        StartCoroutine(Save_Co_Player());
-        StartCoroutine(Save_Co_Land());
-        StartCoroutine(Save_Co_Enemy());
+        if (!forceReload)
+        {
+            StartCoroutine(Save_Co_Player());
+            StartCoroutine(Save_Co_Land());
+            StartCoroutine(Save_Co_Enemy());
+        }
     }
     private void InitFile(string filename, object data)
     {

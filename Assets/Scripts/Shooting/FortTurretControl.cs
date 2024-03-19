@@ -39,10 +39,10 @@ public class FortTurretControl : MonoBehaviour
         if (!withinDstOfPlayer) return;
         if (!gunsEnabled) return;
         if (teamId == -1) return;
-        time += Time.deltaTime;
-        if(time >= 1)
+        time -= Time.deltaTime;
+        if(time <= 0)
         {
-            time %= 1;
+            time = 1 + Random.Range(0.0f, 0.5f);
             target = findTargetController.GetTarget(transform.position + new Vector3(0, 5, 0), teamId, FindTargetController.targetType.fort);
             if (target == null) return;
             List<int> ableTurretIndexes = new();
