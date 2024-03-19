@@ -9731,6 +9731,7 @@ GameObject:
   - component: {fileID: 1236655871}
   - component: {fileID: 1236655872}
   - component: {fileID: 1236655873}
+  - component: {fileID: 1236655874}
   m_Layer: 0
   m_Name: Controller
   m_TagString: Untagged
@@ -9911,6 +9912,19 @@ MonoBehaviour:
   - {fileID: 1041960638799907617, guid: 97a1706de7ef744e182f7d05ef3c8f7f, type: 3}
   - {fileID: 9099458795216664190, guid: 74d4d56bde52d46bfb67bf94783d057e, type: 3}
   - {fileID: 6373517438482491454, guid: 7a647fdef360e477f816fe4b8990d32d, type: 3}
+--- !u!114 &1236655874
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1236655861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98ea1f6552ec84b6abcb2a00e9e1d9a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shipPrefab: {fileID: 8809204229294244615, guid: 4af7ef211e75f4cdb8b1dcaf359e1f1b, type: 3}
 --- !u!1 &1245790424
 GameObject:
   m_ObjectHideFlags: 0

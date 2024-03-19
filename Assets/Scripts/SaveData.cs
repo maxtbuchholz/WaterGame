@@ -185,4 +185,24 @@ public class SaveData : MonoBehaviour
         if (islandData.ContainsKey(key)) islandData[key] = data;
         else islandData.Add(key, data);
     }
+    private Dictionary<int, Vector3> enemyShipPositions = new();
+    public Dictionary<int, Vector3> GetAllEnemyShipPositions()
+    {
+        return enemyShipPositions;
+    }
+    public void SetEnemyShipPosition(int key, Vector3 pos)
+    {
+        if (enemyShipPositions.ContainsKey(key)) enemyShipPositions[key] = pos;
+        else enemyShipPositions.Add(key, pos);
+    }
+    public int GetNewEnemyShipKey()
+    {
+        int i = 0;
+        while (true)
+        {
+            if (!enemyShipPositions.ContainsKey(i)) return i;
+            i++;
+            if (i > 99999999) return -1;
+        }
+    }
 }
