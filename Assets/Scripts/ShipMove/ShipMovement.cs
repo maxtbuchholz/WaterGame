@@ -15,6 +15,7 @@ public class ShipMovement : MonoBehaviour
     private float amountBackParticles;
     private float amountFrontParticles;
     [HideInInspector] public float currSpeedPercentage = 0;
+    private SaveData saveData;
 
     float horizontal;
     float vertical;
@@ -32,10 +33,13 @@ public class ShipMovement : MonoBehaviour
     public void Start()
     {
         if (frontParticle == null) return;
+        saveData = SaveData.Instance;
         body = GetComponent<Rigidbody>();
         amountFunnelParticles = funnelParticles[0].GetFloat("SpawnRate");
         amountBackParticles = backParticles[0].emissionRate;
         amountFrontParticles = frontParticle.emissionRate;
+        transform.position = saveData.GetPlayerPos();
+        body.rotation = Quaternion.Euler(0, saveData.GetPlayerRot(), 0);
         //Debug.Log(amountFrontParticles);
     }
     public void SetMaxSpeed(float speed)
@@ -52,6 +56,8 @@ public class ShipMovement : MonoBehaviour
             //Debug.Log(horizontal);
             vertical = PlayerInput.Instance.GetVertical();
         }
+        saveData.SetPlayerPos(transform.position);
+        saveData.SetPlayerRot(body.rotation.eulerAngles.y);
     }
     void OnCollisionEnter(Collision collision)
     {

@@ -80,7 +80,7 @@ public class ShipSpawner : MonoBehaviour
             float range = Random.Range(minSpawnRange, maxSpawnRange);
             Vector2 vecTry = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * range;
             Vector3 posTry = new Vector3(focalPos.x + vecTry.x, 0, focalPos.z + vecTry.y);
-            RaycastHit[] hits = Physics.BoxCastAll(new Vector3(posTry.x, 50, posTry.z), new Vector3(25, 1, 25), Vector3.down, Quaternion.identity);
+            RaycastHit[] hits = Physics.BoxCastAll(new Vector3(posTry.x, 50, posTry.z), new Vector3(10, 1, 10), Vector3.down, Quaternion.identity);
             bool hitLand = false;
             foreach (RaycastHit hit in hits)
                 if (hit.collider.CompareTag("Land"))
@@ -89,7 +89,7 @@ public class ShipSpawner : MonoBehaviour
             {
                 bool hitShip = false;
                 foreach (KeyValuePair<int, GameObject> pair in loadedShips)
-                    if (Vector3.Distance(pair.Value.transform.position, posTry) < 25)
+                    if (Vector3.Distance(pair.Value.transform.position, posTry) < 30)
                         hitShip = true;
                 if (!hitShip)
                     return posTry;

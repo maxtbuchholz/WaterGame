@@ -189,6 +189,7 @@ public class FortLevel : MonoBehaviour
         { 2, 150 },
     };
 }
+[System.Serializable]
 public class FortSaveLevel
 {
     public int hea_level;

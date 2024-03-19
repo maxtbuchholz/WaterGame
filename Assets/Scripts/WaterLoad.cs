@@ -26,6 +26,7 @@ public class WaterLoad : MonoBehaviour
     private void Start()
     {
         saveData = SaveData.Instance;
+        saveData.CheckLoad();
     }
     private void Update()
     {

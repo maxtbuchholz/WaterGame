@@ -74,6 +74,7 @@
     <Compile Include="Assets/Scripts/healthandteam/DetectHit.cs" />
     <Compile Include="Assets/Scripts/x/LoadWaterTiles.cs" />
     <Compile Include="Assets/Scripts/PointToPlayer.cs" />
+    <Compile Include="Assets/Scripts/Serialize.cs" />
     <Compile Include="Assets/Scripts/PlayerMoneyController.cs" />
     <Compile Include="Assets/Scripts/ShipSurroundFoam.cs" />
     <Compile Include="Assets/Scripts/ButtonCollisionTracker.cs" />
