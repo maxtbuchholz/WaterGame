@@ -38,8 +38,11 @@ public class ShipMovement : MonoBehaviour
         amountFunnelParticles = funnelParticles[0].GetFloat("SpawnRate");
         amountBackParticles = backParticles[0].emissionRate;
         amountFrontParticles = frontParticle.emissionRate;
-        transform.position = saveData.GetPlayerPos();
-        body.rotation = Quaternion.Euler(0, saveData.GetPlayerRot(), 0);
+        if (isPlayer)
+        {
+            transform.position = saveData.GetPlayerPos();
+            body.rotation = Quaternion.Euler(0, saveData.GetPlayerRot(), 0);
+        }
         //Debug.Log(amountFrontParticles);
     }
     public void SetMaxSpeed(float speed)
@@ -47,7 +50,11 @@ public class ShipMovement : MonoBehaviour
         maxSpeed = speed;
         maxReverseSpeed = speed / 2;
     }
-
+    public void SetControlsNN(float horizontal, float vertical)
+    {
+        this.horizontal = horizontal;
+        this.vertical = vertical;
+    }
     void Update()
     {
         if (isPlayer)
@@ -55,9 +62,9 @@ public class ShipMovement : MonoBehaviour
             horizontal = PlayerInput.Instance.GetHorizontal();
             //Debug.Log(horizontal);
             vertical = PlayerInput.Instance.GetVertical();
+            saveData.SetPlayerPos(transform.position);
+            saveData.SetPlayerRot(body.rotation.eulerAngles.y);
         }
-        saveData.SetPlayerPos(transform.position);
-        saveData.SetPlayerRot(body.rotation.eulerAngles.y);
     }
     void OnCollisionEnter(Collision collision)
     {
@@ -72,8 +79,11 @@ public class ShipMovement : MonoBehaviour
         //currSpeed = 0;
     }
     float prevLean = 0;
+    float prevHor = 0;
     private void FixedUpdate()
     {
+        horizontal = Mathf.Lerp(prevHor, horizontal, 0.5f);
+        prevHor = horizontal;
         Vector3 setSpeed = transform.InverseTransformVector(body.velocity);
         float currRBSpeed = setSpeed.z;
         setSpeed *= (1 - (Time.fixedDeltaTime / 0.02f));

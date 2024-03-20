@@ -31,7 +31,7 @@ public class CaptureButton : MonoBehaviour
         transform.position = inFrontOf + (norm * 5);
 
         if (playerShip == null)
-            playerShip = FindObjectOfType<PlayerFireControl>().transform;
+            playerShip = PointToPlayer.Instance.GetPlayerShip();
         if(playerShip != null)
         {
             float tempDist = Vector3.Distance(healthController.transform.position, playerShip.position);

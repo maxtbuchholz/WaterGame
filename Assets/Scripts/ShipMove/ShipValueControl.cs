@@ -29,6 +29,12 @@ public class ShipValueControl : MonoBehaviour
             else
                 UpdateShipValues();
         }
+        else
+        {
+            shipModel = 0;
+            GetComponent<LocalTeamController>().ForceChangeTeam(1);
+            StartCoroutine(UpdateShipType());
+        }
     }
     private void Update()
     {
@@ -47,12 +53,12 @@ public class ShipValueControl : MonoBehaviour
         tempTBD.transform.position = new Vector3(0, -100, 0);
         foreach (Transform child in transform)
         {
-            if (child.name != "default")
+            if ((child.name != "default") && (child.name != "brain"))
             {
                 //child.transform.parent = tempDestroy.transform;
                 tempDestroy.Add(child.gameObject);
             }
-            else
+            else if(child.name == "default")
             {
                 GetComponent<LocalTeamController>().AddObjectToColored(child.gameObject);
             }
