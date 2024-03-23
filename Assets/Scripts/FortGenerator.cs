@@ -70,6 +70,7 @@ public class FortGenerator : MonoBehaviour
                 saveData.SetFortTeam(fortKey, fort.GetComponent<LocalTeamController>().GetTeam());
                 fort.GetComponent<LocalTeamController>().ForceChangeTeam(fortTeam);
             }
+            fort.GetComponent<FortValues>().SetKey(fortKey);
         }
     }
     private bool NoLandOverCorner(Vector3 corner)

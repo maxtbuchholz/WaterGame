@@ -35,14 +35,22 @@ public class HealthController : MonoBehaviour
         currentHealth = maxHealth;
         if (!isPlayer)
         {
-            healthBar = GameObject.Instantiate(healthBarPrefab);
-            healthBar.transform.parent = transform;
-            healthBar.transform.localPosition = new Vector3(0, 3, 0);
-            healthBarVisability = healthBar.GetComponent<HealthBarVisability>();
-            healthBarVisability.SetBarColor(teamsController.GetTeamColor(teamId, localTeamController));
-            MoveBar = healthBarVisability.GetMoveBar().transform;
-            localTeamController.AddObjectToColored(MoveBar.gameObject);
+            InstanciateHealthBar();
         }
+        else
+        {
+            SetTeam(0);
+        }
+    }
+    private void InstanciateHealthBar()
+    {
+        healthBar = GameObject.Instantiate(healthBarPrefab);
+        healthBar.transform.parent = transform;
+        healthBar.transform.localPosition = new Vector3(0, 3, 0);
+        healthBarVisability = healthBar.GetComponent<HealthBarVisability>();
+        healthBarVisability.SetBarColor(teamsController.GetTeamColor(teamId, localTeamController));
+        MoveBar = healthBarVisability.GetMoveBar().transform;
+        localTeamController.AddObjectToColored(MoveBar.gameObject);
     }
     private float timeWithoutDamage = 10;
     private float startHealTime = 10;
@@ -55,11 +63,12 @@ public class HealthController : MonoBehaviour
             if (healthBarAppear)
             {
                 if (camera == null) camera = Camera.main;
+                if (healthBar == null) InstanciateHealthBar();
                 healthBar.transform.forward = camera.transform.forward;
                 healthBar.transform.localRotation = Quaternion.Euler(healthBar.transform.localRotation.eulerAngles.x, healthBar.transform.localRotation.eulerAngles.y, -90);
             }
             timeWithoutDamage += Time.deltaTime;
-            if ((healthBar != null) && (MoveBar != null) && !healthRefilingDuringCapture && isFort && !healthRefilingDuringCapture)
+            if ((healthBar != null) && (MoveBar != null) && !healthRefilingDuringCapture && !isPlayer && !healthRefilingDuringCapture)
             {
                 if (timeWithoutDamage > startHealTime)
                 {
@@ -93,9 +102,9 @@ public class HealthController : MonoBehaviour
             teamChangedStopHealthRefilMortar = true;
         if (findTarget == null) findTarget = FindTargetController.Instance;
         if (findTarget == null) return;
-        if (teamId != -1) findTarget.ModifyTargetable(this.gameObject, teamId, isFort ? FindTargetController.targetType.fort : FindTargetController.targetType.ship, FindTargetController.targetContition.destoyed);
+        findTarget.ModifyTargetable(this.gameObject, teamId, isFort ? FindTargetController.targetType.fort : FindTargetController.targetType.ship, FindTargetController.targetContition.destoyed);
         this.teamId = newTeamId;
-        findTarget.ModifyTargetable(this.gameObject, teamId, isFort ? FindTargetController.targetType.fort : FindTargetController.targetType.ship, FindTargetController.targetContition.targetable);
+        findTarget.ModifyTargetable(this.gameObject, newTeamId, isFort ? FindTargetController.targetType.fort : FindTargetController.targetType.ship, FindTargetController.targetContition.targetable);
         if (didStart)
         {
             healthBarVisability.SetBarColor(teamsController.GetTeamColor(teamId, localTeamController));
@@ -118,7 +127,7 @@ public class HealthController : MonoBehaviour
     }
     public void EffectHealth(float change, int attackerTeamId)
     {
-        //Debug.Log("HIT!!!" + " max:c" + maxHealth + " curr: " + currentHealth + " teamID: " + teamId + " attackID: " + attackerTeamId);
+        Debug.Log("HIT!!!" + " max:c" + maxHealth + " curr: " + currentHealth + " teamID: " + teamId + " attackID: " + attackerTeamId);
         if (teamId == -1) return;
         if (teamId == attackerTeamId) return;
         if (healthRefilingDuringCapture) return;
@@ -147,8 +156,14 @@ public class HealthController : MonoBehaviour
                 GameObject.Instantiate(fortExplosion, transform.position + new Vector3(0, 1, 0), Quaternion.identity);
                 StartCoroutine(MortarRefilHealthFromZero(20.0f, currentHealth));
             }
-            else
+            else if(!isPlayer)
             {           //destroy ship
+                GameObject fC = GameObject.Instantiate(fortCapturedParticle, transform.position + new Vector3(0, 1, 0), Quaternion.identity);
+                fC.GetComponent<VisualEffect>().SetVector4("_TeamColor", teamsController.GetTeamColor(teamId, localTeamController));
+                GameObject.Instantiate(fortExplosion, transform.position, Quaternion.identity);
+                ShipSpawner.Instance.DestroyShip(this.gameObject);
+                Destroy(GetComponent<ShipValueControl>().ship_drive.gameObject);
+                Destroy(this.gameObject);
                 findTarget.ModifyTargetable(this.gameObject, teamId, FindTargetController.targetType.ship, FindTargetController.targetContition.destoyed);
             }
         }
@@ -157,19 +172,26 @@ public class HealthController : MonoBehaviour
     {
         findTarget.ModifyTargetable(this.gameObject, teamId, FindTargetController.targetType.fort, FindTargetController.targetContition.destoyed);
         localTeamController.ForceChangeTeam(attackerTeamId);
-        findTarget.ModifyTargetable(this.gameObject, teamId, FindTargetController.targetType.fort , FindTargetController.targetContition.targetable);
+        findTarget.ModifyTargetable(this.gameObject, attackerTeamId, FindTargetController.targetType.fort , FindTargetController.targetContition.targetable);
         currentHealth = maxHealth;
         SetHealthSize(currentHealth / maxHealth);
+        healthRefilingDuringCapture = false;
         this.teamId = attackerTeamId;
+        if (healthBar == null) InstanciateHealthBar();
         healthBarVisability.SetBarColor(teamsController.GetTeamColor(teamId, localTeamController));
-        SaveData.Instance.SetFortTeam(GetComponent<FortGenerator>().fortKey, attackerTeamId);
+        SaveData.Instance.SetFortTeam(GetComponent<FortValues>().GetKey(), attackerTeamId);
 
     }
     public void PlayerCaptureBase()
     {
+        findTarget.ModifyTargetable(this.gameObject, teamId, FindTargetController.targetType.fort, FindTargetController.targetContition.destoyed);
+        findTarget.ModifyTargetable(this.gameObject, 0, FindTargetController.targetType.fort, FindTargetController.targetContition.targetable);
+        localTeamController.ForceChangeTeam(0);
         baseCaptured = true;
-        PlayerMoneyController.Instance.AddMoney(100);
-        SaveData.Instance.SetFortTeam(GetComponent<FortGenerator>().fortKey, 0);
+        healthRefilingDuringCapture = false;
+        if (healthBar == null) InstanciateHealthBar();
+        PlayerMoneyController.Instance.AddMoney(300 + (Random.Range(0, 4) * 25));
+        SaveData.Instance.SetFortTeam(GetComponent<FortValues>().GetKey(), 0);
     }
     private bool baseCaptured = false;
     IEnumerator MortarRefilHealthFromZero(float timeToFill, float curMin)

@@ -20,6 +20,7 @@ public class ExchangeShipButtons : MonoBehaviour
     public void Start()
     {
         saveData = SaveData.Instance;
+        GetComponent<ResizeBox>().Resize(Screen.width * 0.8f);
         InitButtons();
     }
     public void InitButtons()

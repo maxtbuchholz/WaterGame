@@ -6,8 +6,8 @@ using UnityEngine.VFX;
 public class ShipMovement : MonoBehaviour
 {
     Rigidbody body;
-    [SerializeField] ShipRotation shipRotation;
-    [SerializeField] GameObject shipBody;
+    [SerializeField] public ShipRotation shipRotation;
+    [SerializeField] public GameObject shipBody;
     [SerializeField] public List<ParticleSystem> backParticles;
     [SerializeField] public ParticleSystem frontParticle;
     [SerializeField] public List<VisualEffect> funnelParticles;
@@ -82,7 +82,7 @@ public class ShipMovement : MonoBehaviour
     float prevHor = 0;
     private void FixedUpdate()
     {
-        horizontal = Mathf.Lerp(prevHor, horizontal, 0.5f);
+        horizontal = Mathf.Lerp(prevHor, horizontal, Time.deltaTime / 0.5f);
         prevHor = horizontal;
         Vector3 setSpeed = transform.InverseTransformVector(body.velocity);
         float currRBSpeed = setSpeed.z;

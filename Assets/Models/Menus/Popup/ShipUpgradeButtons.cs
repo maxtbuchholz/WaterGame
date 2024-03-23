@@ -22,6 +22,7 @@ public class ShipUpgradeButtons : MonoBehaviour
     {
         //body = GetComponent<RectTransform>();
         InitButtonsSize();
+        GetComponent<ResizeBox>().Resize(Screen.width * 0.8f);
     }
     private SaveData saveData;
     private int shipKey;

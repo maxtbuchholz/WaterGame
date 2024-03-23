@@ -21,6 +21,7 @@ public class FortUpgradeButtons : MonoBehaviour
     private void Start()
     {
         //body = GetComponent<RectTransform>();
+        GetComponent<ResizeBox>().Resize(Screen.width * 0.8f);
         InitButtonsSize();
     }
     private SaveData saveData;

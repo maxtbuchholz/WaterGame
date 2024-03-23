@@ -12,11 +12,54 @@ public class ShipSpawner : MonoBehaviour
     private float goalShipCount = 20;
     private float maxSpawnRange = 300;
     private float minSpawnRange = 50;
+    private static ShipSpawner instance;
+    public static ShipSpawner Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                instance = GameObject.FindAnyObjectByType<ShipSpawner>();
+            }
+            return instance;
+        }
+    }
+    public virtual void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            //DontDestroyOnLoad(this.gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
     private void Start()
     {
         saveData = SaveData.Instance;
         pointToPlayer = PointToPlayer.Instance;
         focalPoint = pointToPlayer.GetFocalPoint();
+    }
+    public void DestroyShip(GameObject ship)
+    {
+        List<int> keysToRemove = new();
+        if (loadedShips.ContainsValue(ship))
+        {
+            foreach(KeyValuePair<int, GameObject> pair in loadedShips)
+            {
+                if(pair.Value == ship)
+                {
+                    keysToRemove.Add(pair.Key);
+                }
+            }
+        }
+        foreach(int i in keysToRemove)
+        {
+            loadedShips.Remove(i);
+            SaveData.Instance.EnemyShipDestroyed(i);
+        }
     }
     private void Update()
     {

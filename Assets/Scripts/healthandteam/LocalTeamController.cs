@@ -10,6 +10,7 @@ public class LocalTeamController : MonoBehaviour
     [SerializeField] List<GameObject> coloredObjects;
     [SerializeField] FortTurretControl fortTurretControl;
     [SerializeField] PlayerFireControl playerFireControl;
+    [SerializeField] AIFireControl aIFireControl;
     [SerializeField] bool isplayer = false;
     [SerializeField] HealthController healthController;
     [SerializeField] bool isMortar = false;
@@ -31,6 +32,7 @@ public class LocalTeamController : MonoBehaviour
         SetGameObjectColors();
         if (fortTurretControl != null) fortTurretControl.SetTeam(teamId);
         if (playerFireControl != null) playerFireControl.SetTeamId(teamId);
+        if (aIFireControl != null) aIFireControl.SetTeamId(teamId);
         if (healthController != null) healthController.SetTeam(teamId);
         UpdateMortarTeam();
     }
@@ -80,6 +82,7 @@ public class LocalTeamController : MonoBehaviour
         SetGameObjectColors();
         if (fortTurretControl != null) fortTurretControl.SetTeam(teamId);
         if (playerFireControl != null) playerFireControl.SetTeamId(teamId);
+        if (aIFireControl != null) aIFireControl.SetTeamId(teamId);
         if (healthController != null) healthController.SetTeam(teamId);
         UpdateMortarTeam();
     }
@@ -87,7 +90,8 @@ public class LocalTeamController : MonoBehaviour
     public void AddChildMortar(MortarController mortarController)
     {
         mortarController.SetTeam(teamId);
-        mortarControllers.Add(mortarController);
+        if(!mortarControllers.Contains(mortarController))
+            mortarControllers.Add(mortarController);
     }
     public void UpdateMortarTeam()
     {

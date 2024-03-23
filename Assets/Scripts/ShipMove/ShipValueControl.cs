@@ -5,15 +5,18 @@ using UnityEngine;
 
 public class ShipValueControl : MonoBehaviour
 {
-    [SerializeField] public Transform ship_drive;
+    [SerializeField] public Transform ship_drive = null;
+    [SerializeField] GameObject shipDrivePrefab;
     [SerializeField] public Transform turrets_parent;
     [SerializeField] private Transform meshOb;
     [HideInInspector] public List<GameObject> shipParts;
+    [SerializeField] ShipRotation shipRotation;
     [SerializeField] public bool isPlayer = false;
     private SaveData saveData;
     private int shipModel = -1;
     void Start()
     {
+        if (ship_drive == null) SetShipDrive();
         saveData = SaveData.Instance;
         shipParts = new();
         AddChildrenToShipParts(gameObject);
@@ -31,10 +34,26 @@ public class ShipValueControl : MonoBehaviour
         }
         else
         {
-            shipModel = 0;
-            GetComponent<LocalTeamController>().ForceChangeTeam(1);
-            StartCoroutine(UpdateShipType());
+            //shipModel = 0;
+            //GetComponent<LocalTeamController>().ForceChangeTeam(1);
+            //StartCoroutine(UpdateShipType());
         }
+    }
+    public void SetShipDrive()
+    {
+        GameObject drive = GameObject.Instantiate(shipDrivePrefab);
+        drive.transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+        drive.transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
+        drive.GetComponent<ShipMovement>().shipBody = this.gameObject;
+        drive.GetComponent<ShipMovement>().shipRotation = shipRotation;
+        ship_drive = drive.transform;
+    }
+    public void ForceChangeShipType(int shipId)
+    {
+        if (ship_drive == null) SetShipDrive();
+        shipModel = shipId;
+        shipModel = 2;
+        StartCoroutine(UpdateShipType());
     }
     private void Update()
     {
@@ -66,7 +85,8 @@ public class ShipValueControl : MonoBehaviour
         foreach (Transform child in ship_drive)
         {
             //child.transform.parent = tempDestroy.transform;
-            tempDestroy.Add(child.gameObject);
+            if (child.name != "brain")
+                tempDestroy.Add(child.gameObject);
         }
         foreach(GameObject go in tempDestroy)
         {
@@ -102,6 +122,7 @@ public class ShipValueControl : MonoBehaviour
         turrets_parent = turrets.transform;
         TurretPointer turretPointer = turrets.GetComponent<TurretPointer>();
         PlayerFireControl playerFireControl = null;
+        AIFireControl aIFireControl = null;
         HealthController healthController = GetComponent<HealthController>();
         ShipMovement shipMovement = ship_drive.GetComponent<ShipMovement>();
         shipMovement.backParticles.Clear();
@@ -110,6 +131,9 @@ public class ShipValueControl : MonoBehaviour
         playerFireControl = GetComponent<PlayerFireControl>();
         if (playerFireControl != null)
             playerFireControl.turrets = new();
+        aIFireControl = GetComponent<AIFireControl>();
+        if (aIFireControl != null)
+            aIFireControl.turrets = new();
         GameObject details = GameObject.Instantiate(newShip.GetComponent<ShipPartPointer>().details);
         details.transform.parent = transform;
         details.transform.localPosition = Vector3.zero;
@@ -133,6 +157,8 @@ public class ShipValueControl : MonoBehaviour
             turretController.shipValues = this;
             if (playerFireControl != null)
                 playerFireControl.turrets.Add(turretController);
+            if (aIFireControl != null)
+                aIFireControl.turrets.Add(turretController);
         }
         foreach (DetectHit detecthit in turretPointer.detectHit)
         {

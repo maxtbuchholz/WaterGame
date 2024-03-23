@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
-using Unity.Burst.CompilerServices;
 using UnityEngine;
 
 public class SaveData : MonoBehaviour
@@ -821,6 +820,28 @@ public class SaveData : MonoBehaviour
             if (!enemyShipPositions.ContainsKey(i)) return i;
             i++;
             if (i > 99999999) return -1;
+        }
+    }
+    public void EnemyShipDestroyed(int key)
+    {
+        if (!didInit) LoadFilesOuter();
+        if (enemyShipPositions.ContainsKey(key)) enemyShipPositions.Remove(key);
+        string destination = Application.persistentDataPath + "/" + "enemy_ship_poss" + ".txt";
+        FileStream file;
+        if (File.Exists(destination))
+        {
+            file = File.OpenWrite(destination);
+        }
+        else file = File.Create(destination);
+        try
+        {
+            BinaryFormatter bf = new BinaryFormatter();
+            bf.Serialize(file, Serialize.I_V3(enemyShipPositions));
+            file.Close();
+        }
+        catch (System.Exception e)
+        {
+            Debug.Log(e.Message);
         }
     }
 }

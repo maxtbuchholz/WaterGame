@@ -16,4 +16,13 @@ public class FortValues : MonoBehaviour
         for (int i = 0; i < go.transform.childCount; i++)
             AddChildrenToFortParts(go.transform.GetChild(i).gameObject);
     }
+    private string key;
+    public void SetKey(string key)
+    {
+        this.key = key;
+    }
+    public string GetKey()
+    {
+        return key;
+    }
 }
