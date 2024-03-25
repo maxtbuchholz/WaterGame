@@ -13,6 +13,7 @@ public class LocalTeamController : MonoBehaviour
     [SerializeField] AIFireControl aIFireControl;
     [SerializeField] bool isplayer = false;
     [SerializeField] HealthController healthController;
+    [HideInInspector] ShipMovement shipMovement;
     [SerializeField] bool isMortar = false;
     private Color teamColor;
     // Start is called before the first frame update
@@ -35,6 +36,15 @@ public class LocalTeamController : MonoBehaviour
         if (aIFireControl != null) aIFireControl.SetTeamId(teamId);
         if (healthController != null) healthController.SetTeam(teamId);
         UpdateMortarTeam();
+        if (shipMovement != null)
+        {
+            shipMovement.teamId = teamId;
+        }
+    }
+    public void SetShipDrive(ShipMovement shipMovement)
+    {
+        this.shipMovement = shipMovement;
+        shipMovement.teamId = teamId;
     }
     public void SetGameObjectColors()
     {
@@ -85,6 +95,10 @@ public class LocalTeamController : MonoBehaviour
         if (aIFireControl != null) aIFireControl.SetTeamId(teamId);
         if (healthController != null) healthController.SetTeam(teamId);
         UpdateMortarTeam();
+        if(shipMovement != null)
+        {
+            shipMovement.teamId = newTeam;
+        }
     }
     private List<MortarController> mortarControllers = new();
     public void AddChildMortar(MortarController mortarController)

@@ -75,6 +75,7 @@
     <Compile Include="Assets/Scripts/healthandteam/LocalTeamController.cs" />
     <Compile Include="Assets/Scripts/healthandteam/DetectHit.cs" />
     <Compile Include="Assets/Scripts/x/LoadWaterTiles.cs" />
+    <Compile Include="Assets/Scripts/AI/Around_Drive_Agent.cs" />
     <Compile Include="Assets/Scripts/PointToPlayer.cs" />
     <Compile Include="Assets/Scripts/Serialize.cs" />
     <Compile Include="Assets/Scripts/NewGameButton.cs" />
@@ -99,6 +100,7 @@
     <Compile Include="Assets/Scripts/Shooting/FortValues.cs" />
     <Compile Include="Assets/Scripts/Canvas/UpgradeFortCanvas.cs" />
     <Compile Include="Assets/Scripts/MortarController.cs" />
+    <Compile Include="Assets/Scripts/AI/Avoid_NN_Inputs.cs" />
     <Compile Include="Assets/Scripts/Shooting/FortTurretControl.cs" />
     <Compile Include="Assets/Scripts/ShipLevel.cs" />
     <Compile Include="Assets/Scripts/Touch/ButtonTouch.cs" />
@@ -118,6 +120,7 @@
     <Compile Include="Assets/Scripts/AI/Circles_NN_Inputs.cs" />
     <Compile Include="Assets/Scripts/Shooting/TurretController.cs" />
     <Compile Include="Assets/Terrain/IslandTracker.cs" />
+    <Compile Include="Assets/Scripts/AI/BrainController.cs" />
     <Compile Include="Assets/Models/Menus/Popup/FortUpgradeButtons.cs" />
     <Compile Include="Assets/Scripts/Shooting/PlayerFireControl.cs" />
     <Compile Include="Assets/Scripts/Camera/FocalPointFollow.cs" />
@@ -130,6 +133,7 @@
     <Compile Include="Assets/Terrain/SetTerrainShader.cs" />
     <Compile Include="Assets/Scripts/WaterMovement.cs" />
     <Compile Include="Assets/Scripts/SimpleBob.cs" />
+    <Compile Include="Assets/Scripts/AI/BackBrain.cs" />
     <Compile Include="Assets/Scripts/MoneyTextInit.cs" />
     <Compile Include="Assets/Terrain/GenerateTerrain.cs" />
     <Compile Include="Assets/Scripts/FaceCamera.cs" />
@@ -140,6 +144,7 @@
     <Compile Include="Assets/Scripts/MapFortTouch.cs" />
     <Compile Include="Assets/Scripts/CameraTrack.cs" />
     <Compile Include="Assets/Scripts/ShipSpawner.cs" />
+    <Compile Include="Assets/Scripts/EnableInRangeOfPlayer.cs" />
     <Compile Include="Assets/Scripts/Touch/NavTouch.cs" />
     <Compile Include="Assets/Scripts/HealthBarVisability.cs" />
     <Compile Include="Assets/Scripts/ShipPartPointer.cs" />

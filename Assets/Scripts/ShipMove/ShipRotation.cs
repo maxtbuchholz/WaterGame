@@ -8,11 +8,11 @@ public class ShipRotation : MonoBehaviour
     private Vector3 _ForwardCheck = new Vector3(0,0,2);
     private Vector3 _PortCheck = new Vector3(-1, 0, -2);
     private Vector3 _StarboardCheck = new Vector3(1, 0, -2);
-    [SerializeField] WaterGetHeight waterHeight;
+    private WaterGetHeight waterHeight;
     [HideInInspector] public Vector3 bobDisplacement = Vector3.zero;
     void Start()
     {
-        
+        waterHeight = WaterGetHeight.Instance;
     }
 
     // Update is called once per frame

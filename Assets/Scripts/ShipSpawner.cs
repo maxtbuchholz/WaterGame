@@ -73,7 +73,8 @@ public class ShipSpawner : MonoBehaviour
         }
         for(int i = 0; i < keysToRemoveLoaded.Count; i++)     //unload far away ships
         {
-            Destroy(loadedShips[keysToRemoveLoaded[i]]);
+            loadedShips[keysToRemoveLoaded[i]].GetComponent<HealthController>().UnloadShip();
+            loadedShips[keysToRemoveLoaded[i]].GetComponent<GenShip>().UnloadShip();
             loadedShips.Remove(keysToRemoveLoaded[i]);
         }
         if(loadedShips.Count < goalShipCount)   //then load more ships
@@ -108,7 +109,9 @@ public class ShipSpawner : MonoBehaviour
             if (foundShipPos)
             {
                 GameObject enShip = GameObject.Instantiate(shipPrefab);
-                enShip.transform.position = spawnShipPos;
+                enShip.GetComponent<ShipValueControl>().SetPositionInit(spawnShipPos);
+                enShip.GetComponent<GenShip>().GenerateShip(spawnShipId);
+                //enShip.transform.position = spawnShipPos;
                 saveData.SetEnemyShipPosition(spawnShipId, spawnShipPos);
                 loadedShips.Add(spawnShipId, enShip);
             }
@@ -116,7 +119,9 @@ public class ShipSpawner : MonoBehaviour
     }
     private Vector3 GetShipSpawnLocation(Vector3 focalPos)
     {
-        int maxTries = 50;
+        int maxTries = 10;
+        float furthestDst = -1;
+        Vector3 bestPos = Vector3.zero;
         for(int i = 0; i < maxTries; i++)
         {
             float angle = Random.Range(0.0f, 360.0f) * Mathf.Deg2Rad;
@@ -134,10 +139,27 @@ public class ShipSpawner : MonoBehaviour
                 foreach (KeyValuePair<int, GameObject> pair in loadedShips)
                     if (Vector3.Distance(pair.Value.transform.position, posTry) < 30)
                         hitShip = true;
-                if (!hitShip)
-                    return posTry;
+                if (!hitShip)                           //position is technically okay
+                {
+                    float totalDistance = 0;
+                    foreach(KeyValuePair<int, GameObject> pair in loadedShips)
+                    {
+                        totalDistance += Vector3.Distance(pair.Value.transform.position, posTry); 
+                    }
+                    Vector3 playerPos = PointToPlayer.Instance.GetPlayerShip().transform.position;
+                    float playerDst = Vector3.Distance(playerPos, posTry);
+                    totalDistance += 2 * playerDst;
+                    totalDistance /= (loadedShips.Count + 2);
+                    if((furthestDst == -1) || (totalDistance > furthestDst))
+                    {
+                        furthestDst = totalDistance;
+                        bestPos = posTry;
+                    }
+                }
             }
         }
+        if (furthestDst != -1)
+            return bestPos;
         return new Vector3(0, -100, 0);
     }
 }

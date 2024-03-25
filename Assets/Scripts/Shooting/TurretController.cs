@@ -152,7 +152,7 @@ public class TurretController : MonoBehaviour
             {
                 Debug.DrawLine(hit.point, Vector3.zero, Color.blue);
                 shootAbility = ShootAbility.blocked;
-                Debug.Break();
+                //Debug.Break();
                 return Vector3.zero;
             }
         }

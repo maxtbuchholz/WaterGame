@@ -40,6 +40,7 @@ public class DestroyOnEffectComplete : MonoBehaviour
             if (ps.aliveParticleCount != 0)
                 destroy = false;
         }
+        if (time > 5) destroy = true;
         if (destroy)
             Destroy(gameObject);
     }

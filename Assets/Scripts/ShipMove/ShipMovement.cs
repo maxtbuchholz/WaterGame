@@ -14,6 +14,7 @@ public class ShipMovement : MonoBehaviour
     private float amountFunnelParticles;
     private float amountBackParticles;
     private float amountFrontParticles;
+    public int teamId = -1;
     [HideInInspector] public float currSpeedPercentage = 0;
     private SaveData saveData;
 

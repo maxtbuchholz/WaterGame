@@ -45,7 +45,7 @@ public class IslandImager : MonoBehaviour
         yield return null;
         //TakePictureAsync(islandPos, keyS, island);
         island.layer = 16;
-        transform.position = new Vector3(islandPos.x, 100, islandPos.y);
+        transform.position = new Vector3(islandPos.x, 200, islandPos.y);
         RenderTexture mRt = new RenderTexture(snapTexture.width, snapTexture.height, snapTexture.depth, RenderTextureFormat.ARGB32, RenderTextureReadWrite.sRGB);
         mRt.antiAliasing = snapTexture.antiAliasing;
 
@@ -62,9 +62,9 @@ public class IslandImager : MonoBehaviour
             for (int y = 0; y < tex.height; y++)
             {
                 Temp = tex.GetPixel(x, y);
-                if ((Temp.r > 0.8f) &&
-                    (Temp.g > 0.8f) &&
-                    (Temp.b > 0.8f))
+                if ((Temp.r < 0.1f) &&
+                    (Temp.g < 0.1f) &&
+                    (Temp.b < 0.1f))
                     tex.SetPixel(x, y, Color.clear);
             }
         }

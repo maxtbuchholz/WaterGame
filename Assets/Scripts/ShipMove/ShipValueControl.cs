@@ -13,7 +13,7 @@ public class ShipValueControl : MonoBehaviour
     [SerializeField] ShipRotation shipRotation;
     [SerializeField] public bool isPlayer = false;
     private SaveData saveData;
-    private int shipModel = -1;
+    public int shipModel = -1;
     void Start()
     {
         if (ship_drive == null) SetShipDrive();
@@ -39,6 +39,11 @@ public class ShipValueControl : MonoBehaviour
             //StartCoroutine(UpdateShipType());
         }
     }
+    public void SetPositionInit(Vector3 pos)
+    {
+        pos.y = 0;
+        transform.position = pos;
+    }
     public void SetShipDrive()
     {
         GameObject drive = GameObject.Instantiate(shipDrivePrefab);
@@ -47,12 +52,18 @@ public class ShipValueControl : MonoBehaviour
         drive.GetComponent<ShipMovement>().shipBody = this.gameObject;
         drive.GetComponent<ShipMovement>().shipRotation = shipRotation;
         ship_drive = drive.transform;
+        GetComponent<LocalTeamController>().SetShipDrive(drive.GetComponent<ShipMovement>());
+    }
+    public void UnloadShip()
+    {
+        if (ship_drive != null)
+            Destroy(ship_drive.gameObject);
+        Destroy(this.gameObject);
     }
     public void ForceChangeShipType(int shipId)
     {
         if (ship_drive == null) SetShipDrive();
         shipModel = shipId;
-        shipModel = 2;
         StartCoroutine(UpdateShipType());
     }
     private void Update()
@@ -62,6 +73,7 @@ public class ShipValueControl : MonoBehaviour
     }
     public void ShipModelChanged()
     {
+        if (ship_drive == null) SetShipDrive();
         shipModel = saveData.GetCurrentShipId();
         StartCoroutine(UpdateShipType());
     }
@@ -85,7 +97,7 @@ public class ShipValueControl : MonoBehaviour
         foreach (Transform child in ship_drive)
         {
             //child.transform.parent = tempDestroy.transform;
-            if (child.name != "brain")
+            if ((child.name != "brain") && (child.name != "Sphere"))
                 tempDestroy.Add(child.gameObject);
         }
         foreach(GameObject go in tempDestroy)
@@ -164,7 +176,10 @@ public class ShipValueControl : MonoBehaviour
         {
             detecthit.healthController = healthController;
         }
-        UpdateShipValues();
+        if (isPlayer)
+            UpdateShipValues();
+        else
+            UpdateShipValuesZero();
         GetComponent<LocalTeamController>().SetGameObjectColors();
     }
     public void UpdateShipValues()
@@ -172,6 +187,12 @@ public class ShipValueControl : MonoBehaviour
         Set_Health(saveData.GetShipLevelValue(shipModel, "health"));
         Set_Damage(saveData.GetShipLevelValue(shipModel, "damage"));
         Set_Speed(saveData.GetShipLevelValue(shipModel, "speed"));
+    }
+    public void UpdateShipValuesZero()
+    {
+        Set_Health(0);
+        Set_Damage(0);
+        Set_Speed(0);
     }
     private void AddChildrenToShipParts(GameObject go)
     {
@@ -182,6 +203,8 @@ public class ShipValueControl : MonoBehaviour
     public void Set_Health(int health)
     {
         float fHealth = ShipLevel.hea_level_effect[shipModel][health];
+        if (isPlayer)
+            fHealth *= 1.5f;
         GetComponent<HealthController>().SetMaxHealth(fHealth);
     }
     public void Set_Damage(int damage)

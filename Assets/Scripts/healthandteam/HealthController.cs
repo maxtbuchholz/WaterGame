@@ -94,6 +94,10 @@ public class HealthController : MonoBehaviour
             healthBar.GetComponent<HealthBarVisability>().SetAppear(appear);
         }
     }
+    public void UnloadShip()
+    {
+        findTarget.ModifyTargetable(this.gameObject, teamId, isFort ? FindTargetController.targetType.fort : FindTargetController.targetType.ship, FindTargetController.targetContition.destoyed);
+    }
     private int teamId = -1;
     private bool teamChangedStopHealthRefilMortar = false;
     public void SetTeam(int newTeamId)
@@ -107,7 +111,8 @@ public class HealthController : MonoBehaviour
         findTarget.ModifyTargetable(this.gameObject, newTeamId, isFort ? FindTargetController.targetType.fort : FindTargetController.targetType.ship, FindTargetController.targetContition.targetable);
         if (didStart)
         {
-            healthBarVisability.SetBarColor(teamsController.GetTeamColor(teamId, localTeamController));
+            if(!isPlayer)
+                healthBarVisability.SetBarColor(teamsController.GetTeamColor(teamId, localTeamController));
         }
     }
     public void SetMaxHealth(float health)
@@ -127,7 +132,7 @@ public class HealthController : MonoBehaviour
     }
     public void EffectHealth(float change, int attackerTeamId)
     {
-        Debug.Log("HIT!!!" + " max:c" + maxHealth + " curr: " + currentHealth + " teamID: " + teamId + " attackID: " + attackerTeamId);
+        //Debug.Log("HIT!!!" + " max:c" + maxHealth + " curr: " + currentHealth + " teamID: " + teamId + " attackID: " + attackerTeamId);
         if (teamId == -1) return;
         if (teamId == attackerTeamId) return;
         if (healthRefilingDuringCapture) return;
@@ -158,6 +163,9 @@ public class HealthController : MonoBehaviour
             }
             else if(!isPlayer)
             {           //destroy ship
+                if(attackerTeamId == 0)
+                    PlayerMoneyController.Instance.AddMoney(((GetComponent<ShipValueControl>().shipModel + 1) * 100) + (Random.Range(0, 4) * 25));
+                UnloadShip();
                 GameObject fC = GameObject.Instantiate(fortCapturedParticle, transform.position + new Vector3(0, 1, 0), Quaternion.identity);
                 fC.GetComponent<VisualEffect>().SetVector4("_TeamColor", teamsController.GetTeamColor(teamId, localTeamController));
                 GameObject.Instantiate(fortExplosion, transform.position, Quaternion.identity);

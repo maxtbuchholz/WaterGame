@@ -51,6 +51,7 @@ public class SaveData : MonoBehaviour
     private Dictionary<string, float[]> islandData = new();
     private Dictionary<int, Vector3> enemyShipPositions = new();
     private HashSet<Vector2> seenSeaCoords = new();
+    private Dictionary<int, int[]> enemyShipData = new();
     private IEnumerator Save_Co_Player()
     {
         float minTimeBetween = 0.5f;
@@ -227,6 +228,38 @@ public class SaveData : MonoBehaviour
                 {
                     Debug.Log(e.Message);
                 }
+                destination = Application.persistentDataPath + "/" + "enemy_ship_poss" + ".txt";
+                if (File.Exists(destination))
+                {
+                    file = File.OpenWrite(destination);
+                }
+                else file = File.Create(destination);
+                try
+                {
+                    BinaryFormatter bf = new BinaryFormatter();
+                    bf.Serialize(file, Serialize.I_V3(enemyShipPositions));
+                    file.Close();
+                }
+                catch (System.Exception e)
+                {
+                    Debug.Log(e.Message);
+                }
+                destination = Application.persistentDataPath + "/" + "enemy_ship_data" + ".txt";
+                if (File.Exists(destination))
+                {
+                    file = File.OpenWrite(destination);
+                }
+                else file = File.Create(destination);
+                try
+                {
+                    BinaryFormatter bf = new BinaryFormatter();
+                    bf.Serialize(file, enemyShipData);
+                    file.Close();
+                }
+                catch (System.Exception e)
+                {
+                    Debug.Log(e.Message);
+                }
                 time = minTimeBetween + Random.Range(0, 0.5f);
             }
             yield return new WaitForSeconds(0.1f);
@@ -272,6 +305,8 @@ public class SaveData : MonoBehaviour
             InitFile("enemy_ship_poss",Serialize.I_V3(enemyShipPositions));
             seenSeaCoords = new();
             InitFile("seen_sea_coords",Serialize.HV2(seenSeaCoords));
+            enemyShipData = new();
+            InitFile("enemy_ship_data", enemyShipData);
 
         }
         islandKeyIncriment = islandCoordsToKey.Count;
@@ -457,6 +492,18 @@ public class SaveData : MonoBehaviour
             try
             {
                 seenSeaCoords = Deserialize.HV2((HashSet<float[]>)data);
+            }
+            catch (System.Exception e)
+            {
+                return false;
+            }
+        }
+        else return false;
+        if (TryLoadDataFromFile("enemy_ship_data", out data))
+        {
+            try
+            {
+                enemyShipData = (Dictionary<int, int[]>)data;
             }
             catch (System.Exception e)
             {
@@ -793,23 +840,6 @@ public class SaveData : MonoBehaviour
         if (!didInit) LoadFilesOuter();
         if (enemyShipPositions.ContainsKey(key)) enemyShipPositions[key] = pos;
         else enemyShipPositions.Add(key, pos);
-        string destination = Application.persistentDataPath + "/" + "enemy_ship_poss" + ".txt";
-        FileStream file;
-        if (File.Exists(destination))
-        {
-            file = File.OpenWrite(destination);
-        }
-        else file = File.Create(destination);
-        try
-        {
-            BinaryFormatter bf = new BinaryFormatter();
-            bf.Serialize(file, Serialize.I_V3(enemyShipPositions));
-            file.Close();
-        }
-        catch (System.Exception e)
-        {
-            Debug.Log(e.Message);
-        }
     }
     public int GetNewEnemyShipKey()
     {
@@ -826,22 +856,27 @@ public class SaveData : MonoBehaviour
     {
         if (!didInit) LoadFilesOuter();
         if (enemyShipPositions.ContainsKey(key)) enemyShipPositions.Remove(key);
-        string destination = Application.persistentDataPath + "/" + "enemy_ship_poss" + ".txt";
-        FileStream file;
-        if (File.Exists(destination))
+        if (enemyShipData.ContainsKey(key)) enemyShipData.Remove(key);
+    }
+    public int[] GetEnemyShipData(int key)
+    {
+        if (!didInit) LoadFilesOuter();
+        if (enemyShipData.ContainsKey(key))
         {
-            file = File.OpenWrite(destination);
+            return enemyShipData[key];
         }
-        else file = File.Create(destination);
-        try
+        return new int[] { };
+    }
+    public void SetEnemyShipData(int key, int[] data)
+    {
+        if (!didInit) LoadFilesOuter();
+        if (enemyShipData.ContainsKey(key))
         {
-            BinaryFormatter bf = new BinaryFormatter();
-            bf.Serialize(file, Serialize.I_V3(enemyShipPositions));
-            file.Close();
+            enemyShipData[key] = data;
         }
-        catch (System.Exception e)
+        else
         {
-            Debug.Log(e.Message);
+            enemyShipData.Add(key, data);
         }
     }
 }

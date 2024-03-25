@@ -26,6 +26,31 @@ public class WaterGetHeight : MonoBehaviour
             }
         }
     }
+    private static WaterGetHeight instance;
+
+    public static WaterGetHeight Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                instance = GameObject.FindAnyObjectByType<WaterGetHeight>();
+            }
+            return instance;
+        }
+    }
+
+    public virtual void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
     //void OnDrawGizmos()
     //{
     //    for (int x = -50; x < 50; x++)

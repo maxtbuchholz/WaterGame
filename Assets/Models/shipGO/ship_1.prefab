@@ -5129,6 +5129,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1662994433867884424}
   - component: {fileID: 5064799196500977265}
+  - component: {fileID: 974243614519922862}
   m_Layer: 6
   m_Name: Effects
   m_TagString: Ship
@@ -5175,6 +5176,26 @@ MonoBehaviour:
   - {fileID: 6946575030490061390}
   frontParticles: {fileID: 1346512803624750993}
   frontTrail: {fileID: 316802349465411329}
+--- !u!114 &974243614519922862
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2429280335846483534}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d44225a50b56c478aa89206eed442535, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effects:
+  - {fileID: 8919970176409012860}
+  - {fileID: 6570323827587823960}
+  - {fileID: 3378408584180918752}
+  - {fileID: 9221667972305421537}
+  - {fileID: 1212564118638994976}
+  - {fileID: 4917012651648503525}
+  - {fileID: 4510324230770446}
 --- !u!1 &3023669465616865251
 GameObject:
   m_ObjectHideFlags: 0

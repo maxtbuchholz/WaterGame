@@ -4,15 +4,23 @@ using UnityEngine;
 
 public class Circles_NN_Inputs : MonoBehaviour
 {
-    [SerializeField] public Transform target;
+    [SerializeField] public Transform target = null;
     [SerializeField] public Transform self;
+    [SerializeField] public ShipMovement shipMovement;
     [HideInInspector] public float distance;
-    private void Start()
-    {
-        
-    }
+    int teamId = -1;
+    float timeBetweenTargetSearch = 10;
+    float time = 0;
     public List<float> GetInputs()
     {
+        if (teamId == -1) teamId = shipMovement.teamId;
+        if (teamId == -1) return new List<float>() {0, 0 };
+        time -= Time.deltaTime;
+        if ((target == null) || (time <= 0))
+        {
+            time = timeBetweenTargetSearch + Random.Range(0f, 1f);
+            target = FindTargetController.Instance.GetTarget(transform.position, teamId, FindTargetController.targetType.ship);
+        }
         if (target == null) target = PointToPlayer.Instance.GetPlayerShip();
         Vector3 aimPose = GetAimPos(target.position);
         Vector3 forwardDir = self.forward;
