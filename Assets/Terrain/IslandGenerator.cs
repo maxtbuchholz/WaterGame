@@ -81,7 +81,7 @@ public class IslandGenerator : MonoBehaviour
 
         return new float[] { 1, xMove, zMove };
     }
-    public void StartGenerate(string keyS)
+    public void StartGenerate(string keyS, bool forcePlayerTeam)
     {
         saveData = SaveData.Instance;
         WorldXWidth = xWidth;
@@ -96,7 +96,10 @@ public class IslandGenerator : MonoBehaviour
             saveData.AddIslandCoords(posVT, keyS);
             StartCoroutine(islandImager.ImageOfIsland(posVT, keyS, gameObject));
         }
-        fortGenerator.LoadFort(transform.position.x, transform.position.z, WorldXWidth, WorldZWidth, keyS);
+        int forceTeam = -1;
+        if (forcePlayerTeam) forceTeam = 0;
+        fortGenerator.LoadFort(transform.position.x, transform.position.z, WorldXWidth, WorldZWidth, keyS, forceTeam);
+
     }
     //private void Update()
     //{

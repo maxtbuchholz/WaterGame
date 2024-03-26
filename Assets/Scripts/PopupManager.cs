@@ -11,6 +11,8 @@ public class PopupManager : MonoBehaviour
     [SerializeField] GameObject nonBlockigBackroundUIPrefab;
     [SerializeField] GameObject upgradeShipFortPrefab;
     [SerializeField] GameObject loadingScreenPrefab;
+    [SerializeField] GameObject newGameScreenPrefab;
+    [SerializeField] GameObject respawnScreenPrefab;
     [SerializeField] UpdradeShipCanvas upgradeShipCanvas;
     [SerializeField] UpdradeFortCanvas upgradeFortCanvas;
     [SerializeField] MainCanvas mainCanvas;
@@ -110,7 +112,7 @@ public class PopupManager : MonoBehaviour
         {
             rSI.SetOpacity(1 - (currTime / loadingScreenFadeTime));
             currTime += Time.deltaTime;
-            Debug.Log(currTime);
+            //Debug.Log(currTime);
             yield return null;
         }
         rSI.SetOpacity(0);
@@ -152,5 +154,37 @@ public class PopupManager : MonoBehaviour
         {
             fUB.SetFortKey(fortKey);
         }
+    }
+    Transform newGameScreen;
+    public void SummonNewGameScreen()
+    {
+        GameObject loadSc = GameObject.Instantiate(newGameScreenPrefab);
+        loadSc.transform.parent = overlayTransform;
+        loadSc.GetComponent<ResizeScreenImage>().ResizeImage();
+        newGameScreen = loadSc.transform;
+        loadSc.transform.SetSiblingIndex(0);
+    }
+    public void EndNewGameScreen()
+    {
+        newGameScreen.transform.position = new Vector3(0, -100000, 0);
+        ResizeScreenImage rSI = newGameScreen.GetComponent<ResizeScreenImage>();
+        rSI.SetOpacity(0);
+        Destroy(newGameScreen.gameObject);
+    }
+    Transform respawnScreen;
+    public void SummonRespawnScreen()
+    {
+        GameObject loadSc = GameObject.Instantiate(respawnScreenPrefab);
+        loadSc.transform.parent = overlayTransform;
+        loadSc.GetComponent<ResizeScreenImage>().ResizeImage();
+        respawnScreen = loadSc.transform;
+        loadSc.transform.SetSiblingIndex(0);
+    }
+    public void EndRespawnScreen()
+    {
+        respawnScreen.transform.position = new Vector3(0, -100000, 0);
+        ResizeScreenImage rSI = respawnScreen.GetComponent<ResizeScreenImage>();
+        rSI.SetOpacity(0);
+        Destroy(respawnScreen.gameObject);
     }
 }

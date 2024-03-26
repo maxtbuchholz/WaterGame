@@ -92,7 +92,7 @@ public class IslandTracker : MonoBehaviour
             if (data[0] == 0)                                           //typical green island
             {
                 GameObject island = GameObject.Instantiate(islandPrefab, new Vector3(pos.x, 0, pos.y), Quaternion.identity);
-                island.GetComponent<IslandGenerator>().StartGenerate(keyS);
+                island.GetComponent<IslandGenerator>().StartGenerate(keyS, false);
                 loadedIslands.Add(pos, island);
             }
             else if (data[0] == 1)                                           //typical green island
@@ -105,7 +105,7 @@ public class IslandTracker : MonoBehaviour
     }
     public void TrySpawnIsland(Vector2 pos, bool allwaysSpawn)
     {
-        if ((Random.Range(0.0f, 1.0f) > 0.8f) || allwaysSpawn)
+        if ((Random.Range(0.0f, 1.0f) > 0.5f) || allwaysSpawn)
         {
             bool farEnoughOut = true;
             Dictionary<Vector2, string> seaCoords = saveData.GetIslandCoords();
@@ -119,7 +119,7 @@ public class IslandTracker : MonoBehaviour
                 {
                     GameObject island = GameObject.Instantiate(islandPrefab, new Vector3(pos.x, 0, pos.y), Quaternion.identity);
                     int keyI = saveData.GetNewIslandKey(pos);
-                    island.GetComponent<IslandGenerator>().StartGenerate(keyI.ToString());
+                    island.GetComponent<IslandGenerator>().StartGenerate(keyI.ToString(), allwaysSpawn);
                     loadedIslands.Add(pos, island);
                     saveData.SetIslandData(keyI.ToString(), new float[] { 0 });
                 }

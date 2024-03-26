@@ -282,7 +282,7 @@ public class SaveData : MonoBehaviour
             //InitFile("player_ship_pos",Serialize.V3(playerShipPos));
             playerShipRot = 0;
             InitFile("player_ship_rot", playerShipRot);
-            money = 1500;
+            money = 500;
             InitFile("money", money);
             currShipId = 0;
             InitFile("curr_ship_id", currShipId);
@@ -906,5 +906,33 @@ public class SaveData : MonoBehaviour
         if (fortCenter.ContainsKey(key)) fortCenter[key] = new float[] { data.x, data.y };
         fortCenter[key] = new float[] { data.x, data.y };
         InitFile("fort_center", fortCenter);
+    }
+    public int GetAmountOfPlayerFortTeams()
+    {
+        int amount = 0;
+        foreach(KeyValuePair<string, int> par in fortTeam)
+        {
+            if (par.Value == 0)
+                amount++;
+        }
+        return amount;
+    }
+    public string GetClosestFriendlyFort(Vector3 pos)
+    {
+        string bestKey = "";
+        float bestDist = -1;
+        foreach(KeyValuePair<string, Vector3> pair in fortKeyToCoords)
+        {
+            float dst = Vector3.Distance(pos, pair.Value);
+            if (fortTeam[pair.Key] == 0)
+            {
+                if ((bestDist == -1) || (dst < bestDist))
+                {
+                    bestDist = dst;
+                    bestKey = pair.Key;
+                }
+            }
+        }
+        return bestKey;
     }
 }

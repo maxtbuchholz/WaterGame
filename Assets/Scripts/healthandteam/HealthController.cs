@@ -74,8 +74,7 @@ public class HealthController : MonoBehaviour
                     {
                         currentHealth += (healAmountPerSec * Time.deltaTime);
                         currentHealth = Mathf.Min(currentHealth, maxHealth);
-                        if(!isPlayer)
-                            SetHealthSize(currentHealth / maxHealth);
+                        SetHealthSize(currentHealth / maxHealth);
                     }
                     else
                     {                                 //health bar eventually dissapear
@@ -123,12 +122,18 @@ public class HealthController : MonoBehaviour
     }
     private void SetHealthSize(float perc)
     {
-        if (isPlayer) return;
-        if (MoveBar == null) return;
-        Rect rect = MoveBar.GetComponent<RectTransform>().rect;
-        MoveBar.GetComponent<RectTransform>().sizeDelta = new Vector2(rect.width, perc);
-        //MoveBar.GetComponent<RectTransform>().rect
-        //MoveBar.localPosition = new Vector3(0, perc * MoveBar.GetComponent<RectTransform>().rect.height, 0);
+        if (isPlayer)
+        {
+            PlayerHealthBar.Instance.SethealthPercent(perc);
+        }
+        else
+        {
+            if (MoveBar == null) return;
+            Rect rect = MoveBar.GetComponent<RectTransform>().rect;
+            MoveBar.GetComponent<RectTransform>().sizeDelta = new Vector2(rect.width, perc);
+            //MoveBar.GetComponent<RectTransform>().rect
+            //MoveBar.localPosition = new Vector3(0, perc * MoveBar.GetComponent<RectTransform>().rect.height, 0);
+        }
     }
     public void EffectHealth(float change, int attackerTeamId)
     {

@@ -11,6 +11,11 @@ public class ResizeBox : MonoBehaviour
     [SerializeField] float innerWidth = 0;
     [SerializeField] float innerHeight = 0;
     bool resized = false;
+    //private void Update()
+    //{
+    //    if (fit)
+    //        Resize(0);
+    //}
     public void Resize(float finalWidth)
     {
         if (resized) return;
@@ -27,11 +32,11 @@ public class ResizeBox : MonoBehaviour
             float perHei = Screen.height * 0.8f / innerHeight;// inner.rect.height;
             if(perHei < perLar)
             {
-                inner.gameObject.transform.localScale *= perHei;
+                inner.gameObject.transform.localScale = new Vector3(perHei, perHei, perHei);
             }
             else
             {
-                inner.gameObject.transform.localScale *= perLar;
+                inner.gameObject.transform.localScale = new Vector3(perLar, perLar, perLar);
             }
         }
     }

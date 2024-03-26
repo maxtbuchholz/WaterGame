@@ -1,0 +1,5 @@
+/Users/maxbuchholz/WaterGame/.utmp/RelWithDebInfo/4n3o201c/armeabi-v7a/CMakeFiles/edit_cache.dir
+/Users/maxbuchholz/WaterGame/.utmp/RelWithDebInfo/4n3o201c/armeabi-v7a/CMakeFiles/rebuild_cache.dir
+/Users/maxbuchholz/WaterGame/.utmp/RelWithDebInfo/4n3o201c/armeabi-v7a/FramePacing/CMakeFiles/swappywrapper.dir
+/Users/maxbuchholz/WaterGame/.utmp/RelWithDebInfo/4n3o201c/armeabi-v7a/FramePacing/CMakeFiles/edit_cache.dir
+/Users/maxbuchholz/WaterGame/.utmp/RelWithDebInfo/4n3o201c/armeabi-v7a/FramePacing/CMakeFiles/rebuild_cache.dir

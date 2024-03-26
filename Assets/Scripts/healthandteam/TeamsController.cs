@@ -83,7 +83,8 @@ public class TeamsController : MonoBehaviour
     public void SetAllColors(Dictionary<int, Color> teamColor)
     {
         this.teamColor = teamColor;
-        for(int i = localTeams.Count - 1; i >= 0; i--)
+        PlayerHealthBar.Instance.SetColor(teamColor[0]);
+        for (int i = localTeams.Count - 1; i >= 0; i--)
         {
             if (localTeams[i] == null)
                 localTeams.RemoveAt(i);

@@ -10,7 +10,7 @@ public class ShipSpawner : MonoBehaviour
     private PointToPlayer pointToPlayer;
     private Transform focalPoint;
     private float goalShipCount = 20;
-    private float maxSpawnRange = 300;
+    private float maxSpawnRange = 250;
     private float minSpawnRange = 50;
     private static ShipSpawner instance;
     public static ShipSpawner Instance
@@ -86,7 +86,7 @@ public class ShipSpawner : MonoBehaviour
             foreach(KeyValuePair<int, Vector3> pair in AllShipsPos)         //look through prev saved ships to spawn
             {
                 float dst = Vector3.Distance(focalPos, pair.Value);
-                if((dst > minSpawnRange) && (dst < maxSpawnRange))
+                if((dst < maxSpawnRange))
                 {
                     if (!loadedShips.ContainsKey(pair.Key))
                     {

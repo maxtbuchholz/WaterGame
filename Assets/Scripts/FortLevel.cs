@@ -21,6 +21,7 @@ public class FortLevel : MonoBehaviour
     }
     public void LevelsUpdate()
     {
+        if (centralLocation.y == -100) centralLocation = saveData.GetFortCenter(key);
         FortSaveLevel fSL = saveData.GetFortLevels(key);
         if (fSL != null)                                     //fort has been set before, load from these levels
         {

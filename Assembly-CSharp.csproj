@@ -89,6 +89,7 @@
     <Compile Include="Assets/Scripts/ShipTypesController.cs" />
     <Compile Include="Assets/Scripts/ShipMove/ShipRotation.cs" />
     <Compile Include="Assets/Scripts/x/TileDeleter.cs" />
+    <Compile Include="Assets/Scripts/PlayerHealthBar.cs" />
     <Compile Include="Assets/Scripts/SettingsColorButtons.cs" />
     <Compile Include="Assets/Models/Menus/Popup/ShipUpgradeButtons.cs" />
     <Compile Include="Assets/Scripts/Noise.cs" />
@@ -139,6 +140,7 @@
     <Compile Include="Assets/Scripts/FaceCamera.cs" />
     <Compile Include="Assets/RenderTexture/MaskLowerLayers/MaskObject.cs" />
     <Compile Include="Assets/Scripts/Canvas/SettingsCanvas.cs" />
+    <Compile Include="Assets/Models/Menus/Popup/DestroyedButtons.cs" />
     <Compile Include="Assets/Scripts/FortLevel.cs" />
     <Compile Include="Assets/Models/Menus/Popup/ResizeScreenImage.cs" />
     <Compile Include="Assets/Scripts/MapFortTouch.cs" />

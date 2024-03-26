@@ -21,13 +21,29 @@ public class TurretController : MonoBehaviour
     [SerializeField] bool overhead = false;
     Vector3[] trajectory = new Vector3[] { };
     [SerializeField] float force = 100;
+    Quaternion originalBarrelRotation;
+    Quaternion originalTurretRotation;
     float reloadTime = 1.0f;
     private float maxDistance;
     Dictionary<float, float> cannonDistanceToTime = new();
     Dictionary<float, float> cannonDistanceToAngle = new();
     private float gravity = 30;
+    float timeToOrigRotation = 3;
+    float time = -999;
+    private void Update()
+    {
+        time -= Time.deltaTime;
+        if((time <= 0) && (time != -999))
+        {
+            barrelRotationPoint.transform.localRotation = originalBarrelRotation;
+            turret.transform.localRotation = originalTurretRotation;
+            time = -999;
+        }
+    }
     private void Start()
     {
+        originalBarrelRotation = barrelRotationPoint.transform.localRotation;
+        originalTurretRotation = turret.transform.localRotation;
         cannonDistanceToTime = new();
         maxDistance = Mathf.Pow(force, 2) / gravity;
         bool keepSearching = true;
@@ -67,6 +83,7 @@ public class TurretController : MonoBehaviour
     }
     public Vector3 RequestShot(Vector3 targetPos, out ShootAbility shootAbility)
     {
+        time = timeToOrigRotation;
         Vector3 vDistance = (targetPos - shootPoint.transform.position) * distanceMultiplyer;
         vDistance.y = -vDistance.y;
         Vector3 turn = (new Vector3(targetPos.x, 0, targetPos.z) - new Vector3(shootPoint.transform.position.x, 0, shootPoint.transform.position.z)).normalized;

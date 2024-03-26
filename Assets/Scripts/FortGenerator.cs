@@ -10,7 +10,7 @@ public class FortGenerator : MonoBehaviour
     Vector3 center = Vector3.zero;
     private SaveData saveData;
     public string fortKey;
-    public void LoadFort(float xPos, float zPos, float islandXWidth, float islandZWidth, string islandKey)
+    public void LoadFort(float xPos, float zPos, float islandXWidth, float islandZWidth, string islandKey, int team)
     {
         fortKey = islandKey + "_fort";
         saveData = SaveData.Instance;
@@ -71,6 +71,8 @@ public class FortGenerator : MonoBehaviour
                 fort.GetComponent<LocalTeamController>().ForceChangeTeam(fortTeam);
             }
             fort.GetComponent<FortValues>().SetKey(fortKey);
+            if(team != -1)
+                fort.GetComponent<LocalTeamController>().ForceChangeTeam(team);
         }
     }
     private bool NoLandOverCorner(Vector3 corner)
