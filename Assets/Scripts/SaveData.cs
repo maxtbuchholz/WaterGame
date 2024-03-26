@@ -52,6 +52,7 @@ public class SaveData : MonoBehaviour
     private Dictionary<int, Vector3> enemyShipPositions = new();
     private HashSet<Vector2> seenSeaCoords = new();
     private Dictionary<int, int[]> enemyShipData = new();
+    Dictionary<string, float[]> fortCenter = new();
     private IEnumerator Save_Co_Player()
     {
         float minTimeBetween = 0.5f;
@@ -307,6 +308,8 @@ public class SaveData : MonoBehaviour
             InitFile("seen_sea_coords",Serialize.HV2(seenSeaCoords));
             enemyShipData = new();
             InitFile("enemy_ship_data", enemyShipData);
+            fortCenter = new();
+            InitFile("fort_center", fortCenter);
 
         }
         islandKeyIncriment = islandCoordsToKey.Count;
@@ -504,6 +507,18 @@ public class SaveData : MonoBehaviour
             try
             {
                 enemyShipData = (Dictionary<int, int[]>)data;
+            }
+            catch (System.Exception e)
+            {
+                return false;
+            }
+        }
+        else return false;
+        if (TryLoadDataFromFile("fort_center", out data))
+        {
+            try
+            {
+                fortCenter = (Dictionary<string, float[]>)data;
             }
             catch (System.Exception e)
             {
@@ -878,5 +893,18 @@ public class SaveData : MonoBehaviour
         {
             enemyShipData.Add(key, data);
         }
+    }
+    public Vector3 GetFortCenter(string key)
+    {
+        if (!didInit) LoadFilesOuter();
+        if (fortCenter.ContainsKey(key)) return new Vector3(fortCenter[key][0], 0, fortCenter[key][1]);
+        return Vector3.zero;
+    }
+    public void SetFortCenter(string key, Vector3 data)
+    {
+        if (!didInit) LoadFilesOuter();
+        if (fortCenter.ContainsKey(key)) fortCenter[key] = new float[] { data.x, data.y };
+        fortCenter[key] = new float[] { data.x, data.y };
+        InitFile("fort_center", fortCenter);
     }
 }

@@ -11793,7 +11793,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 187f01985d84645e9be9aafc46d668e1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -20
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 187f01985d84645e9be9aafc46d668e1, type: 3}
       propertyPath: m_LocalPosition.y
@@ -11801,7 +11801,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 187f01985d84645e9be9aafc46d668e1, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -20
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 187f01985d84645e9be9aafc46d668e1, type: 3}
       propertyPath: m_LocalRotation.w
@@ -11996,7 +11996,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06a873f4687b449d2aa910e4abd4cb4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waterHeight: {fileID: 0}
   bobDisplacement: {x: 0, y: 0, z: 0}
 --- !u!1001 &760057906277477788
 PrefabInstance:

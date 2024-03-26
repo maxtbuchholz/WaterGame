@@ -42,7 +42,7 @@ public class FortTurretControl : MonoBehaviour
         time -= Time.deltaTime;
         if(time <= 0)
         {
-            time = 1 + Random.Range(0.0f, 0.5f);
+            time = 1.5f + Random.Range(0.0f, 0.5f);
             target = findTargetController.GetTarget(transform.position + new Vector3(0, 5, 0), teamId, FindTargetController.targetType.fort);
             if (target == null) return;
             List<int> ableTurretIndexes = new();
@@ -51,7 +51,7 @@ public class FortTurretControl : MonoBehaviour
             Rigidbody rb = null;
             //bool forceStraight = false;
             //if ((target.position - transform.position).magnitude < 10) forceStraight = true;
-            float distanceMissAdd = Vector3.Distance(transform.position, target.position) / 20;
+            float distanceMissAdd = 1;
             Vector3 targetPos = new Vector3(target.position.x + Random.Range(-0.5f - distanceMissAdd, 0.5f + distanceMissAdd), 0, target.position.z + Random.Range(-1.0f - distanceMissAdd, 1.0f + distanceMissAdd));
             if(target.TryGetComponent<ShipValueControl>(out ShipValueControl sVC))
             {
@@ -94,7 +94,7 @@ public class FortTurretControl : MonoBehaviour
     }
     IEnumerator FireProjectiles(Queue<KeyValuePair<int, Vector3>> turretShootQueue)
     {
-        float fireMaxDiff = 0.02f;
+        float fireMaxDiff = 0.015f;
         while (turretShootQueue.Count > 0)
         {
             KeyValuePair<int, Vector3> turNor = turretShootQueue.Dequeue();

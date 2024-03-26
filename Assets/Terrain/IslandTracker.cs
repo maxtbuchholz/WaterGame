@@ -105,7 +105,7 @@ public class IslandTracker : MonoBehaviour
     }
     public void TrySpawnIsland(Vector2 pos, bool allwaysSpawn)
     {
-        if ((Random.Range(0.0f, 1.0f) > 0.3f) || allwaysSpawn)
+        if ((Random.Range(0.0f, 1.0f) > 0.8f) || allwaysSpawn)
         {
             bool farEnoughOut = true;
             Dictionary<Vector2, string> seaCoords = saveData.GetIslandCoords();

@@ -73,6 +73,7 @@ public class TurretController : MonoBehaviour
         float d = Mathf.Pow(Mathf.Pow(vDistance.x, 2) + Mathf.Pow(vDistance.z, 2), 0.5f);
         float angle = GetAngle(gravity, force, d, vDistance.y);
         if (float.IsNaN(angle)) { shootAbility = ShootAbility.toFar; return Vector3.zero; }
+        if(!overhead && (angle * Mathf.Rad2Deg) > 30) { shootAbility = ShootAbility.toFar; return Vector3.zero; };
         if (overhead) angle = 1.5708f - angle;
         Vector3 normalDist = new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0);
         float rotY = Mathf.Atan2(turn.x, turn.z) * Mathf.Rad2Deg;
@@ -159,6 +160,7 @@ public class TurretController : MonoBehaviour
         //float angle = (Mathf.Asin((9.18F * closestDst) / (Mathf.Pow(force, 2)))) / 2;
         //if (overhead) angle = 1.5708f - angle;
         float angle = cannonDistanceToAngle[closestDst] + radAngleAdd;
+        if(!overhead && (angle * Mathf.Rad2Deg) > 30) { shootAbility = ShootAbility.toFar; return Vector3.zero; };
         Vector3 turn = (new Vector3(targetPos.x, 0, targetPos.y) - new Vector3(shootPoint.transform.position.x, 0, shootPoint.transform.position.z)).normalized;
         Vector3 normalDist = new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0);
         float rotY = Mathf.Atan2(turn.x, turn.z) * Mathf.Rad2Deg;

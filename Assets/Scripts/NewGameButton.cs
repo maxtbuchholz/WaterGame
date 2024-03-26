@@ -12,10 +12,12 @@ public class NewGameButton : MonoBehaviour
         bool ans = await PopupManager.Instance.AwaitUserBinaryInput(key);
         PopupManager.Instance.EndBinaryPopup(key);
         if (!ans) return;
+        PopupManager.Instance.SummonLoadingScreen();
         DeleteFilesRecur(Application.persistentDataPath + "/");
         int sceneIndex = SceneManager.GetActiveScene().buildIndex;
         //await SceneManager.UnloadSceneAsync(sceneIndex);
         await SceneManager.LoadSceneAsync(sceneIndex);
+        PopupManager.Instance.EndLoadingScreen();
     }
     private void DeleteFilesRecur(string pathName)
     {

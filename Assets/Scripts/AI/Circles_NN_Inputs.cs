@@ -18,7 +18,7 @@ public class Circles_NN_Inputs : MonoBehaviour
         time -= Time.deltaTime;
         if ((target == null) || (time <= 0))
         {
-            time = timeBetweenTargetSearch + Random.Range(0f, 1f);
+            time = timeBetweenTargetSearch + Random.Range(0f, 2f);
             target = FindTargetController.Instance.GetTarget(transform.position, teamId, FindTargetController.targetType.ship);
         }
         if (target == null) target = PointToPlayer.Instance.GetPlayerShip();

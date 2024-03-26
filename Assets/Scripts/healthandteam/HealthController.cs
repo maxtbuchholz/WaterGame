@@ -58,9 +58,7 @@ public class HealthController : MonoBehaviour
     private bool healthBarAppear = true;
     public void Update()
     {
-        if (!isPlayer)
-        {
-            if (healthBarAppear)
+            if (healthBarAppear && !isPlayer)
             {
                 if (camera == null) camera = Camera.main;
                 if (healthBar == null) InstanciateHealthBar();
@@ -68,7 +66,7 @@ public class HealthController : MonoBehaviour
                 healthBar.transform.localRotation = Quaternion.Euler(healthBar.transform.localRotation.eulerAngles.x, healthBar.transform.localRotation.eulerAngles.y, -90);
             }
             timeWithoutDamage += Time.deltaTime;
-            if ((healthBar != null) && (MoveBar != null) && !healthRefilingDuringCapture && !isPlayer && !healthRefilingDuringCapture)
+            if (!healthRefilingDuringCapture)
             {
                 if (timeWithoutDamage > startHealTime)
                 {
@@ -76,18 +74,20 @@ public class HealthController : MonoBehaviour
                     {
                         currentHealth += (healAmountPerSec * Time.deltaTime);
                         currentHealth = Mathf.Min(currentHealth, maxHealth);
-                        SetHealthSize(currentHealth / maxHealth);
+                        if(!isPlayer)
+                            SetHealthSize(currentHealth / maxHealth);
                     }
                     else
                     {                                 //health bar eventually dissapear
-                        SetHealthBarAppear(false);
+                        if(!isPlayer)
+                            SetHealthBarAppear(false);
                     }
                 }
             }
-        }
     }
     public void SetHealthBarAppear(bool appear)
     {
+        if((healthBar == null) || (MoveBar == null)) return;
         if(appear != healthBarAppear)
         {
             healthBarAppear = appear;
@@ -148,7 +148,7 @@ public class HealthController : MonoBehaviour
                 GameObject.Instantiate(fortExplosion, transform.position + new Vector3(0, 1, 0), Quaternion.identity);
                 healthRefilingDuringCapture = true;
                 if (attackerTeamId == 0)
-                    StartCoroutine(FortRefilHealthOrCapture(20.0f, currentHealth));
+                    StartCoroutine(FortRefilHealthOrCapture(30.0f, currentHealth));
                 else
                 {
                     FortCaptuerdByAI(attackerTeamId);

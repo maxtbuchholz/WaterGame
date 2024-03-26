@@ -87,7 +87,7 @@ public class PlayerFireControl : MonoBehaviour
     }
     private IEnumerator FireTurrets(List<int> turretIndexs, List<Vector3> Vectors)
     {
-        float fireMaxDiff = 0.01f;
+        float fireMaxDiff = 0.015f;
         int[] fireOrder = new int[turretIndexs.Count];
         for (int i = 0; i < turretIndexs.Count; i++)
             fireOrder[i] = i;
@@ -96,7 +96,7 @@ public class PlayerFireControl : MonoBehaviour
         {
             turretTimeAbleFire[turretIndexs[fireOrder[i]]] = turrets[turretIndexs[fireOrder[i]]].ShootProjectile(Vectors[fireOrder[i]] + new Vector3(Random.Range(-fireMaxDiff, fireMaxDiff), Random.Range(-fireMaxDiff, fireMaxDiff), Random.Range(-fireMaxDiff, fireMaxDiff)), teamId);
             StartCoroutine(ReloadTurret(turretIndexs[fireOrder[i]]));
-            yield return new WaitForSeconds(Random.Range(0.0f, 0.075f));
+            yield return new WaitForSeconds(Random.Range(0.0f, 0.1f));
         }
     }
     int[] Shuffle(int[] texts)

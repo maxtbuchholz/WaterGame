@@ -36,8 +36,8 @@ public class ProjectileHit : MonoBehaviour
     }
     void OnCollisionEnter(Collision collision)
     {
-        if (teamId == 0)
-            Debug.Log("projTeam: " + teamId + " collided with: " + collision.collider.name + " ship parts count: " + shipParts.Count);
+        //if (teamId == 0)
+        //    Debug.Log("projTeam: " + teamId + " collided with: " + collision.collider.name + " ship parts count: " + shipParts.Count);
         if (teamId == -1) return;
         Collide(collision.gameObject.tag);
         if(collision.gameObject.TryGetComponent<DetectHit>(out DetectHit detectHit))

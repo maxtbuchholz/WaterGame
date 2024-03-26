@@ -32,7 +32,7 @@ public class AIFireControl : MonoBehaviour
         time -= Time.deltaTime;
         if (time <= 0)
         {
-            time = 1 + Random.Range(0.0f, 0.5f);
+            time = 2 + Random.Range(0.0f, 1.0f);
             Transform target = findTargetController.GetTarget(transform.position + new Vector3(0, 5, 0), teamId, FindTargetController.targetType.ship);
             if (target == null) return;
             List<int> ableTurretIndexes = new();
@@ -41,7 +41,7 @@ public class AIFireControl : MonoBehaviour
             Rigidbody rb = null;
             //bool forceStraight = false;
             //if ((target.position - transform.position).magnitude < 10) forceStraight = true;
-            float distanceMissAdd = Vector3.Distance(transform.position, target.position) / 20;
+            float distanceMissAdd = 3;
             Vector3 targetPos = new Vector3(target.position.x + Random.Range(-0.5f - distanceMissAdd, 0.5f + distanceMissAdd), 0, target.position.z + Random.Range(-1.0f - distanceMissAdd, 1.0f + distanceMissAdd));
             if (target.TryGetComponent<ShipValueControl>(out ShipValueControl sVC))
             {
@@ -88,7 +88,7 @@ public class AIFireControl : MonoBehaviour
     }
     private IEnumerator FireTurrets(List<int> turretIndexs, List<Vector3> Vectors)
     {
-        float fireMaxDiff = 0.01f;
+        float fireMaxDiff = 0.02f;
         int[] fireOrder = new int[turretIndexs.Count];
         for (int i = 0; i < turretIndexs.Count; i++)
             fireOrder[i] = i;
@@ -96,7 +96,7 @@ public class AIFireControl : MonoBehaviour
         for (int i = 0; i < fireOrder.Length; i++)
         {
             turrets[turretIndexs[fireOrder[i]]].ShootProjectile(Vectors[fireOrder[i]] + new Vector3(Random.Range(-fireMaxDiff, fireMaxDiff), Random.Range(-fireMaxDiff, fireMaxDiff), Random.Range(-fireMaxDiff, fireMaxDiff)), teamId);
-            yield return new WaitForSeconds(Random.Range(0.0f, 0.075f));
+            yield return new WaitForSeconds(Random.Range(0.02f, 0.125f));
         }
     }
     int[] Shuffle(int[] texts)
