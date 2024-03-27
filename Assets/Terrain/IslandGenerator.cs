@@ -257,6 +257,7 @@ public class IslandGenerator : MonoBehaviour
     private float islandYCollider = 0;
     VertAndTri CreateShape(Vector3 currTransform)
     {
+        float[] seed = saveData.GetSeed();
         Vector3[] verticies = new Vector3[(xSize + 1) * (zSize + 1)];
         //vertColors = new Color[(xSize + 1) * (zSize + 1)];
         int i = 0;
@@ -267,7 +268,7 @@ public class IslandGenerator : MonoBehaviour
                 float fX = ((float)x / (float)xSize * WorldXWidth) - (WorldXWidth / 2); //aX = (((((middle.x - currTransform.x) + (WorldXWidth / 2)) / (float)WorldXWidth) * (float)xSize);
                 float fZ = ((float)z / (float)zSize * WorldZWidth) - (WorldZWidth / 2);
                 //float y = Noise.GroundHeight(fX, fZ, lacunarity, persistance, octaves);
-                float y = Noise.GroundHeight(fX + currTransform.x, fZ + currTransform.z, lacunarity, persistance, octaves);
+                float y = Noise.GroundHeight(fX + currTransform.x, fZ + currTransform.z, lacunarity, persistance, octaves, seed[0], seed[1]);
                 y = Noise.ConformToIslandShape(Noise.IslandEdgeCircleFilter(y, x, z, xSize, zSize));
                 y = SetTerrainShader.SetIslandHeightBelowStarts(y);
                 verticies[i] = new Vector3(fX, y, fZ);
@@ -323,6 +324,7 @@ public class IslandGenerator : MonoBehaviour
     VertAndTri CreateShapeRocky(Vector3 currTransform)
     {
         Vector3[] verticies = new Vector3[(xSize + 1) * (zSize + 1)];
+        float[] seed = saveData.GetSeed();
         //vertColors = new Color[(xSize + 1) * (zSize + 1)];
         int i = 0;
         for (int z = 0; z <= zSize; z++)
@@ -332,7 +334,7 @@ public class IslandGenerator : MonoBehaviour
                 float fX = ((float)x / (float)xSize * WorldXWidth) - (WorldXWidth / 2); //aX = (((((middle.x - currTransform.x) + (WorldXWidth / 2)) / (float)WorldXWidth) * (float)xSize);
                 float fZ = ((float)z / (float)zSize * WorldZWidth) - (WorldZWidth / 2);
                 //float y = Noise.GroundHeight(fX, fZ, lacunarity, persistance, octaves);
-                float y = Noise.GroundHeightRocky(fX + currTransform.x, fZ + currTransform.z, lacunarity, persistance, octaves);
+                float y = Noise.GroundHeightRocky(fX + currTransform.x, fZ + currTransform.z, lacunarity, persistance, octaves, seed[0], seed[1]);
                 y = Noise.ConformToIslandShape(Noise.IslandEdgeCircleFilter(y, x, z, xSize, zSize));
                 y = SetTerrainShader.SetIslandHeightBelowStarts(y);
                 verticies[i] = new Vector3(fX, y, fZ);

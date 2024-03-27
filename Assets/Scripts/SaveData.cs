@@ -53,6 +53,7 @@ public class SaveData : MonoBehaviour
     private HashSet<Vector2> seenSeaCoords = new();
     private Dictionary<int, int[]> enemyShipData = new();
     Dictionary<string, float[]> fortCenter = new();
+    float[] seed;
     private IEnumerator Save_Co_Player()
     {
         float minTimeBetween = 0.5f;
@@ -270,6 +271,7 @@ public class SaveData : MonoBehaviour
     {
         LoadFilesOuter(true);
     }
+    public bool FirstTimeLoad = false;
     private void LoadFilesOuter(bool forceReload = false)
     {
         didInit = true;
@@ -278,6 +280,7 @@ public class SaveData : MonoBehaviour
             success = LoadFilesInner();
         if (!success || forceReload)
         {
+            FirstTimeLoad = true;
             playerShipPos = new Vector3(-20, 0, -20);
             //InitFile("player_ship_pos",Serialize.V3(playerShipPos));
             playerShipRot = 0;
@@ -310,6 +313,8 @@ public class SaveData : MonoBehaviour
             InitFile("enemy_ship_data", enemyShipData);
             fortCenter = new();
             InitFile("fort_center", fortCenter);
+            seed = new float[] { Random.Range(0, 1_000_000), Random.Range(0, 1_000_000) };
+            InitFile("seed", seed);
 
         }
         islandKeyIncriment = islandCoordsToKey.Count;
@@ -519,6 +524,18 @@ public class SaveData : MonoBehaviour
             try
             {
                 fortCenter = (Dictionary<string, float[]>)data;
+            }
+            catch (System.Exception e)
+            {
+                return false;
+            }
+        }
+        else return false;
+        if (TryLoadDataFromFile("seed", out data))
+        {
+            try
+            {
+                seed = (float[])data;
             }
             catch (System.Exception e)
             {
@@ -898,13 +915,13 @@ public class SaveData : MonoBehaviour
     {
         if (!didInit) LoadFilesOuter();
         if (fortCenter.ContainsKey(key)) return new Vector3(fortCenter[key][0], 0, fortCenter[key][1]);
-        return Vector3.zero;
+        return new Vector3(0, -100, 0);
     }
     public void SetFortCenter(string key, Vector3 data)
     {
         if (!didInit) LoadFilesOuter();
-        if (fortCenter.ContainsKey(key)) fortCenter[key] = new float[] { data.x, data.y };
-        fortCenter[key] = new float[] { data.x, data.y };
+        if (fortCenter.ContainsKey(key)) fortCenter[key] = new float[] { data.x, data.z };
+        fortCenter[key] = new float[] { data.x, data.z };
         InitFile("fort_center", fortCenter);
     }
     public int GetAmountOfPlayerFortTeams()
@@ -934,5 +951,10 @@ public class SaveData : MonoBehaviour
             }
         }
         return bestKey;
+    }
+    public float[] GetSeed()
+    {
+        if (!didInit) LoadFilesOuter();
+        return seed;
     }
 }

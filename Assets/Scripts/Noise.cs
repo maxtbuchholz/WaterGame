@@ -5,10 +5,10 @@ using UnityEngine;
 public static class Noise
 {
     static Vector2 seedOffset = new Vector2(10000000, 10000000);
-    public static float GroundHeight(float x, float z, float lacunarity, float persistance, int octaves)
+    public static float GroundHeight(float x, float z, float lacunarity, float persistance, int octaves, float seedOffX, float seedOffZ)
     {
-        x += seedOffset.x;
-        z += seedOffset.y;
+        x += seedOffX;
+        z += seedOffZ;
         //float y = Mathf.PerlinNoise((x * 0.03f), (z * 0.03f)) * 30f;
         //y += Mathf.PerlinNoise((x * 0.005f), (z * 0.005f)) * 30f;
         //y += Mathf.PerlinNoise((x * 0.0005f), (z * 0.0005f)) * 60f;
@@ -33,10 +33,10 @@ public static class Noise
         //if ((y > 0) && (y < 2.5)) y = 2;
         return y;
     }
-    public static float GroundHeightRocky(float x, float z, float lacunarity, float persistance, int octaves)
+    public static float GroundHeightRocky(float x, float z, float lacunarity, float persistance, int octaves, float seedOffX, float seedOffZ)
     {
-        x += seedOffset.x;
-        z += seedOffset.y;
+        x += seedOffX;
+        z += seedOffZ;
         //float y = Mathf.PerlinNoise((x * 0.03f), (z * 0.03f)) * 30f;
         //y += Mathf.PerlinNoise((x * 0.005f), (z * 0.005f)) * 30f;
         //y += Mathf.PerlinNoise((x * 0.0005f), (z * 0.0005f)) * 60f;
