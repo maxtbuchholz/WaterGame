@@ -54,7 +54,7 @@ public class HealthController : MonoBehaviour
     }
     private float timeWithoutDamage = 10;
     private float startHealTime = 10;
-    private float healAmountPerSec = 10;
+    private float healAmountPerSec = 20;
     private bool healthBarAppear = true;
     public void Update()
     {

@@ -285,7 +285,7 @@ public class SaveData : MonoBehaviour
             //InitFile("player_ship_pos",Serialize.V3(playerShipPos));
             playerShipRot = 0;
             InitFile("player_ship_rot", playerShipRot);
-            money = 500;
+            money = 5000;
             InitFile("money", money);
             currShipId = 0;
             InitFile("curr_ship_id", currShipId);
@@ -332,6 +332,13 @@ public class SaveData : MonoBehaviour
         if (!File.Exists(destination))
         {
             file = File.Create(destination);
+            BinaryFormatter bf = new BinaryFormatter();
+            bf.Serialize(file, data);
+            file.Close();
+        }
+        else
+        {
+            file = File.OpenWrite(destination);
             BinaryFormatter bf = new BinaryFormatter();
             bf.Serialize(file, data);
             file.Close();

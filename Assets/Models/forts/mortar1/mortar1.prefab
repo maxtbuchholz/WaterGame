@@ -167,7 +167,7 @@ MonoBehaviour:
   distanceAdd: 0
   radAngleAdd: 0
   overhead: 1
-  force: 25
+  force: 40
 --- !u!1 &1133291146558292589
 GameObject:
   m_ObjectHideFlags: 0
@@ -645,6 +645,7 @@ MonoBehaviour:
   - {fileID: 2585947953580172068}
   fortTurretControl: {fileID: 1784754629520903027}
   playerFireControl: {fileID: 0}
+  aIFireControl: {fileID: 0}
   isplayer: 0
   healthController: {fileID: 39001564243200806}
   isMortar: 1

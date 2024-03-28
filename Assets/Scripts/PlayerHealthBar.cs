@@ -68,7 +68,7 @@ public class PlayerHealthBar : MonoBehaviour
     {
         PopupManager.Instance.EndRespawnScreen();
         string key = SaveData.Instance.GetClosestFriendlyFort(PointToPlayer.Instance.GetPlayerShip().transform.position);
-        PointToPlayer.Instance.GetPlayerShipValues().GetComponent<HealthController>().EffectHealth(999999, 0);
+        PointToPlayer.Instance.GetPlayerShipValues().GetComponent<HealthController>().EffectHealth(999999, -2);
         await WaitFastTravel(SaveData.Instance.GetFortPos(key));
         FindTargetController.Instance.ModifyTargetable(PointToPlayer.Instance.GetPlayerShipValues().gameObject, 0, FindTargetController.targetType.ship, FindTargetController.targetContition.targetable);
         screenUp = false;
