@@ -62,7 +62,8 @@ public class FortGenerator : MonoBehaviour
             fort.transform.parent = transform;
             LoadedObjects.Instance.AddLoadedFort(fortKey, fort);
             fort.GetComponent<HealthController>().camera = Camera.main;
-            fort.GetComponent<FortLevel>().SetCentralLocation(bestCentralPos);                //set central point has to be before init from key
+            if(furthestDstIn != 0)
+                fort.GetComponent<FortLevel>().SetCentralLocation(bestCentralPos);                //set central point has to be before init from key
             fort.GetComponent<FortLevel>().InitFromKey(fortKey);
             if (fortTeam != -1)
                 fort.GetComponent<LocalTeamController>().ForceChangeTeam(fortTeam);

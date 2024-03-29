@@ -16,7 +16,8 @@ public class FortLevel : MonoBehaviour
     {
         this.key = key;
         saveData = SaveData.Instance;
-        saveData.SetFortCenter(key, centralLocation);
+        if(centralLocation.y != -100)
+            saveData.SetFortCenter(key, centralLocation);
         LevelsUpdate();
     }
     public void LevelsUpdate()
