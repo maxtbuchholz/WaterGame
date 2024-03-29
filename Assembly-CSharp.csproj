@@ -90,6 +90,7 @@
     <Compile Include="Assets/Scripts/ShipMove/ShipRotation.cs" />
     <Compile Include="Assets/Scripts/x/TileDeleter.cs" />
     <Compile Include="Assets/Scripts/PlayerHealthBar.cs" />
+    <Compile Include="Assets/Scripts/PrivacyPolicyButton.cs" />
     <Compile Include="Assets/Scripts/SettingsColorButtons.cs" />
     <Compile Include="Assets/Models/Menus/Popup/ShipUpgradeButtons.cs" />
     <Compile Include="Assets/Scripts/Noise.cs" />
