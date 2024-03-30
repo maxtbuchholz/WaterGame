@@ -39,7 +39,7 @@ public class SaveData : MonoBehaviour
     private Vector3 playerShipPos;
     private float playerShipRot;
     int islandKeyIncriment = 0;
-    private float money = 1500;
+    private float money = 500;
     private int currShipId = 0;
     private Dictionary<Vector2, string> islandCoordsToKey = new();
     private Dictionary<string, Vector3> fortKeyToCoords = new();
@@ -285,7 +285,7 @@ public class SaveData : MonoBehaviour
             //InitFile("player_ship_pos",Serialize.V3(playerShipPos));
             playerShipRot = 0;
             InitFile("player_ship_rot", playerShipRot);
-            money = 5000;
+            money = 500;
             InitFile("money", money);
             currShipId = 0;
             InitFile("curr_ship_id", currShipId);

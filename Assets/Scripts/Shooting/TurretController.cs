@@ -32,12 +32,15 @@ public class TurretController : MonoBehaviour
     float time = -999;
     private void Update()
     {
-        time -= Time.deltaTime;
-        if((time <= 0) && (time != -999))
+        if (time != -999)
         {
-            barrelRotationPoint.transform.localRotation = originalBarrelRotation;
-            turret.transform.localRotation = originalTurretRotation;
-            time = -999;
+            time -= Time.deltaTime;
+            if (time <= 0)
+            {
+                barrelRotationPoint.transform.localRotation = originalBarrelRotation;
+                turret.transform.localRotation = originalTurretRotation;
+                time = -999;
+            }
         }
     }
     private void Start()

@@ -342,6 +342,7 @@ MonoBehaviour:
   turrets:
   - {fileID: 3662885108485971188}
   - {fileID: 9070936522488324553}
+  tapFortUpgradeHelp: {fileID: 3518033570003867866, guid: de891e856060c44b0b9ba9db370c145d, type: 3}
 --- !u!114 &37026520919803669
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -366,6 +367,7 @@ MonoBehaviour:
   fortExplosion: {fileID: 3945905181827361489, guid: d0e4f20e0b843413eb8ac53de0014408, type: 3}
   fortCapturedParticle: {fileID: 3945905181827361489, guid: 895a3094f719c4d8691b8b0491ad65ee, type: 3}
   damageSmokePrefab: {fileID: 3945905181827361489, guid: 389a55126aa624402b1d9ff499419419, type: 3}
+  tapFortForHelp: {fileID: 3518033570003867866, guid: de891e856060c44b0b9ba9db370c145d, type: 3}
   isPlayer: 0
 --- !u!114 &1093381162862037081
 MonoBehaviour:
@@ -397,6 +399,7 @@ MonoBehaviour:
   - {fileID: 6461547668380675383}
   fortTurretControl: {fileID: 5633547753328098535}
   playerFireControl: {fileID: 0}
+  aIFireControl: {fileID: 0}
   isplayer: 0
   healthController: {fileID: 37026520919803669}
   isMortar: 0

@@ -39,7 +39,6 @@ public class FortTouch : MonoBehaviour
         if (Vector3.Distance(transform.position, PointToPlayer.Instance.GetFocalPoint().transform.position) > 20) return false;
         //if (isTouching) return false;
         //isTouching = true;
-        Debug.Log("IN" + addMaterialTo.Count);
         for (int i = 0; i < addMaterialTo.Count; i++)
         {
             List<Material> obMat = addMaterialTo[i].GetComponent<Renderer>().materials.ToList();
@@ -47,10 +46,10 @@ public class FortTouch : MonoBehaviour
             {
                 Color col = mat.GetColor("_BaseColor");
                 if(col != Color.white) originalBaseColor[i][mat] = col;
-                Debug.Log("SetColor");
                 mat.SetColor("_BaseColor", Color.white);
             }
         }
+        PlayerPrefsController.Instance.SetTapFortHelp(true);
         return true;
     }
     public void TouchEnd()

@@ -21,6 +21,7 @@ public class HealthController : MonoBehaviour
     [SerializeField] GameObject fortExplosion;
     [SerializeField] GameObject fortCapturedParticle;
     [SerializeField] GameObject damageSmokePrefab;
+    [SerializeField] GameObject tapFortForHelp;
     private HealthBarVisability healthBarVisability;
     [SerializeField]public bool isPlayer = false;
     private GameObject healthBar;
@@ -28,10 +29,16 @@ public class HealthController : MonoBehaviour
     private bool healthRefilingDuringCapture = false;
     private FindTargetController findTarget;
     private TeamsController teamsController;
+    private PointToPlayer pointToPlayer;
+    private Transform playerTransformForHelpTip;
+    private PlayerPrefsController playerPrefs;
     private void Start()
     {
         teamsController = TeamsController.Instance;
         findTarget = FindTargetController.Instance;
+        pointToPlayer = PointToPlayer.Instance;
+        playerPrefs = PlayerPrefsController.Instance;
+        playerTransformForHelpTip = pointToPlayer.GetPlayerShip();
         currentHealth = maxHealth;
         if (!isPlayer)
         {
@@ -46,7 +53,7 @@ public class HealthController : MonoBehaviour
     {
         healthBar = GameObject.Instantiate(healthBarPrefab);
         healthBar.transform.parent = transform;
-        healthBar.transform.localPosition = new Vector3(0, 3, 0);
+        healthBar.transform.localPosition = new Vector3(0, 4, 0);
         healthBarVisability = healthBar.GetComponent<HealthBarVisability>();
         healthBarVisability.SetBarColor(teamsController.GetTeamColor(teamId, localTeamController));
         MoveBar = healthBarVisability.GetMoveBar().transform;
@@ -83,7 +90,39 @@ public class HealthController : MonoBehaviour
                     }
                 }
             }
+        if (isFort && !isMortar)
+        {
+            bool shouldShow = false;
+            if (teamId == 0)                     //check if should show touch fort for help tooltip
+            {
+                if (!playerPrefs.HasShowTapFortHelp())
+                {
+                    if (Vector3.Distance(transform.position, playerTransformForHelpTip.position) < 20)
+                    {
+                        shouldShow = true;
+                    }
+                }
+            }
+            if (shouldShow)
+            {
+                if (localClickFortHelpTip == null)
+                {
+                    localClickFortHelpTip = GameObject.Instantiate(tapFortForHelp);
+                    localClickFortHelpTip.transform.parent = transform;
+                }
+                localClickFortHelpTip.transform.forward = camera.transform.forward;
+                localClickFortHelpTip.transform.localPosition = new Vector3(0, 1.8f, 0);
+                //localClickFortHelpTip.transform.localRotation = Quaternion.Euler(localClickFortHelpTip.transform.localRotation.eulerAngles.x, localClickFortHelpTip.transform.localRotation.eulerAngles.y, -90);
+            }
+            else
+            {
+                if (localClickFortHelpTip != null)
+                    Destroy(localClickFortHelpTip);
+                localClickFortHelpTip = null;
+            }
+        }
     }
+    private GameObject localClickFortHelpTip;
     public void SetHealthBarAppear(bool appear)
     {
         if((healthBar == null) || (MoveBar == null)) return;

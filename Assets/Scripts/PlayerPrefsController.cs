@@ -82,4 +82,27 @@ public class PlayerPrefsController : MonoBehaviour
     {
         return yPanSens;
     }
+    private bool shouldShowTapFortHelp = false;
+    private bool shouldShowSet = false;
+    public bool HasShowTapFortHelp()
+    {
+        if (!shouldShowSet)
+        {
+            if (!PlayerPrefs.HasKey("_showed_tap_fort_help"))
+            {
+                PlayerPrefs.SetInt("_showed_tap_fort_help", 0);
+                shouldShowTapFortHelp = false;
+                shouldShowSet = true;
+                return shouldShowTapFortHelp;
+            }
+            shouldShowTapFortHelp = PlayerPrefs.GetInt("_showed_tap_fort_help") == 1 ? true : false;
+            shouldShowSet = true;
+        }
+        return shouldShowTapFortHelp;
+    }
+    public void SetTapFortHelp(bool set)
+    {
+        PlayerPrefs.SetInt("_showed_tap_fort_help", set ? 1 : 0);
+        shouldShowTapFortHelp = set;
+    }
 }

@@ -34,9 +34,9 @@ public class FortLevel : MonoBehaviour
         }
         else
         {                                                   //new fort, handle accordingly
-            hea_level = Random.Range(0, hea_level_effect.Count);
-            dam_level = Random.Range(0, dam_level_effect.Count);
-            mor_level = Mathf.Max(Random.Range(0, mor_level_effect.Count), 1);
+            hea_level = Random.Range(0, hea_level_effect.Count - 1);
+            dam_level = Random.Range(0, dam_level_effect.Count - 1);
+            mor_level = Random.Range(0, mor_level_effect.Count - 1);
             fSL = new FortSaveLevel(hea_level, dam_level, mor_level);
             saveData.SetFortLevels(key, fSL);
         }

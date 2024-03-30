@@ -9985,6 +9985,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2af12e75f5909484f917bb435d754be5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  FirstTimeLoad: 0
 --- !u!114 &1236655869
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13421,6 +13422,7 @@ MonoBehaviour:
   fortExplosion: {fileID: 0}
   fortCapturedParticle: {fileID: 0}
   damageSmokePrefab: {fileID: 0}
+  tapFortForHelp: {fileID: 0}
   isPlayer: 0
 --- !u!1 &1872769447 stripped
 GameObject:
@@ -19874,6 +19876,7 @@ MonoBehaviour:
   fortExplosion: {fileID: 0}
   fortCapturedParticle: {fileID: 0}
   damageSmokePrefab: {fileID: 0}
+  tapFortForHelp: {fileID: 0}
   isPlayer: 1
 --- !u!222 &3506734905179819465
 CanvasRenderer:

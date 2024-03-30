@@ -231,9 +231,12 @@ public class LoadMap : MonoBehaviour
             pair.Value.GetComponent<MapFortTouch>().SetSize(tileSize * 0.2f, tileSize * 0.2f);
             pair.Value.transform.localPosition = new Vector3((pair.Key.x / waterTileWidth) * tileSize, (pair.Key.y / waterTileWidth) * tileSize, -1);
         }
-        ship.GetComponent<RectTransform>().sizeDelta = new Vector2((tileSize / 8) * shipWidthToHeight, tileSize / 8);
-        ship.transform.localPosition = addPan;// new Vector2(((focalPosition.position.x / waterTileWidth) * tileSize), ((focalPosition.position.y / waterTileWidth) * tileSize));
-        ship.transform.rotation = Quaternion.Euler(0, 0, -shipDrive.rotation.eulerAngles.y);
+        if (ship != null)
+        {
+            ship.GetComponent<RectTransform>().sizeDelta = new Vector2((tileSize / 8) * shipWidthToHeight, tileSize / 8);
+            ship.transform.localPosition = addPan;// new Vector2(((focalPosition.position.x / waterTileWidth) * tileSize), ((focalPosition.position.y / waterTileWidth) * tileSize));
+            ship.transform.rotation = Quaternion.Euler(0, 0, -shipDrive.rotation.eulerAngles.y);
+        }
         transform.localPosition = new Vector2(-(focalPosition.position.x / waterTileWidth) * tileSize, -(focalPosition.position.z / waterTileWidth) * tileSize) + addPan;
         waterparent.localPosition = new Vector2(-(focalPosition.position.x / waterTileWidth) * tileSize, -(focalPosition.position.z / waterTileWidth) * tileSize) + addPan;
         fortparent.localPosition = new Vector2(-(focalPosition.position.x / waterTileWidth) * tileSize, -(focalPosition.position.z / waterTileWidth) * tileSize) + addPan;
