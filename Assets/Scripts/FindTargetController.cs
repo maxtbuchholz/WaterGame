@@ -29,6 +29,7 @@ public class FindTargetController : MonoBehaviour
             Destroy(gameObject);
         }
         instance.Setup();
+        instance.StartCoroutine(instance.FixDicts());
     }
     public enum targetContition
     {
@@ -41,6 +42,14 @@ public class FindTargetController : MonoBehaviour
         ship,
         fort,
     }
+    public IEnumerator FixDicts()
+    {
+        while(true)
+        {
+            CheckDictsForNull();
+            yield return new WaitForSeconds(1);
+        }
+    }
     public Transform GetTarget(Vector3 origin, int originTeamId, targetType originType)
     {
         GameObject bestTarget = null;
@@ -50,7 +59,8 @@ public class FindTargetController : MonoBehaviour
             if(teamList.Key != originTeamId)
                 foreach(KeyValuePair<GameObject, targetContition> ship in teamList.Value)       //go through ships
                 {
-                    if (ship.Value == targetContition.targetable)
+                    if (ship.Key != null)
+                        if (ship.Value == targetContition.targetable)
                     {
                         Vector3 nor = (ship.Key.transform.position) - origin;
                         float tempDst = nor.magnitude;
@@ -74,6 +84,7 @@ public class FindTargetController : MonoBehaviour
             if (teamList.Key != originTeamId)
                 foreach (KeyValuePair<GameObject, targetContition> fort in teamList.Value)       //go through ships
                 {
+                    if(fort.Key != null)
                     if (fort.Value == targetContition.targetable)
                     {
                         Vector3 targetPos = fort.Key.transform.position;
@@ -96,6 +107,31 @@ public class FindTargetController : MonoBehaviour
         }
         if (bestTarget == null) return null;
         return bestTarget.transform;
+    }
+    private void CheckDictsForNull()
+    {
+        foreach (KeyValuePair<int, Dictionary<GameObject, targetContition>> teamList in teamShips)       //go through ships
+        {
+            teamShips[teamList.Key] = RemoveNullKeys(teamList.Value);
+        }
+        foreach (KeyValuePair<int, Dictionary<GameObject, targetContition>> teamList in teamForts)       //go through ships
+        {
+            teamShips[teamList.Key] = RemoveNullKeys(teamList.Value);
+        }
+    }
+    private Dictionary<GameObject, targetContition> RemoveNullKeys(Dictionary<GameObject, targetContition> dictionary)
+    {
+        Dictionary<GameObject, targetContition> newDict = new();
+        KeyValuePair<GameObject, targetContition>[] dArray = dictionary.ToArray();
+
+        foreach (var key in dArray)
+        {
+            if (key.Key != null)
+            {
+                newDict.Add(key.Key, key.Value);
+            }
+        }
+        return newDict;
     }
     public void ModifyTargetable(GameObject ob, int teamId, targetType type, targetContition condition)
     {
