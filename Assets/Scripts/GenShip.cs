@@ -26,27 +26,23 @@ public class GenShip : MonoBehaviour
             if(playerShipId == 0)
             {
                 shipId = Random.Range(0, 10);
-                if(shipId < 7)
+                if(shipId < 8)
                 {
                     shipId = 0;
                 }
-                else if(shipId < 9)
-                {
-                    shipId = 1;
-                }
                 else
                 {
-                    shipId = 2;
+                    shipId = 1;
                 }
             }
             else if(playerShipId == 1)
             {
                 shipId = Random.Range(0, 10);
-                if(shipId < 4)
+                if(shipId < 5)
                 {
                     shipId = 0;
                 }
-                else if(shipId < 8)
+                else if(shipId < 9)
                 {
                     shipId = 1;
                 }
