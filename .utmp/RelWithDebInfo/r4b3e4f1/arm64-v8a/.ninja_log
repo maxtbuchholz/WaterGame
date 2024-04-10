@@ -1,0 +1,5 @@
+# ninja log v5
+0	5575	1712028308966350909	FramePacing/CMakeFiles/swappywrapper.dir/UnitySwappyWrapper.cpp.o	9daa430673d973b
+5575	8829	1712028312203111969	/Users/maxbuchholz/WaterGame/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/r4b3e4f1/obj/arm64-v8a/libswappywrapper.so	874c6a50b51a15ac
+1	6070	1712361943822696216	FramePacing/CMakeFiles/swappywrapper.dir/UnitySwappyWrapper.cpp.o	9daa430673d973b
+6070	9543	1712361947277220632	/Users/maxbuchholz/WaterGame/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/r4b3e4f1/obj/arm64-v8a/libswappywrapper.so	874c6a50b51a15ac
